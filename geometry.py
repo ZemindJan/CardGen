@@ -61,7 +61,7 @@ class Vec2:
             int(self.y)
         )
     
-class Box:
+class Rect:
     def __init__(self, p1 : Vec2, p2 : Vec2) -> None:   
         self.p1 = p1
         self.p2 = p2
