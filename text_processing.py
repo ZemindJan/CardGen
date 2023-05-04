@@ -18,7 +18,7 @@ def split_csv_line(line : str) -> list[str]:
     return parts
 
 def preprocess_effect(effect : str) -> str:
-    effect.replace(',', '.')
+    effect = effect.replace(',', '.')
     parts = effect.split('.')
     final = ''
 

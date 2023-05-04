@@ -10,6 +10,7 @@ RIGHT = 'RIGHT'
 
 def center_text(draw : ImageDraw.ImageDraw, font : ImageFont.FreeTypeFont, text : str, width : int) -> str:
     _, _, space_width, _ = draw.textbbox((0, 0), ' ', font=font)
+
     lines = text.split('\n')
     final = ''
 
