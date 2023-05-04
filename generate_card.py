@@ -4,6 +4,7 @@ from colors import *
 from alignment import write, LEFT, CENTER
 from card import Card
 from text_processing import preprocess_effect
+import os
 
 ratio = Vec2(2.5, 3.5)
 scale = 100
@@ -11,6 +12,11 @@ size = (ratio * scale).to_ints()
 
 CARDS_DIR = 'out/cards'
 DECKS_DIR = 'out/decks'
+ALL_DIRS = (CARDS_DIR, DECKS_DIR)
+
+for path in ALL_DIRS:
+    if not os.path.exists(path):
+        os.makedirs(path)
 
 top_frame_size = int(size.y / 5)
 side_frame_size = int(size.x / 20)
