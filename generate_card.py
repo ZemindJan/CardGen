@@ -78,10 +78,6 @@ def generate_deck(name : str, cards : list[Card]):
         image = Image.open(file)
         new_image.paste(image, (size.x * x_coord, size.y * y_coord, size.x * (x_coord + 1), size.y * (y_coord + 1))) 
         # Because minimum exports are 2 high, we double the height
-
-    x_coord = X_GRID_SIZE - 1
-    y_coord = 1
-    new_image.paste(Image.open(f'{CARDS_DIR}/back.png'), (size.x * x_coord, size.y * y_coord, size.x * (x_coord + 1), size.y * (y_coord + 1)))
     
     new_image.save(f'{DECKS_DIR}/{name}.png')
 
