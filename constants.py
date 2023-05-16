@@ -1,3 +1,3 @@
-ROCK = 'Rock'
-PAPER = 'Paper'
-SCISSORS = 'Scissors'
+ROCK = 'Stone'
+PAPER = 'Scrolls'
+SCISSORS = 'Blades'

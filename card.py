@@ -3,7 +3,7 @@ from dataclasses import dataclass
 @dataclass
 class Card:
     Name : str
+    Title : str
     Type : str
-    BaseEffect : str
-    ExtraWinEffect : str
+    Effect : str
     Deck : str

@@ -25,7 +25,8 @@ bottom_frame_size = int(size.y / 20)
 def generate_card(card : Card):
     image = Image.new('RGBA', size=size.tuple(), color=WHITE)
     title_font = ImageFont.FreeTypeFont('fonts/AlegreyaSans-Bold.ttf', size=32)
-    font = ImageFont.FreeTypeFont('fonts/AlegreyaSans-Regular.ttf', size=16)
+    subtitle_font = ImageFont.FreeTypeFont('fonts/AlegreyaSans-Italic.ttf', size=20)
+    font = ImageFont.FreeTypeFont('fonts/AlegreyaSans-Regular.ttf', size=18)
     bold_font = ImageFont.FreeTypeFont('fonts/AlegreyaSans-Bold.ttf', size=16)
     draw = ImageDraw.Draw(image)
 
@@ -38,17 +39,16 @@ def generate_card(card : Card):
     draw.rectangle((size.x - side_frame_size, 0, size.x, size.y), background_color)
 
     # Title
-    title_area = Rect(Vec2(0, 0), Vec2(size.x, top_frame_size))
+    title_area = Rect(Vec2(0, 0), Vec2(size.x, int(top_frame_size * 2/3)))
+    subtitle_area = Rect(Vec2(0, int(top_frame_size * 2/3)), Vec2(size.x, top_frame_size))
     write_area = Rect(Vec2(side_frame_size, top_frame_size), Vec2(size.x - side_frame_size, size.y - bottom_frame_size))
 
     top_write_area = Rect(write_area.p1, Vec2(write_area.p2.x, write_area.size().y / 2 + write_area.p1.y))
     bottom_write_area  = Rect(Vec2(write_area.p1.x, write_area.size().y / 2 + write_area.p1.y), write_area.p2)
 
     write(card.Name, draw, title_font, title_area, x_align=CENTER, y_align=CENTER)
-    # write('Stun 1', draw, font, write_area, x_align=CENTER, y_align=CENTER)
-    write(preprocess_effect(card.BaseEffect), draw, font, top_write_area, x_align=CENTER, y_align=CENTER)
-    write('On Win:', draw, bold_font, write_area, CENTER, CENTER)
-    write(preprocess_effect(card.ExtraWinEffect), draw, font, bottom_write_area, x_align=CENTER, y_align=CENTER)
+    write(card.Title, draw, subtitle_font, subtitle_area, x_align=CENTER, y_align=CENTER)
+    write(preprocess_effect(card.Effect), draw, font, write_area, x_align=CENTER, y_align=CENTER)
 
     image.save(f'{CARDS_DIR}/{card.Name}.png')
 

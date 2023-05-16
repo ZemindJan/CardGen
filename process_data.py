@@ -16,11 +16,14 @@ for line in lines[1:]:
     while len(args) < len(arg_line):
         args.append('')
 
+    if args[0] == '': # skip empty lines
+        continue
+
     cards.append(Card(
         Name           = args[0],
-        Type           = args[1],
-        BaseEffect     = args[2],
-        ExtraWinEffect = args[3],
+        Title          = args[1],
+        Type           = args[2],
+        Effect         = args[3],
         Deck           = args[4],
     ))
 
