@@ -2,7 +2,7 @@ from constants import *
 
 WHITE = (255, 255, 255, 255)
 MUTED_BLUE = (112, 167, 255, 255)
-MUTED_RED = (201, 77, 68, 255)
+MUTED_RED = (233, 93, 83, 255)
 MUTED_GREEN = (116, 204, 125, 255)
 BLACK = (0, 0, 0, 255)
 
