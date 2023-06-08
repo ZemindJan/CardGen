@@ -24,7 +24,7 @@ def center_text(draw : ImageDraw.ImageDraw, font : ImageFont.FreeTypeFont, text 
     
     return final
 
-def write(text : str, draw : ImageDraw.ImageDraw, font : ImageFont.FreeTypeFont, area : Rect, x_align = LEFT, y_align = TOP):
+def write(text : str, draw : ImageDraw.ImageDraw, font : ImageFont.FreeTypeFont, area : Rect, x_align = LEFT, y_align = TOP, fill=BLACK):
     _, _, w, h = draw.textbbox((0, 0), text, font=font)
 
     size = area.size()
@@ -43,4 +43,4 @@ def write(text : str, draw : ImageDraw.ImageDraw, font : ImageFont.FreeTypeFont,
     if y_align == BOTTOM:
         y += size.y - h
 
-    draw.text((x, y), text, font=font, fill=BLACK)
+    draw.text((x, y), text, font=font, fill=fill)

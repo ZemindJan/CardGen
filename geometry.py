@@ -68,3 +68,6 @@ class Rect:
 
     def size(self) -> Vec2:
         return self.p2 - self.p1
+    
+    def to_tuple(self) -> tuple[int, int, int, int]:
+        return (self.p1[0], self.p1[1], self.p2[0], self.p2[1])
