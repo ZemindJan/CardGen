@@ -4,10 +4,10 @@ from constants import *
 
 for suite in (ROCK, PAPER, SCISSORS):
     generate_card(Card(
-        Name=f'Heavy  {suite}',
-        God='Artemis',
-        Suite=suite,
-        Effect='5 #dmg',
-        Speed=99,
-        Deck=None,
+        name=f'Heavy {suite}',
+        god='Artemis',
+        suite=suite,
+        effect='5 #dmg and such. 3 #rage. this is some text',
+        speed=99,
+        deck=None,
     ))

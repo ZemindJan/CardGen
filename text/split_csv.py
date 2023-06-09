@@ -16,13 +16,3 @@ def split_csv_line(line : str) -> list[str]:
         parts.append(part)
 
     return parts
-
-def preprocess_effect(effect : str) -> str:
-    effect = effect.replace(',', '.')
-    parts = effect.split('.')
-    final = ''
-
-    for part in parts:
-        final += part.strip() + '\n'
-
-    return final

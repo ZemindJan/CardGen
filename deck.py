@@ -1,7 +1,7 @@
 from generate_card import *
 
 def generate_deck(name: str, cards: list[Card]):
-    files = [f'{CARDS_DIR}/{card.Name}.png' for card in cards]
+    files = [f'{CARDS_DIR}/{card.name}.png' for card in cards]
 
     Y_GRID_SIZE = 2
     X_GRID_SIZE = (len(cards) + 1) // 2

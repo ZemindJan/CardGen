@@ -1,7 +1,8 @@
 
 icon_prefix = '#'
-icons_filepath = 'assets/icons/'
+icons_folder_path = 'assets/icons/'
 
-icons = {
-    'dmg' : f'{icons_filepath}/dmg.png'
+icon_files = {
+    'dmg': f'{icons_folder_path}/dmg.png',
+    'rage': f'{icons_folder_path}/rage.png'
 }

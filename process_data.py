@@ -1,4 +1,4 @@
-from text_processing import split_csv_line
+from text.split_csv import split_csv_line
 from card import Card
 from generate_card import generate_card, generate_back
 from deck import generate_deck
@@ -21,11 +21,12 @@ for line in lines[1:]:
         continue
 
     cards.append(Card(
-        Name=args[0],
-        Title=args[1],
-        Type=args[2],
-        Effect=args[3],
-        Deck=args[4],
+        name=args[0],
+        god=args[1],
+        suite=args[2],
+        effect=args[3],
+        speed=int(args[4]),
+        deck=args[5],
     ))
 
 decks = {}
@@ -33,10 +34,10 @@ decks = {}
 for card in cards:
     generate_card(card)
 
-    if card.Deck in decks:
-        decks[card.Deck].append(card)
+    if card.deck in decks:
+        decks[card.deck].append(card)
     else:
-        decks[card.Deck] = [card]
+        decks[card.deck] = [card]
 
 generate_back()
 

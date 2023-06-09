@@ -1,6 +1,8 @@
 from PIL import Image, ImageFont, ImageDraw
-from dimensions import inner_rect
+from dimensions import icon_size, inner_rect, card_size, line_spacing, icon_x_buffer
 from text.icons import *
+from fonts import font
+from colors import BLACK, GOLD
 
 LINEBREAK = '.'
 
@@ -8,28 +10,42 @@ class Text:
     content : str
     font : ImageFont.FreeTypeFont
 
-    def Text(content : str):
-        pass
+    def __init__(self, content : str):
+        self.content = content
+        self.font = font
+
+    def is_icon(self):
+        return False
+
+    def get_length(self):
+        return font.getlength(self.content) + 2 * icon_x_buffer
 
 class Icon:
     name : str
     image : Image.Image
 
-    def Icon(name : str):
-        pass
+    def __init__(self, name : str) -> None:
+        if name.startswith(icon_prefix):
+            name = name.replace(icon_prefix, '')
 
-class CardText:
-    content : list[Text | Icon | str]
+        self.name = name
+        self.image = Image.open(icon_files[name]).resize(icon_size.tuple())
 
-    def __init__(self, content : list[Text | Icon | str]) -> None:
-        self.content = content
+    def is_icon(self):
+        return True
+    
+    def get_length(self):
+        return icon_size.x
 
-def Process(text : str) -> CardText:
+def process(text : str) -> list[Text | Icon | str]:
     elements = []
     curr_string = ''
     is_icon = False
 
     def push():
+        nonlocal curr_string
+        nonlocal is_icon
+
         if curr_string == '':
             return
 
@@ -39,29 +55,31 @@ def Process(text : str) -> CardText:
             elements.append(Text(curr_string))
 
         curr_string = ''
+        is_icon = False
 
     for char in text:
         if char == LINEBREAK:
             push()
             elements.append(LINEBREAK)
         elif char == icon_prefix:
+            push()
             is_icon = True
-        elif char == ' ':
+        elif char == ' ' and is_icon:
             push()
         else:
             curr_string += char
     
     push()
 
-    return CardText(elements)
+    return elements
 
-def WriteText(text : CardText, image : Image.Image, draw : ImageDraw):
+def write_text(text : list[Text | Icon | str], image : Image.Image, draw : ImageDraw.ImageDraw):
     # Split by lines
     lines = []
 
     curr_line = []
-    while len(text.content) > 0:
-        item = text.content.pop(0)
+    while len(text) > 0:
+        item = text.pop(0)
 
         if item == LINEBREAK:
             lines.append(curr_line.copy())
@@ -74,7 +92,27 @@ def WriteText(text : CardText, image : Image.Image, draw : ImageDraw):
     
     # Write Lines
     for i, line in enumerate(lines):
-        WriteLine(CardText(line), image, draw, i, len(lines))
+        write_line(line, image, draw, i, len(lines))
 
-def WriteLine(text : CardText, image : Image.Image, draw : ImageDraw, lineNum : int, totalLines : int):
-    pass
+def write_line(text : list[Text | Icon | str], image : Image.Image, draw : ImageDraw.ImageDraw, lineNum : int, totalLines : int):
+    length = 0
+    x_offsets = [0 for _ in text]
+
+    for i, item in enumerate(text):
+        length += item.get_length()
+        
+        for j in range(i, len(text)):
+            x_offsets[j] += item.get_length()
+    
+    x_origin = (card_size.x // 2) - length // 2
+    mid_pos = totalLines / 2
+    y_position = int( (lineNum - mid_pos) * line_spacing + (inner_rect.p1.y + inner_rect.p2.y) // 2 )
+
+    for i, item in enumerate(text):
+        x_position = int(x_origin + x_offsets[i - 1]) if i > 0 else x_origin
+        
+        if isinstance(item, Icon):
+            image.paste(item.image, (x_position + icon_x_buffer - icon_size.x // 2, y_position, x_position + icon_x_buffer + icon_size.x // 2, y_position + icon_size.y), item.image)
+        else:
+            item : Text
+            draw.text((x_position, y_position), item.content, font=item.font, fill=BLACK)

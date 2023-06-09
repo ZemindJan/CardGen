@@ -1,11 +1,11 @@
 from PIL import Image, ImageDraw
 from geometry import Vec2, Rect
 from colors import *
-from alignment import write, LEFT, CENTER, TOP, BOTTOM
+from text.alignment import write, LEFT, CENTER, TOP, BOTTOM
 from card import Card
-from text_processing import preprocess_effect
 import os
 from fonts import *
+from text.card_text import process, write_text
 
 ratio = Vec2(2.5, 3.5)
 scale = 100
@@ -41,7 +41,7 @@ def generate_card(card: Card):
     image = Image.new('RGBA', size=size.tuple(), color=WHITE)
     draw = ImageDraw.Draw(image)
 
-    background_color = BACKGROUNDS[card.Suite]
+    background_color = BACKGROUNDS[card.suite]
 
     # Frames
     draw.rectangle((0, 0, size.x, top_frame_size), background_color)
@@ -63,22 +63,22 @@ def generate_card(card: Card):
     write_area = Rect(Vec2(side_frame_size, top_frame_size), Vec2(
         size.x - side_frame_size, size.y - bottom_frame_size))
 
-    top_write_area = Rect(write_area.p1, Vec2(
-        write_area.p2.x, write_area.size().y / 2 + write_area.p1.y))
-    bottom_write_area = Rect(
-        Vec2(write_area.p1.x, write_area.size().y / 2 + write_area.p1.y), write_area.p2)
+    
+    write_text(process(card.effect), image, draw)
 
-    write(card.Name, draw, title_font, title_area,
+    write(card.name, draw, title_font, title_area,
           x_align=LEFT, y_align=BOTTOM)
-    write(card.God, draw, subtitle_font,
+    write(card.god, draw, subtitle_font,
           subtitle_area, x_align=LEFT, y_align=BOTTOM)
-    write(preprocess_effect(card.Effect), draw, font,
-          write_area, x_align=CENTER, y_align=CENTER)
+    #write(preprocess_effect(card.Effect), draw, font,
+    #      write_area, x_align=CENTER, y_align=CENTER)
+
+    
 
     add_speed_triangle(card, draw)
     add_suite(image, card)
 
-    image.save(f'{CARDS_DIR}/{card.Name}.png')
+    image.save(f'{CARDS_DIR}/{card.name}.png')
 
 
 def add_speed_triangle(card: Card, draw: ImageDraw):
@@ -98,7 +98,7 @@ def add_speed_triangle(card: Card, draw: ImageDraw):
     ], fill=GOLD)
 
     write(
-        text=f'{card.Speed}',
+        text=f'{card.speed}',
         draw=draw,
         font=speed_font,
         area=write_area,
@@ -107,7 +107,7 @@ def add_speed_triangle(card: Card, draw: ImageDraw):
     )
 
 def add_suite(image : Image.Image, card : Card):
-    suite_image = Image.open(SUITE_IMAGES[card.Suite])
+    suite_image = Image.open(SUITE_IMAGES[card.suite])
     suite_image = suite_image.resize(SUITE_SIZE.tuple())
     image.paste(suite_image, (size.x - SUITE_SIZE.x, 0, size.x, SUITE_SIZE.y), suite_image)
 

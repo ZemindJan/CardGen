@@ -1,7 +1,7 @@
 import requests
 
 response = requests.get(
-    'https://docs.google.com/spreadsheets/d/e/2PACX-1vQfcuVJtXMn4PGIY7id1qMlOi4IbkVqFpqSArPBe-YZlKZ2crQuPx_IzHGe5O8z86uPB93QAykHNT4T/pub?gid=1649222636&single=true&output=csv')
+    'https://docs.google.com/spreadsheets/d/e/2PACX-1vQfcuVJtXMn4PGIY7id1qMlOi4IbkVqFpqSArPBe-YZlKZ2crQuPx_IzHGe5O8z86uPB93QAykHNT4T/pub?gid=1250764417&single=true&output=csv')
 assert response.status_code == 200, 'Wrong status code'
 
 data_file = 'data.csv'
