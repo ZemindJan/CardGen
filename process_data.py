@@ -2,6 +2,7 @@ from text.split_csv import split_csv_line
 from card import Card
 from generate_card import generate_card, generate_back
 from deck import generate_deck
+from settings import Settings
 
 with open('data.csv') as f:
     data = f.read()
@@ -20,14 +21,24 @@ for line in lines[1:]:
     if args[0] == '':  # skip empty lines
         continue
 
-    cards.append(Card(
-        name=args[0],
-        god=args[1],
-        suite=args[2],
-        effect=args[3],
-        speed=int(args[4]),
-        deck=args[5],
-    ))
+    if Settings.use_speed_value:
+        cards.append(Card(
+            name=args[0],
+            god=args[1],
+            suite=args[2],
+            effect=args[3],
+            speed=int(args[4]),
+            deck=args[5],
+        ))
+    else:
+        cards.append(Card(
+            name=args[0],
+            god=args[1],
+            suite=args[2],
+            effect=args[3],
+            speed=None,
+            deck=args[4],
+        ))
 
 decks = {}
 

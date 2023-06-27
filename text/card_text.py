@@ -1,5 +1,5 @@
 from PIL import Image, ImageFont, ImageDraw
-from dimensions import icon_size, inner_rect, card_size, line_spacing, icon_x_buffer
+from dimensions import icon_size, inner_rect, card_size, line_spacing, icon_x_buffer, icon_y_offset
 from text.icons import *
 from fonts import font
 from colors import BLACK, GOLD
@@ -26,10 +26,10 @@ class Icon:
 
     def __init__(self, name : str) -> None:
         if name.startswith(icon_prefix):
-            name = name.replace(icon_prefix, '')
+            name = name.replace(icon_prefix, '').lower()
 
         self.name = name
-        self.image = Image.open(icon_files[name]).resize(icon_size.tuple())
+        self.image = Image.open(get_icon_file(name)).resize(icon_size.tuple())
 
     def is_icon(self):
         return True
@@ -61,6 +61,8 @@ def process(text : str) -> list[Text | Icon | str]:
         if char == LINEBREAK:
             push()
             elements.append(LINEBREAK)
+        elif char == ' ' and curr_string == '':
+            continue
         elif char == icon_prefix:
             push()
             is_icon = True
@@ -70,6 +72,10 @@ def process(text : str) -> list[Text | Icon | str]:
             curr_string += char
     
     push()
+
+    # don't want trailing linebreak
+    if elements[-1] == LINEBREAK:
+        elements.pop()
 
     return elements
 
@@ -109,10 +115,10 @@ def write_line(text : list[Text | Icon | str], image : Image.Image, draw : Image
     y_position = int( (lineNum - mid_pos) * line_spacing + (inner_rect.p1.y + inner_rect.p2.y) // 2 )
 
     for i, item in enumerate(text):
-        x_position = int(x_origin + x_offsets[i - 1]) if i > 0 else x_origin
+        x_position = int(x_origin + x_offsets[i - 1]) if i > 0 else int(x_origin)
         
         if isinstance(item, Icon):
-            image.paste(item.image, (x_position + icon_x_buffer - icon_size.x // 2, y_position, x_position + icon_x_buffer + icon_size.x // 2, y_position + icon_size.y), item.image)
+            image.paste(item.image, (x_position + icon_x_buffer - icon_size.x // 2, y_position + icon_y_offset, x_position + icon_x_buffer + icon_size.x // 2, y_position + icon_size.y + icon_y_offset), item.image)
         else:
             item : Text
             draw.text((x_position, y_position), item.content, font=item.font, fill=BLACK)

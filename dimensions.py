@@ -13,11 +13,12 @@ inner_rect = Rect(
     Vec2(side_frame_size + gold_frame_thickness, top_frame_size + gold_frame_thickness),
     Vec2(card_size.x - side_frame_size - gold_frame_thickness, card_size.y - bottom_frame_size - gold_frame_thickness)    
 )
-line_spacing = 40
+line_spacing = 50
 
 suite_size = Vec2(card_size.x * 2 // 7, card_size.x * 2 // 7)
 speed_triangle_position = Vec2(card_size.x / 2, card_size.y)
 speed_triangle_size = Vec2(card_size.x / 4, card_size.y / 8)
 
-icon_size = Vec2(26, 26)
-icon_x_buffer = 5
+icon_size = Vec2(40, 40)
+icon_x_buffer = 7
+icon_y_offset = -8

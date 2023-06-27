@@ -6,6 +6,7 @@ from card import Card
 import os
 from fonts import *
 from text.card_text import process, write_text
+from settings import Settings
 
 ratio = Vec2(2.5, 3.5)
 scale = 100
@@ -74,8 +75,9 @@ def generate_card(card: Card):
     #      write_area, x_align=CENTER, y_align=CENTER)
 
     
-
-    add_speed_triangle(card, draw)
+    if Settings.use_speed_value:
+        add_speed_triangle(card, draw)
+    
     add_suite(image, card)
 
     image.save(f'{CARDS_DIR}/{card.name}.png')
