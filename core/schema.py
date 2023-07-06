@@ -5,7 +5,7 @@ from PIL import Image, ImageDraw
 from core.create_directories import verify_directories
 from settings import Settings
 
-DEFAULT_DIMENSIONS = Point(336, 240)
+DEFAULT_DIMENSIONS = Point(240, 336)
 
 class Schema:
     def __init__(self, naming : str, dimensions : Point = None, elements = None, background : Color = None) -> None:
@@ -20,7 +20,6 @@ class Schema:
             size=self.dimensions.int_tuple(), 
             color=self.background.tuple()
         )
-
 
         for element in self.elements:
             element.draw(image, entry, self, Point.zero().to(self.dimensions))
