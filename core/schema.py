@@ -1,23 +1,30 @@
 from core.geometry import Point, Rect
+from core.string_parser import parse_string
 from core.color import Color, White
 from PIL import Image, ImageDraw
+from core.create_directories import verify_directories
+from settings import Settings
 
 DEFAULT_DIMENSIONS = Point(336, 240)
 
 class Schema:
-    def __init__(self, dimensions : Point = None, elements = None, background : Color = None) -> None:
+    def __init__(self, naming : str, dimensions : Point = None, elements = None, background : Color = None) -> None:
+        self.naming = naming
         self.dimensions = dimensions or DEFAULT_DIMENSIONS
         self.elements   = elements   or []
         self.background = background or White
 
-    def draw(self, entry : dict[str, str]):
+    def draw(self, entry : dict[str, str], index = 0):
         image = Image.new(
             mode='RGBA', 
             size=self.dimensions.int_tuple(), 
             color=self.background.tuple()
         )
 
+
         for element in self.elements:
             element.draw(image, entry, self, Point.zero().to(self.dimensions))
 
-        image.save('test.png')
+        path = f'{Settings.CardsDirectory}/{parse_string(self.naming, entry, index)}.png'
+        verify_directories(path)
+        image.save(path)
