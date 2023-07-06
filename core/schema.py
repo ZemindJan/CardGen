@@ -4,6 +4,7 @@ from core.color import Color, White
 from PIL import Image, ImageDraw
 from core.create_directories import verify_directories
 from settings import Settings
+from data.source import Source
 
 DEFAULT_DIMENSIONS = Point(240, 336)
 
@@ -27,3 +28,8 @@ class Schema:
         path = f'{Settings.CardsDirectory}/{parse_string(self.naming, entry, index)}.png'
         verify_directories(path)
         image.save(path)
+
+    def process(self, source : Source):
+        entries = source.get_data()
+        for index, entry in enumerate(entries):
+            self.draw(entry, index)

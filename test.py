@@ -2,6 +2,7 @@ from cardsmith import *
 from elements.rect import RectElement
 from elements.ellipse import EllipseElement
 from core.color import Black, Red
+from data.source import Local
 
 schema = Schema(
     naming='test/$name$',

@@ -1,6 +1,6 @@
 
 
-def process(filename : str = 'data.csv') -> dict[str, str]:
+def process(filename : str = 'data.csv') -> list[dict[str, str]]:
     with open(filename) as file:
         content = file.read()
 
