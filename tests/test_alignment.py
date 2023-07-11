@@ -1,3 +1,8 @@
+# Allows code to be run in root directory
+import sys
+import time
+sys.path[0] = sys.path[0].removesuffix('\\tests')
+
 from cardsmith import *
 from elements.rect import RectElement
 from elements.ellipse import EllipseElement
