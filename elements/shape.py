@@ -8,13 +8,13 @@ from PIL import ImageDraw
 from abc import abstractmethod
 
 class ShapeElement(CardElement):
-    def __init__(self, fill : Color, offset: Point, size: Point, alignment: Alignment = None, outline : Color = None, outlineWidth : int = 0) -> None:
-        super().__init__(offset, alignment, size)
+    def __init__(self, fill : Color, offset: Point, size: Point, alignment: Alignment = None, outline : Color = None, outlineWidth : int = 0, children : list[CardElement] = None) -> None:
+        super().__init__(offset, alignment, size, children)
         self.fill = fill
         self.outline = outline
         self.outlineWidth = outlineWidth
     
-    def draw(self, image: Image, entry: dict[str, str], schema: Schema, parent_area: Rect):
+    def draw(self, image: Image, entry: dict[str, str], schema: Schema, parent_area: Rect, index : int = 0):
         area : Rect = self.calculate_size(parent_area)
         draw = ImageDraw.Draw(image)
 
@@ -25,6 +25,10 @@ class ShapeElement(CardElement):
             self.outline,
             self.outlineWidth
         )
+
+        for child in self.children:
+            child : CardElement
+            child.draw(image, entry, schema, area)
     
     @abstractmethod
     def draw_shape(self, draw : ImageDraw.ImageDraw, area : Rect, fill : Color, outline : Color = None, outlineWidth : int = 0):

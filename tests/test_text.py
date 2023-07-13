@@ -24,12 +24,21 @@ schema = Schema(
         EllipseElement(
             Red, Point(-5, -5), Point(15, 15), MiddleCenter, Black, 2
         ),
-        TextElement(
-            text='Testing a Card',
-            font_path='squealer.ttf',
-            text_size=40,
-            fill=Black
-        )
+        RectElement(
+            fill=Red,
+            offset=Point(0, 0),
+            size=Point(PARENT, 100),
+            children=[
+                TextElement(
+                    text='$name$',
+                    font_path='squealer.ttf',
+                    text_size=40,
+                    fill=White,
+                    alignment=MiddleCenter,
+                )
+            ]
+        ),
+        
     ]
 )
 
