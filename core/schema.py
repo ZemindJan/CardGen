@@ -1,5 +1,5 @@
 from core.geometry import Point, Rect
-from core.string_parser import parse_string
+from core.string_parser import replace_references
 from core.color import Color, White
 from PIL import Image, ImageDraw
 from core.create_directories import verify_directories
@@ -25,7 +25,7 @@ class Schema:
         for element in self.elements:
             element.draw(image, entry, self, Point.zero().to(self.dimensions))
 
-        path = f'{Settings.CardsDirectory}/{parse_string(self.naming, entry, index)}.png'
+        path = f'{Settings.CardsDirectory}/{replace_references(self.naming, entry, index)}.png'
         verify_directories(path)
         image.save(path)
 

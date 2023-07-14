@@ -1,21 +1,33 @@
-def parse_string(string : str, entry : dict[str, str], index = 0) -> str:
-    index = string.find('$')
+class Tag:
+    def __init__(self, name, args = None) -> None:
+        self.name = name
+        self.args = args or []
 
-    while index != -1:
-        substring = string[index + 1:]
-        second_index = substring.find('$')
+class StringElement:
+    def __init__(self, content : str, tags : list[Tag]) -> None:
+        pass
 
-        if second_index == -1:
+def parse_string(string : str, entry : dict[str, str], index : int = 0):
+    pass
+
+def replace_references(string : str, entry : dict[str, str], entry_index : int = 0) -> str:
+    index1 = string.find('$')
+
+    while index1 != -1:
+        substring = string[index1 + 1:]
+        index2 = substring.find('$')
+
+        if index2 == -1:
             return entry
         
-        second_index = index + second_index + 2
+        index2 = index1 + index2 + 2
 
-        before = string[:index]
-        after = string[second_index:]
-        name = string[index + 1 : second_index - 1]
+        before = string[:index1]
+        after = string[index2:]
+        name = string[index1 + 1 : index2 - 1]
 
         if name == 'index':
-            string = before + str(index) + after
+            string = before + str(entry_index) + after
         else:
             # Typical Case
             if name not in entry:
@@ -23,6 +35,6 @@ def parse_string(string : str, entry : dict[str, str], index = 0) -> str:
 
             string = before + entry[name] + after
 
-        index = string.find('$')
+        index1 = string.find('$')
 
     return string

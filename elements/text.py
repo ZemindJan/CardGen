@@ -5,7 +5,7 @@ from core.schema import Schema
 from elements.element import CardElement
 from PIL import ImageDraw, ImageFont
 from core.color import Color
-from core.string_parser import parse_string
+from core.string_parser import replace_references
 
 class TextElement(CardElement):
     def __init__(self, text : str, font_path : str, fill : Color, text_size : int, offset: Point = None, alignment: Alignment = None) -> None:
@@ -19,7 +19,7 @@ class TextElement(CardElement):
 
     def draw(self, image: Image, entry: dict[str, str], schema: Schema, parent_area: Rect, index : int = 0):
         draw = ImageDraw.Draw(image)
-        text = parse_string(self.text, entry, index)
+        text = replace_references(self.text, entry, index)
 
         # Set size
         font = ImageFont.truetype(f'fonts/{self.font}', size=self.text_size)
