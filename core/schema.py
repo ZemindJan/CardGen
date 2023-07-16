@@ -1,5 +1,5 @@
 from core.geometry import Point, Rect
-from core.string_parser import replace_references
+from core.text.string_parser import replace_references
 from core.color import Color, White
 from PIL import Image, ImageDraw
 from core.create_directories import verify_directories
@@ -15,7 +15,7 @@ class Schema:
         self.elements   = elements   or []
         self.background = background or White
 
-    def draw(self, entry : dict[str, str], index = 0):
+    def draw_entry(self, entry : dict[str, str], index = 0):
         image = Image.new(
             mode='RGBA', 
             size=self.dimensions.int_tuple(), 
@@ -32,4 +32,4 @@ class Schema:
     def process(self, source : Source):
         entries = source.get_data()
         for index, entry in enumerate(entries):
-            self.draw(entry, index)
+            self.draw_entry(entry, index)

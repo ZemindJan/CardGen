@@ -1,12 +1,12 @@
 from core.geometry import Point, Rect
 
-_Top = 0
-_Middle = 1
-_Bottom = 2
+top_y_align = 0
+middle_y_align = 1
+bottom_y_align = 2
 
-_Left = 0
-_Centered = 1
-_Right = 2
+left_x_align = 0
+center_x_align = 1
+right_x_align = 2
 
 class Alignment:
     def __init__(self, y_align : int, x_align : int) -> None:
@@ -17,24 +17,24 @@ class Alignment:
         x = rect.p1.x
         y = rect.p1.y
 
-        if self.x_align == _Centered:
+        if self.x_align == center_x_align:
             x = (rect.p1.x + rect.p2.x) / 2
-        elif self.x_align == _Right:
+        elif self.x_align == right_x_align:
             x = rect.p2.x
 
-        if self.y_align == _Middle:
+        if self.y_align == middle_y_align:
             y = (rect.p1.y + rect.p2.y) / 2
-        elif self.y_align == _Bottom:
+        elif self.y_align == bottom_y_align:
             y = rect.p2.y
 
         return Point(x, y)
 
-TopLeft = Alignment(_Top, _Left)
-TopCenter = Alignment(_Top, _Centered)
-TopRight = Alignment(_Top, _Right)
-MiddleLeft = Alignment(_Middle, _Left)
-MiddleCenter = Alignment(_Middle, _Centered)
-MiddleRight = Alignment(_Middle, _Right)
-BottomLeft = Alignment(_Bottom, _Left)
-BottomCenter = Alignment(_Bottom, _Centered)
-BottomRight = Alignment(_Bottom, _Right)
+TopLeft = Alignment(top_y_align, left_x_align)
+TopCenter = Alignment(top_y_align, center_x_align)
+TopRight = Alignment(top_y_align, right_x_align)
+MiddleLeft = Alignment(middle_y_align, left_x_align)
+MiddleCenter = Alignment(middle_y_align, center_x_align)
+MiddleRight = Alignment(middle_y_align, right_x_align)
+BottomLeft = Alignment(bottom_y_align, left_x_align)
+BottomCenter = Alignment(bottom_y_align, center_x_align)
+BottomRight = Alignment(bottom_y_align, right_x_align)

@@ -7,7 +7,7 @@ from cardsmith import *
 from elements.rect import RectElement
 from elements.ellipse import EllipseElement
 from core.color import Black, Red
-from data.source import Local
+from data.source import LocalSource
 
 schema = Schema(
     naming='test/$name$',
@@ -26,6 +26,6 @@ schema = Schema(
     ]
 )
 
-schema.draw(dict(
+schema.draw_entry(dict(
     name='test'
 ))

@@ -8,7 +8,7 @@ from elements.rect import RectElement
 from elements.ellipse import EllipseElement
 from elements.text import TextElement
 from core.color import Black, Red
-from data.source import Local
+from data.source import ManualSource
 
 schema = Schema(
     naming='test/$name$',
@@ -30,9 +30,9 @@ schema = Schema(
             size=Point(PARENT, 100),
             children=[
                 TextElement(
-                    text='$name$',
+                    text='$name$ <size=20>is</size> the name',
                     font_path='squealer.ttf',
-                    text_size=40,
+                    font_size=40,
                     fill=White,
                     alignment=MiddleCenter,
                 )
@@ -42,6 +42,7 @@ schema = Schema(
     ]
 )
 
-schema.draw(dict(
-    name='test'
-))
+schema.process(ManualSource([
+    dict(name='test'),
+    dict(name='test2')
+]))
