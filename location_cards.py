@@ -14,9 +14,12 @@ schema = Schema(
             text='$name$', 
             font_path='squealer', 
             fill='blue',
-            font_size=40,
+            font_size=60,
             offset=Point(0, 50),
             alignment=TopCenter
+        ),
+        RectElement(
+            fill='black'
         )
     ]
 )
