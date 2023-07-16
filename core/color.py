@@ -30,6 +30,9 @@ def hexcode_to_color(hex : str) -> Color:
     return Color(r, g, b, a)
 
 def make_color(data : str | tuple) -> Color:
+    if isinstance(data, Color):
+        return data
+    
     if isinstance(data, tuple):
         return Color(*data)    
 
