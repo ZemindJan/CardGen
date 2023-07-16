@@ -29,11 +29,14 @@ def hexcode_to_color(hex : str) -> Color:
 
     return Color(r, g, b, a)
 
-def make_color(string : str) -> Color:
-    if string.startswith('#'):
-        return hexcode_to_color(string)
+def make_color(data : str | tuple) -> Color:
+    if isinstance(data, tuple):
+        return Color(*data)    
+
+    if data.startswith('#'):
+        return hexcode_to_color(data)
     
-    if string not in colors:
-        raise KeyError(f'Unknown color: {string}')
+    if data not in colors:
+        raise KeyError(f'Unknown color: {data}')
     
-    return make_color(colors[string])
+    return make_color(colors[data])
