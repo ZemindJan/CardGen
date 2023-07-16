@@ -3,4 +3,6 @@ class Settings:
     StringVariablePrefix = '$'
     CardsDirectory = 'out/cards'
     DecksDirectory = 'out/decks'
-    FontsDirectory = 'fonts'
+    FontsDirectory = 'assets/fonts'
+    ImagesDirectory = 'assets/images'
+    IconsDirectory = 'assets/icons'
