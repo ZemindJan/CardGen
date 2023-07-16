@@ -5,7 +5,7 @@ from core.schema import Schema
 from core.text.segment import TextSegment
 from elements.element import CardElement
 from PIL import ImageDraw, ImageFont
-from core.color import Color
+from core.color import Color, make_color
 from core.text.string_parser import parse_string, newline
 from core.text.line import make_lines
 from core.text.fonts import get_font
@@ -13,6 +13,10 @@ from core.text.fonts import get_font
 class TextElement(CardElement):
     def __init__(self, text : str, font_path : str, fill : Color, font_size : int, line_spacing : int = 5, max_line_length : int = None, offset: Point = None, alignment: Alignment = None) -> None:
         super().__init__(offset, alignment, None)
+
+        if not isinstance(fill, Color):
+            fill = make_color(fill)
+
         self.text = text
         self.font = font_path
         self.fill = fill
