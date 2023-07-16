@@ -8,6 +8,7 @@ from PIL import ImageDraw, ImageFont
 from core.color import Color
 from core.text.string_parser import parse_string, newline
 from core.text.line import make_lines
+from core.text.fonts import get_font
 
 class TextElement(CardElement):
     def __init__(self, text : str, font_path : str, fill : Color, font_size : int, line_spacing : int = 5, max_line_length : int = None, offset: Point = None, alignment: Alignment = None) -> None:
@@ -23,7 +24,7 @@ class TextElement(CardElement):
         draw = ImageDraw.Draw(image)
         elements = parse_string(self.text, self.font, self.font_size, self.fill, entry, index)
 
-        font = ImageFont.truetype(f'fonts/{self.font}', size=self.font_size)
+        font = get_font(self.font, self.font_size, [])
         space_size = font.getlength(' ')
 
         max_line_length = self.max_line_length

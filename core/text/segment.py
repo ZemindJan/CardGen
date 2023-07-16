@@ -1,7 +1,7 @@
-from core.color import Color
+from core.color import Color, make_color
 from core.geometry import Point
 from core.text.tag import Tag
-
+from core.text.fonts import get_font
 
 from PIL import ImageDraw, ImageFont
 
@@ -22,6 +22,11 @@ class TextSegment:
                 self.font = tag.data
             if tag.name == 'size':
                 self.font_size = int(tag.data)
+            if tag.name == 'color' or tag.name == 'fill':
+                self.fill = make_color(tag.data)
+
+    def get_font(self):
+        return get_font(self.font, self.font_size, self.tags)
 
     def __repr__(self) -> str:
         content = self.content
@@ -35,7 +40,7 @@ class TextSegment:
         return f'{prefix}{content}{suffix}'
 
     def draw(self, coords : Point, line_size : Point, draw : ImageDraw.ImageDraw):
-        font = ImageFont.truetype(f'fonts/{self.font}', size=self.font_size)
+        font = self.get_font()
         draw.fontmode = "L"
 
         my_coords = coords + Point.y_span(self.calculate_y_offset(line_size))
@@ -48,12 +53,12 @@ class TextSegment:
         )
 
     def calculate_y_offset(self, line_size : Point) -> int:
-        font = ImageFont.truetype(f'fonts/{self.font}', size=self.font_size)
-        x1, y1, x2, y2 = font.getbbox('ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890')
+        font = self.get_font()
+        x1, y1, x2, y2 = font.getbbox('ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefhiklmnorstuvwxz')
         whitespace = line_size.y - (y2 - y1)
         return whitespace
 
     def calculate_size(self) -> Point:
-        font = ImageFont.truetype(f'fonts/{self.font}', size=self.font_size)
+        font = self.get_font()
         x1, y1, x2, y2 = font.getbbox(self.content)
         return Point(x2 - x1, y2 - y1)

@@ -11,8 +11,6 @@ class TextLine:
         self.y_size = y_size
 
 def make_lines(elements : list[TextSegment], font : str, font_size : int, max_line_length : int, space_size : int) -> list[TextLine]:
-    
-
     lines = []
     line = []
     line_size = 0
