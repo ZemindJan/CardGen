@@ -12,7 +12,7 @@ class ShapeElement(CardElement):
         super().__init__(offset, alignment, size, children)
         self.fill = verify_color(fill)
         self.outline = verify_color(outline)
-        self.outlineWidth = verify_color(outlineWidth)
+        self.outlineWidth = outlineWidth
     
     def draw(self, image: Image, entry: dict[str, str], schema: Schema, parent_area: Rect, index : int = 0):
         area : Rect = self.calculate_size(parent_area)
