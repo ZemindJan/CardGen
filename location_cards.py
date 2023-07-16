@@ -25,6 +25,14 @@ schema = Schema(
             alignment=TopCenter,
             size=Point(PARENT - 80, 1),
             offset=Point(0, 120)
+        ),
+        TextElement(
+            text='$domains$',
+            font_path='alegreya_italic_bold',
+            font_size=40,
+            fill='black',
+            alignment=TopCenter,
+            offset=Point(0, 120),
         )
     ]
 )
