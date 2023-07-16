@@ -38,7 +38,7 @@ class TextElement(CardElement):
         lines = make_lines(elements, self.font, self.font_size, max_line_length, space_size)
         total_height = sum(line.y_size for line in lines) + (len(lines) - 1) * self.line_spacing
 
-        y_offset = 0
+        y_offset = self.offset.y
         y_whitespace = parent_area.size().y - total_height
 
         if self.alignment.y_align == middle_y_align:
@@ -48,12 +48,12 @@ class TextElement(CardElement):
 
         for line in lines:
             x_whitespace = parent_area.size().x - line.x_size
-            x_offset = 0
+            x_offset = self.offset.x
             
             if self.alignment.x_align == center_x_align:
-                x_offset = x_whitespace / 2
+                x_offset += x_whitespace / 2
             elif self.alignment.x_align == right_x_align:
-                x_offset = x_whitespace 
+                x_offset += x_whitespace 
             
             for segment in line.segments:
                 segment.draw(Point(parent_area.p1.x + x_offset, parent_area.p1.y + y_offset), Point(line.x_size, line.y_size), draw)
