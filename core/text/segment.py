@@ -43,7 +43,7 @@ class TextSegment:
         font = self.get_font()
         draw.fontmode = "L"
 
-        my_coords = coords + Point.y_span(self.calculate_y_offset(line_size))
+        my_coords = coords + Point.y_span(line_size.y - self.height())
 
         draw.text(
             xy=my_coords.to(Point(1000, 1000)).int_tuple(),
@@ -52,13 +52,12 @@ class TextSegment:
             fill=self.fill.tuple(),
         )
 
-    def calculate_y_offset(self, line_size : Point) -> int:
+    def height(self) -> int:
         font = self.get_font()
         x1, y1, x2, y2 = font.getbbox('ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefhiklmnorstuvwxz')
-        whitespace = line_size.y - (y2 - y1)
-        return whitespace
+        return (y2 - y1)
 
     def calculate_size(self) -> Point:
         font = self.get_font()
         x1, y1, x2, y2 = font.getbbox(self.content)
-        return Point(x2 - x1, y2 - y1)
+        return Point(x2 - x1, self.height())
