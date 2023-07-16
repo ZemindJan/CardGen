@@ -30,8 +30,8 @@ schema = Schema(
             size=Point(PARENT, 100),
             children=[
                 TextElement(
-                    text='$name$ <size=20>is</size> the name',
-                    font_path='squealer.ttf',
+                    text='$name$ <size=20><color=blue>is</size> <italic>the</color></italic> <bold>name</bold>',
+                    font_path='alegreya',
                     font_size=40,
                     fill=White,
                     alignment=MiddleCenter,
