@@ -11,7 +11,7 @@ from core.text.line import make_lines
 from core.text.fonts import get_font
 
 class TextElement(CardElement):
-    def __init__(self, text : str, font_path : str, fill : Color, font_size : int, line_spacing : int = 5, max_line_length : int = None, offset: Point = None, alignment: Alignment = None) -> None:
+    def __init__(self, text : str, font_path : str, fill : Color, font_size : int, line_spacing : int = 5, max_line_length : int = None, offset: Point = None, alignment: Alignment = None, max_icon_size : Point = None) -> None:
         super().__init__(offset, alignment, None)
         self.text = text
         self.font = font_path
@@ -19,10 +19,10 @@ class TextElement(CardElement):
         self.font_size = font_size
         self.max_line_length = max_line_length
         self.line_spacing = line_spacing
+        self.max_icon_size = max_icon_size or Point(50, 50)
 
     def draw(self, image: Image, entry: dict[str, str], schema: Schema, parent_area: Rect, index : int = 0):
-        draw = ImageDraw.Draw(image)
-        elements = parse_string(self.text, self.font, self.font_size, self.fill, entry, index)
+        elements = parse_string(self.text, self.font, self.font_size, self.fill, self.max_icon_size, entry, index)
 
         font = get_font(self.font, self.font_size, [])
         space_size = font.getlength(' ')
@@ -52,7 +52,7 @@ class TextElement(CardElement):
                 x_offset += x_whitespace 
             
             for segment in line.segments:
-                segment.draw(Point(parent_area.p1.x + x_offset, parent_area.p1.y + y_offset), Point(line.x_size, line.y_size), draw)
+                segment.draw(Point(parent_area.p1.x + x_offset, parent_area.p1.y + y_offset), Point(line.x_size, line.y_size), image)
 
                 x_offset += segment.size.x + space_size
 

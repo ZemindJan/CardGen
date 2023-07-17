@@ -2,8 +2,7 @@ from core.color import Color, make_color
 from core.geometry import Point
 from core.text.tag import Tag
 from core.text.fonts import get_font
-
-from PIL import ImageDraw, ImageFont
+from PIL import ImageDraw, ImageFont, Image
 
 
 class TextSegment:
@@ -39,7 +38,8 @@ class TextSegment:
 
         return f'{prefix}{content}{suffix}'
 
-    def draw(self, coords : Point, line_size : Point, draw : ImageDraw.ImageDraw):
+    def draw(self, coords : Point, line_size : Point, image : Image.Image):
+        draw = ImageDraw.Draw(image)
         font = self.get_font()
         draw.fontmode = "L"
 

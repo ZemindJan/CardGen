@@ -15,7 +15,7 @@ class Schema:
         self.elements   = elements   or []
         self.background = background or White
 
-    def draw_entry(self, entry : dict[str, str], index = 0):
+    def draw_card(self, entry : dict[str, str], index = 0):
         image = Image.new(
             mode='RGBA', 
             size=self.dimensions.int_tuple(), 
@@ -32,4 +32,4 @@ class Schema:
     def process(self, source : Source):
         entries = source.get_data()
         for index, entry in enumerate(entries):
-            self.draw_entry(entry, index)
+            self.draw_card(entry, index)
