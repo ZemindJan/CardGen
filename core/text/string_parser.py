@@ -1,7 +1,10 @@
 from PIL import Image
 from core.color import Color
 from core.text.segment import TextSegment
+from core.text.icon import IconSegment
 from core.text.tag import Tag
+from core.geometry import Point
+from settings import Settings
 
 newline = 'newline'
 
@@ -28,7 +31,7 @@ def parse_tag(string : str) -> Tag:
     else:
         return Tag(name, parts[1:])
 
-def parse_string(string : str, font : str, font_size : int, fill : Color, entry : dict[str, str], index : int = 0) -> list[TextSegment]:
+def parse_string(string : str, font : str, font_size : int, fill : Color, max_icon_size : Point, entry : dict[str, str], index : int = 0) -> list[TextSegment]:
     string = replace_references(string, entry, index)
     
     content = ''
@@ -41,7 +44,10 @@ def parse_string(string : str, font : str, font_size : int, fill : Color, entry 
     def push():
         nonlocal content
         if content != '': 
-            elements.append(TextSegment(content, font, font_size, fill, active_tags.copy()))
+            if content.startswith(Settings.IconPrefix):
+                elements.append(IconSegment(content[1:], max_icon_size))
+            else:
+                elements.append(TextSegment(content, font, font_size, fill, active_tags.copy()))
         content = ''
 
     for char in string:

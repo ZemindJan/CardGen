@@ -30,7 +30,7 @@ schema = Schema(
             size=Point(PARENT, 100),
             children=[
                 TextElement(
-                    text='$name$ <size=20><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>',
+                    text='$name$ <size=20><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>#dmg',
                     font_path='alegreya',
                     font_size=40,
                     fill=White,
