@@ -5,6 +5,17 @@ from core.geometry import Point, Rect
 from core.alignment import Alignment, TopLeft
 from core.scaling import scale
 
+class ICardElement:
+    def draw(
+        self,
+        image : Image.Image, 
+        entry : dict[str, str], 
+        schema : Schema,
+        parent_area : Rect,
+        index : int = 0
+    ):
+        pass
+
 class CardElement:
     def __init__(self, offset : Point = None, alignment : Alignment = None, size : Point = None, children : list = None) -> None:
         self.offset = offset or Point.zero()

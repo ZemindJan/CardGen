@@ -6,6 +6,7 @@ sys.path[0] = sys.path[0].removesuffix('\\tests')
 from cardsmith import *
 from elements.rect import RectElement
 from elements.ellipse import EllipseElement
+from elements.conditional import ConditionalElement
 from elements.text import TextElement
 from core.color import Black, Red
 from data.source import ManualSource
@@ -29,13 +30,28 @@ schema = Schema(
             offset=Point(0, 0),
             size=Point(PARENT, 100),
             children=[
-                TextElement(
-                    text='$name$ <size=20><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>#dmg',
-                    font_path='alegreya',
-                    font_size=40,
-                    fill=White,
-                    alignment=MiddleCenter,
-                )
+                ConditionalElement(
+                    condition='$name$=test',
+                    on_true=[
+                        TextElement(
+                            text='$name$ <size=20><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>#dmg',
+                            font_path='alegreya',
+                            font_size=40,
+                            fill=White,
+                            alignment=MiddleCenter,
+                        )
+                    ],
+                    on_false=[
+                        TextElement(
+                            text='$name$ <size=20><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>#dmg',
+                            font_path='alegreya',
+                            font_size=20,
+                            fill=White,
+                            alignment=MiddleCenter,
+                        )
+                    ]
+                ),
+                
             ]
         ),
         
