@@ -9,10 +9,21 @@ from data.source import Source
 DEFAULT_DIMENSIONS = Point(2.5 * 96 * 2, 3.5 * 96 * 2)
 
 class Schema:
-    def __init__(self, naming : str, dimensions : Point = None, elements : list = None, background : Color = None, deck_name : str = None, group_by : str = None, deck_grid_size : Point = None) -> None:
+    def __init__(
+            self, 
+            naming : str, 
+            elements : list,
+            back_elements : list = None, 
+            dimensions : Point = None, 
+            background : Color = None, 
+            deck_name : str = None, 
+            group_by : str = None, 
+            deck_grid_size : Point = None
+        ) -> None:
         self.naming = naming
         self.dimensions = dimensions or DEFAULT_DIMENSIONS
         self.elements   = elements   or []
+        self.back_elements = back_elements or []
         self.background = background or White
         self.deck_name = deck_name
         self.group_by = group_by
@@ -34,6 +45,20 @@ class Schema:
         image.save(path)
 
         return name
+    
+    def draw_back(self) -> str:
+        image = Image.new(
+            mode='RGBA', 
+            size=self.dimensions.int_tuple(), 
+            color=self.background.tuple()
+        )
+
+        for element in self.back_elements:
+            element.draw(image, {}, self, Point.zero().to(self.dimensions))
+        
+        path = f'{Settings.CardsDirectory}/back.png'
+        verify_directories(path)
+        image.save(path)
 
     def process(self, source : Source):
         decks : dict[str, list[str]] = {}
@@ -56,6 +81,9 @@ class Schema:
 
                 decks[default_deckname].append(name)
 
+        self.draw_back()
+            
+        
         self.build_decks(decks)
 
     def build_decks(self, decks : dict[str, list[str]]):
@@ -63,7 +91,7 @@ class Schema:
             self.build_deck(deck, cards)
 
     def build_deck(self, name : str, cards : list[str]):
-        cards_per_sheet = self.deck_grid_size.x * self.deck_grid_size.y
+        cards_per_sheet = self.deck_grid_size.x * self.deck_grid_size.y - 1
 
         if len(cards) <= cards_per_sheet:
             self.build_cardsheet(name, cards, self.deck_grid_size)
@@ -85,6 +113,16 @@ class Schema:
             image = Image.open(file)
             sheet.paste(image, (int(self.dimensions.x * x_coord), int(self.dimensions.y * y_coord),
                             int(self.dimensions.x * (x_coord + 1)), int(self.dimensions.y * (y_coord + 1))))
+            
+        # Paste back
+        i += 1
+        x_coord = i % grid_size.x
+        y_coord = i // grid_size.x
+        file = f'{Settings.CardsDirectory}/back.png'
+
+        image = Image.open(file)
+        sheet.paste(image, (int(self.dimensions.x * x_coord), int(self.dimensions.y * y_coord),
+                        int(self.dimensions.x * (x_coord + 1)), int(self.dimensions.y * (y_coord + 1))))
         
         path = f'{Settings.DecksDirectory}/{name}.png'
         verify_directories(path)
