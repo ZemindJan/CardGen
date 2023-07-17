@@ -4,17 +4,22 @@ from elements.rect import RectElement
 from elements.conditional import ConditionalElement
 from elements.ellipse import EllipseElement
 from elements.text import TextElement
+from elements.image import ImageElement
 from settings import Settings
 
 url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQfcuVJtXMn4PGIY7id1qMlOi4IbkVqFpqSArPBe-YZlKZ2crQuPx_IzHGe5O8z86uPB93QAykHNT4T/pub?gid=802293359&single=true&output=csv"
-Settings.IconPrefix = '!'
+
+
+
+SUITE_SIZE = Point(120, 120)
+
 schema = Schema(
     naming='$name$',
     deck_name='3.8 ',
     group_by='$deck$',
     required_entry_fields=['name', 'title', 'type', 'effect', 'deck'],
     elements=[
-        # Backgrounds
+        # Background
         ConditionalElement('$type$=Blades', [
             RectElement(
                 fill='muted_green',
@@ -37,18 +42,6 @@ schema = Schema(
             )
         ]),
 
-        
-
-        # Title
-        TextElement(
-            text='$name$',
-            font_path='alegreya_bold',
-            fill='black',
-            font_size=50,
-            offset=Point(0, 10),
-            alignment=TopCenter,
-        ),
-
         # Text
         RectElement(
             fill='white',
@@ -62,8 +55,52 @@ schema = Schema(
                     font_size=40,
                     alignment=MiddleCenter,
                 )
-            ]
+            ],
+            outline='gold',
+            outlineWidth=8,
         ),
+
+        # Title
+        RectElement(
+            fill='blank',
+            offset=Point(PARENT / 20, 10),
+            size=Point(PARENT * (19/20) - SUITE_SIZE.x, 0),
+            alignment=TopLeft,
+            children=[
+                TextElement(
+                    text='$name$',
+                    font_path='alegreya_bold',
+                    fill='black',
+                    font_size=50,
+                    alignment=TopCenter,
+                ),
+            ]
+        ).set_invisible(),
+
+        # Suites
+        ConditionalElement('$type$=Blades', [
+            ImageElement(
+                name='Blades Suite.png',
+                alignment=TopRight,
+                size=SUITE_SIZE,
+            )
+        ]),
+        ConditionalElement('$type$=Stone', [
+            ImageElement(
+                name='Stone Suite.png',
+                alignment=TopRight,
+                size=SUITE_SIZE,
+            )
+        ]),
+        ConditionalElement('$type$=Scrolls', [
+            ImageElement(
+                name='Scrolls Suite.png',
+                alignment=TopRight,
+                size=SUITE_SIZE,
+            )
+        ]),
+
+        
     ],
 )
 
