@@ -8,6 +8,7 @@ from elements.rect import RectElement
 from elements.ellipse import EllipseElement
 from elements.conditional import ConditionalElement
 from elements.text import TextElement
+from elements.image import ImageElement
 from core.color import Black, Red
 from data.source import ManualSource
 
@@ -54,6 +55,11 @@ schema = Schema(
                 
             ]
         ),
+        ImageElement(
+            'cocktail.png',
+            alignment=MiddleCenter,
+            size=Point(200, 200),
+        )
         
     ]
 )
