@@ -18,7 +18,8 @@ class Schema:
             background : Color = None, 
             deck_name : str = None, 
             group_by : str = None, 
-            deck_grid_size : Point = None
+            deck_grid_size : Point = None,
+            required_entry_fields : list[str] = None,
         ) -> None:
         self.naming = naming
         self.dimensions = dimensions or DEFAULT_DIMENSIONS
@@ -28,6 +29,7 @@ class Schema:
         self.deck_name = deck_name
         self.group_by = group_by
         self.deck_grid_size = deck_grid_size or Point(10, 7)
+        self.required_entry_fields = required_entry_fields or []
 
     def draw_card(self, entry : dict[str, str], index = 0) -> str:
         image = Image.new(
@@ -60,9 +62,12 @@ class Schema:
         verify_directories(path)
         image.save(path)
 
+    def is_viable_entry(self, entry : dict[str, str]) -> bool:
+        return all(field in entry for field in self.required_entry_fields)
+
     def process(self, source : Source):
         decks : dict[str, list[str]] = {}
-        entries = source.get_data()
+        entries = [entry for entry in source.get_data() if self.is_viable_entry(entry)]
         default_deckname = self.deck_name or Settings.GlobalDeckName
 
         for index, entry in enumerate(entries):
