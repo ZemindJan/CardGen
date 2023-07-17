@@ -18,13 +18,14 @@ class ShapeElement(CardElement):
         area : Rect = self.calculate_size(parent_area)
         draw = ImageDraw.Draw(image)
 
-        self.draw_shape(
-            draw,
-            area,
-            self.fill,
-            self.outline,
-            self.outlineWidth
-        )
+        if self.visible:
+            self.draw_shape(
+                draw,
+                area,
+                self.fill,
+                self.outline,
+                self.outlineWidth
+            )
 
         for child in self.children:
             child : CardElement

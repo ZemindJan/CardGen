@@ -22,6 +22,9 @@ class TextElement(CardElement):
         self.max_icon_size = max_icon_size or Point(50, 50)
 
     def draw(self, image: Image, entry: dict[str, str], schema: Schema, parent_area: Rect, index : int = 0):
+        if not self.visible:
+            return
+
         elements = parse_string(self.text, self.font, self.font_size, self.fill, self.max_icon_size, entry, index)
 
         font = get_font(self.font, self.font_size, [])

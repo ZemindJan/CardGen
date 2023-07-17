@@ -22,6 +22,7 @@ class CardElement:
         self.alignment = alignment or TopLeft
         self.size = size or Point.zero()
         self.children = children or []
+        self.visible = True
 
     def calculate_size(self, parent_area : Rect) -> Rect:
         origin = self.alignment.get_root(parent_area)
@@ -42,3 +43,7 @@ class CardElement:
         index : int = 0
     ):
         pass
+
+    def set_invisible(self):
+        self.visible = False
+        return self
