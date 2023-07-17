@@ -63,7 +63,11 @@ class Schema:
         image.save(path)
 
     def is_viable_entry(self, entry : dict[str, str]) -> bool:
-        return all(field in entry for field in self.required_entry_fields)
+        for field in self.required_entry_fields:
+            if field not in entry:
+                return False
+        
+        return True
 
     def process(self, source : Source):
         decks : dict[str, list[str]] = {}
