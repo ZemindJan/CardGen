@@ -18,6 +18,9 @@ def process(filename : str = 'data.csv') -> list[dict[str, str]]:
         entry = {}
 
         for i, cell in enumerate(cells):
+            if i >= len(field_names):
+                continue
+
             entry[field_names[i]] = cell
 
         data.append(entry)

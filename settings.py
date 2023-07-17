@@ -6,3 +6,4 @@ class Settings:
     FontsDirectory = 'assets/fonts'
     ImagesDirectory = 'assets/images'
     IconsDirectory = 'assets/icons'
+    GlobalDeckName = 'deck'
