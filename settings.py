@@ -1,3 +1,8 @@
 class Settings:
-    version = "3.8"
-    use_speed_value = False
+    IconPrefix = '#'
+    StringVariablePrefix = '$'
+    CardsDirectory = 'out/cards'
+    DecksDirectory = 'out/decks'
+    FontsDirectory = 'assets/fonts'
+    ImagesDirectory = 'assets/images'
+    IconsDirectory = 'assets/icons'
