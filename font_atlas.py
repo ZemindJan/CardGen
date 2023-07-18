@@ -17,4 +17,5 @@ paths = {
     'alegreya_bold' : 'Alegreya/Alegreya-Bold.ttf',
     'alegreya_bold_italic' : 'Alegreya/Alegreya-BoldItalic.ttf',
     'alegreya_italic_bold' : 'Alegreya/Alegreya-BoldItalic.ttf',
+    'squealer' : 'squealer.ttf'
 }

@@ -5,4 +5,4 @@ class Settings:
     DecksDirectory = 'out/decks'
     FontsDirectory = 'assets/fonts'
     ImagesDirectory = 'assets/images'
-    IconsDirectory = 'assets/icons'
+    GlobalDeckName = 'deck'
