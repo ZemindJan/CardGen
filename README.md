@@ -5,6 +5,11 @@ Cards are outputed as individual png files in the cards directory and are combin
 # How To Use Cardsmith
 Cardsmith allows you to define a `Schema`, which tells the generator how a card should be drawn, and allows it to create cards using that schema and rows in a csv file as input. If you want to figure things out I recommend taking a look at `tests/test_text.py` which uses almost every feature in the generator. Also, look at the code! It's simpler than you may think, and should tell you about what's going on. Really this is just wrapping around the Pillow library for image manipulation.
 
+## Setup
+This project uses `pipenv` as its dependency manager. You can find many resources online on how that works (e.g. https://realpython.com/pipenv-guide/). 
+
+Currently you just need Pillow but that may change at some point. But for now, `pip install pillow` should do the trick.
+
 ## Settings
 Various settings and output directories can be changed by modifying the `Settings` object from `core.settings`. I recommend importing this object and changing its values in the same file before you define your schema.
 
