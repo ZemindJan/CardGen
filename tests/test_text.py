@@ -59,6 +59,21 @@ schema = Schema(
             'cocktail.png',
             alignment=MiddleCenter,
             size=Point(200, 200),
+        ),
+
+        RectElement(
+            fill=Red,
+            alignment=BottomCenter,
+            size=Point(PARENT, PARENT / 4),
+            offset=Point(0, 0),
+            children=[
+                TextElement(
+                    text='This is a test to see how it wraps',
+                    font_path='alegreya',
+                    fill='white',
+                    font_size=800
+                )
+            ]
         )
         
     ]
