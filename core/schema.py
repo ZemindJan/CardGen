@@ -1,6 +1,6 @@
 from core.geometry import Point, Rect
 from core.text.string_parser import replace_references
-from core.color import Color, White
+from core.color import Color, White, verify_color
 from PIL import Image, ImageDraw
 from core.create_directories import verify_directories
 from settings import Settings
@@ -11,7 +11,7 @@ DEFAULT_DIMENSIONS = Point(2.5 * 96 * 2, 3.5 * 96 * 2)
 class Schema:
     def __init__(
             self, 
-            naming : str, 
+            naming : str, # this defines how output cards are named. 
             elements : list,
             back_elements : list = None, 
             dimensions : Point = None, 
@@ -25,7 +25,7 @@ class Schema:
         self.dimensions = dimensions or DEFAULT_DIMENSIONS
         self.elements   = elements   or []
         self.back_elements = back_elements or []
-        self.background = background or White
+        self.background = verify_color(background or White)
         self.deck_name = deck_name
         self.group_by = group_by
         self.deck_grid_size = deck_grid_size or Point(10, 7)
