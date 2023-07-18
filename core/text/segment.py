@@ -54,11 +54,7 @@ class TextSegment:
 
     def height(self) -> int:
         font = self.get_font()
-<<<<<<< HEAD
-        x1, y1, x2, y2 = font.getbbox('ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefhiklmnorstuvwxz')
-=======
         x1, y1, x2, y2 = font.getbbox('ABCDEFGHIJKLMNOPRSTUVWXYZ1234567890abcdefhiklmnorstuvwxz')
->>>>>>> 35a26814e02ad28777518213a06d6d1ff5e5121c
         return (y2 - y1)
 
     def calculate_size(self) -> Point:

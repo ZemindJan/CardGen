@@ -9,15 +9,6 @@ from data.source import Source
 DEFAULT_DIMENSIONS = Point(2.5 * 96 * 2, 3.5 * 96 * 2)
 
 class Schema:
-<<<<<<< HEAD
-    def __init__(self, naming : str, dimensions : Point = None, elements = None, background : Color = None) -> None:
-        self.naming = naming
-        self.dimensions = dimensions or DEFAULT_DIMENSIONS
-        self.elements   = elements   or []
-        self.background = background or White
-
-    def draw_card(self, entry : dict[str, str], index = 0):
-=======
     def __init__(
             self, 
             naming : str, 
@@ -41,7 +32,6 @@ class Schema:
         self.required_entry_fields = required_entry_fields or []
 
     def draw_card(self, entry : dict[str, str], index = 0) -> str:
->>>>>>> 35a26814e02ad28777518213a06d6d1ff5e5121c
         image = Image.new(
             mode='RGBA', 
             size=self.dimensions.int_tuple(), 
@@ -51,16 +41,6 @@ class Schema:
         for element in self.elements:
             element.draw(image, entry, self, Point.zero().to(self.dimensions))
 
-<<<<<<< HEAD
-        path = f'{Settings.CardsDirectory}/{replace_references(self.naming, entry, index)}.png'
-        verify_directories(path)
-        image.save(path)
-
-    def process(self, source : Source):
-        entries = source.get_data()
-        for index, entry in enumerate(entries):
-            self.draw_card(entry, index)
-=======
         name = replace_references(self.naming, entry, index)
         path = f'{Settings.CardsDirectory}/{name}.png'
         verify_directories(path)
@@ -156,4 +136,3 @@ class Schema:
         path = f'{Settings.DecksDirectory}/{name}.png'
         verify_directories(path)
         sheet.save(path)
->>>>>>> 35a26814e02ad28777518213a06d6d1ff5e5121c

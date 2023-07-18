@@ -22,22 +22,6 @@ class TextElement(CardElement):
         self.max_icon_size = max_icon_size or Point(50, 50)
 
     def draw(self, image: Image, entry: dict[str, str], schema: Schema, parent_area: Rect, index : int = 0):
-<<<<<<< HEAD
-        elements = parse_string(self.text, self.font, self.font_size, self.fill, self.max_icon_size, entry, index)
-
-        font = get_font(self.font, self.font_size, [])
-        space_size = font.getlength(' ')
-
-        max_line_length = self.max_line_length
-        if max_line_length is None:
-            max_line_length = parent_area.size().x
-
-        lines = make_lines(elements, self.font, self.font_size, max_line_length, space_size)
-        total_height = sum(line.y_size for line in lines) + (len(lines) - 1) * self.line_spacing
-
-        y_offset = self.offset.y
-        y_whitespace = parent_area.size().y - total_height
-=======
         if not self.visible:
             return
         
@@ -65,7 +49,6 @@ class TextElement(CardElement):
                 break
             else:
                 size = min(int(size * 0.9), int(size - 3))
->>>>>>> 35a26814e02ad28777518213a06d6d1ff5e5121c
 
         if self.alignment.y_align == middle_y_align:
             y_offset += y_whitespace / 2
