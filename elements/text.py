@@ -24,21 +24,31 @@ class TextElement(CardElement):
     def draw(self, image: Image, entry: dict[str, str], schema: Schema, parent_area: Rect, index : int = 0):
         if not self.visible:
             return
+        
+        size = self.font_size
 
-        elements = parse_string(self.text, self.font, self.font_size, self.fill, self.max_icon_size, entry, index)
+        while True:
+            elements = parse_string(self.text, self.font, size, self.fill, self.max_icon_size, entry, index)
 
-        font = get_font(self.font, self.font_size, [])
-        space_size = font.getlength(' ')
+            font = get_font(self.font, size, [])
+            space_size = font.getlength(' ')
 
-        max_line_length = self.max_line_length
-        if max_line_length is None:
-            max_line_length = parent_area.size().x
+            max_line_length = self.max_line_length
+            if max_line_length is None:
+                max_line_length = parent_area.size().x
 
-        lines = make_lines(elements, self.font, self.font_size, max_line_length, space_size)
-        total_height = sum(line.y_size for line in lines) + (len(lines) - 1) * self.line_spacing
+            lines = make_lines(elements, self.font, size, max_line_length, space_size)
+            total_height = sum(line.y_size for line in lines) + (len(lines) - 1) * self.line_spacing
 
-        y_offset = self.offset.y
-        y_whitespace = parent_area.size().y - total_height
+            y_offset = self.offset.y
+            y_whitespace = parent_area.size().y - total_height
+
+            if y_whitespace > 0:
+                break
+            elif size < 10:
+                break
+            else:
+                size = min(int(size * 0.9), int(size - 3))
 
         if self.alignment.y_align == middle_y_align:
             y_offset += y_whitespace / 2

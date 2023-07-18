@@ -64,15 +64,34 @@ schema = Schema(
         RectElement(
             fill='blank',
             offset=Point(PARENT / 20, 10),
-            size=Point(PARENT * (19/20) - SUITE_SIZE.x, 0),
+            size=Point(PARENT * (19/20) - SUITE_SIZE.x, 80),
             alignment=TopLeft,
             children=[
                 TextElement(
                     text='$name$',
                     font_path='alegreya_bold',
                     fill='black',
-                    font_size=50,
-                    alignment=TopCenter,
+                    font_size=55,
+                    alignment=MiddleLeft,
+                    offset=Point(0, -10),
+                ),
+            ]
+        ).set_invisible(),
+
+        # Subtitle
+        RectElement(
+            fill='blank',
+            offset=Point(PARENT / 20, 90),
+            size=Point(PARENT * (19/20) - SUITE_SIZE.x, 40),
+            alignment=TopLeft,
+            children=[
+                TextElement(
+                    text='$title$',
+                    font_path='alegreya_italic',
+                    fill='black',
+                    font_size=36,
+                    alignment=MiddleLeft,
+                    offset=Point(0, -15),
                 ),
             ]
         ).set_invisible(),
