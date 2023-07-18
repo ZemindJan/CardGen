@@ -5,7 +5,6 @@ name = "pypi"
 
 [packages]
 pillow = "*"
-pysimplegui = "*"
 requests = "*"
 
 [dev-packages]
