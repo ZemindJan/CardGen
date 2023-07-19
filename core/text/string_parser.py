@@ -78,6 +78,7 @@ def parse_string(string : str, font : str, font_size : int, fill : Color, max_ic
             else:
                 if tag_content == 'br':
                     push()
+                    tag_content = ''
                     elements.append(newline)
                     continue
 
