@@ -9,6 +9,7 @@ from elements.ellipse import EllipseElement
 from elements.conditional import ConditionalElement
 from elements.text import TextElement
 from elements.image import ImageElement
+from elements.polygon import PolygonElement
 from core.color import Black, Red
 from data.source import ManualSource
 
@@ -74,6 +75,13 @@ schema = Schema(
                     font_size=800
                 )
             ]
+        ),
+
+        PolygonElement(
+            fill='#00FF00',
+            points=[Point(0, 0), Point(1, 0), Point(0.5, 1)],
+            offset=Point(0, 0),
+            alignment=MiddleCenter,
         )
         
     ]
