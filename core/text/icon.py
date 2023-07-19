@@ -4,7 +4,7 @@ from core.text.tag import Tag
 from core.text.fonts import get_font
 
 from PIL import Image, ImageDraw, ImageFont
-from icon_atlas import icon_paths
+from icon_atlas import icon_paths, icon_offsets
 from settings import Settings
 
 def get_icon_path(name):
@@ -22,5 +22,10 @@ class IconSegment:
 
     def draw(self, coords : Point, line_size : Point, image : Image.Image):
         whitespace = line_size.y - self.size.y
-        my_coords = coords + Point.y_span(whitespace / 2)
+        offset = Point(0, 0)
+
+        if self.name in icon_offsets:
+            offset = Point(*icon_offsets[self.name])
+
+        my_coords = coords + Point.y_span(whitespace) + offset
         image.paste(self.image, my_coords.to(my_coords + self.size).int_tuple(), self.image)

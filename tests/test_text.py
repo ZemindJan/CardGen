@@ -68,7 +68,7 @@ schema = Schema(
             offset=Point(0, 0),
             children=[
                 TextElement(
-                    text='This is a test to see how it wraps',
+                    text='This #dmg is a test for wraps',
                     font_path='alegreya',
                     fill='white',
                     font_size=800
