@@ -29,15 +29,51 @@ class Condition:
     def eval(self, entry : dict[str, str]) -> bool:
         pass
 
-class Equality:
-    def __init__(self, value1 : Value, value2 : Value) -> None:
-        self.value1 = value1
-        self.value2 = value2
+class Exists(Condition):
+    def __init__(self, name : str) -> None:
+        super().__init__()
+        self.name = name
+
+    def eval(self, entry: dict[str, str]) -> bool:
+        return self.name in entry
+
+class Equality(Condition):
+    def __init__(self, left : Value, right : Value) -> None:
+        self.left = left
+        self.right = right
     
     def eval(self, entry : dict[str, str]) -> bool:
-        return self.value1.eval(entry) == self.value2.eval(entry)
+        return self.left.eval(entry) == self.right.eval(entry)
+    
+class And(Condition):
+    def __init__(self, left : Condition, right: Condition) -> None:
+        self.left = left
+        self.right = right
+
+    def eval(self, entry : dict[str, str]) -> bool:
+        return self.left.eval(entry) and self.right.eval(entry)
+    
+class Or(Condition):
+    def __init__(self, left : Condition, right: Condition) -> None:
+        self.left = left
+        self.right = right
+
+    def eval(self, entry : dict[str, str]) -> bool:
+        return self.left.eval(entry) or self.right.eval(entry)
 
 def parse_condition(text : str) -> Condition:
-    if "=" in text:
+    text = text.strip()
+    if '|' in text:
+        left, right = text.split('|')
+        return Or(parse_condition(left), parse_condition(right))
+
+    if '&' in text:
+        left, right = text.split('&')
+        return And(parse_condition(left), parse_condition(right))
+    
+    if text.endswith('?'):
+        return Exists(text[:-1])
+
+    if '=' in text:
         left, right = text.split('=')
         return Equality(parse_value(left), parse_value(right))

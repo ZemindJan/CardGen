@@ -10,3 +10,9 @@ icon_paths = {
     'heal' : 'Heal.png',
     'stun' : 'stun.png',
 }
+
+icon_offsets = {
+    'dmg' : (0, 5),
+    'blight' : (0, 5),
+    'heal' : (0, 5),
+}

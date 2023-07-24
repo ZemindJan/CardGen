@@ -44,6 +44,6 @@ class CardElement:
     ):
         pass
 
-    def set_invisible(self):
+    def make_invisible(self):
         self.visible = False
         return self

@@ -52,7 +52,7 @@ schema = Schema(
                     text='$effect$',
                     font_path='alegreya',
                     fill='black',
-                    font_size=40,
+                    font_size=50,
                     alignment=MiddleCenter,
                 )
             ],
@@ -76,7 +76,7 @@ schema = Schema(
                     offset=Point(0, -10),
                 ),
             ]
-        ).set_invisible(),
+        ).make_invisible(),
 
         # Subtitle
         RectElement(
@@ -94,7 +94,7 @@ schema = Schema(
                     offset=Point(0, -15),
                 ),
             ]
-        ).set_invisible(),
+        ).make_invisible(),
 
         # Suites
         ConditionalElement('$type$=Blades', [
