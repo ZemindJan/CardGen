@@ -85,6 +85,9 @@ class Schema:
         entries = [self.process_entry(entry) for entry in source.get_data() if self.is_viable_entry(entry)]
         default_deckname = self.deck_name or Settings.GlobalDeckName
 
+        if len(entries) == 0:
+            raise Exception('No viable entries!')
+
         for index, entry in enumerate(entries):
             name = self.draw_card(entry, index)
 
