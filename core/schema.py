@@ -31,7 +31,7 @@ class Schema:
         self.group_by = group_by
         self.deck_grid_size = deck_grid_size or Point(10, 7)
         self.required_entry_fields = required_entry_fields or []
-        self.replacements = text_replacements or {}
+        self.replacements = text_replacements or dict()
 
     def draw_card(self, entry : dict[str, str], index = 0) -> str:
         image = Image.new(

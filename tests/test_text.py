@@ -15,6 +15,9 @@ from data.source import ManualSource
 
 schema = Schema(
     naming='test/$name$',
+    text_replacements={
+        'test' : 'best'
+    },
     elements=[
         RectElement(
             fill=Black,
@@ -73,16 +76,17 @@ schema = Schema(
                     font_path='alegreya',
                     fill='white',
                     font_size=800
+                ),
+                PolygonElement(
+                    fill='#00FF00',
+                    points=[Point(0, 0), Point(1, 0), Point(0.5, 1)],
+                    offset=Point(0, 0),
+                    alignment=MiddleCenter,
                 )
             ]
         ),
 
-        PolygonElement(
-            fill='#00FF00',
-            points=[Point(0, 0), Point(1, 0), Point(0.5, 1)],
-            offset=Point(0, 0),
-            alignment=MiddleCenter,
-        )
+        
         
     ]
 )
