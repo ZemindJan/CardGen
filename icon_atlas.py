@@ -12,7 +12,7 @@ icon_paths = {
 }
 
 icon_offsets = {
-    'dmg' : (0, 5),
-    'blight' : (0, 5),
-    'heal' : (0, 5),
+    'dmg' : (0, 10),
+    'blight' : (0, 10),
+    'heal' : (0, 10),
 }

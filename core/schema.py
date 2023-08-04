@@ -6,7 +6,7 @@ from core.create_directories import verify_directories
 from settings import Settings
 from data.source import Source
 
-DEFAULT_DIMENSIONS = Point(2.5 * 96 * 2, 3.5 * 96 * 2)
+DEFAULT_DIMENSIONS = Point(750, 1050)
 
 class Schema:
     def __init__(
