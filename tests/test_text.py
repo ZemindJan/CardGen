@@ -2,6 +2,7 @@
 import sys
 import time
 sys.path[0] = sys.path[0].removesuffix('\\tests')
+sys.path[0] = sys.path[0].removesuffix('/tests')
 
 from cardsmith import *
 from elements.rect import RectElement
@@ -18,6 +19,7 @@ schema = Schema(
     text_replacements={
         'test' : 'best'
     },
+    count='$count$',
     elements=[
         RectElement(
             fill=Black,
@@ -92,6 +94,6 @@ schema = Schema(
 )
 
 schema.process(ManualSource([
-    dict(name='test'),
-    dict(name='test2')
+    dict(name='test', count='2'),
+    dict(name='test2', count='1')
 ]))

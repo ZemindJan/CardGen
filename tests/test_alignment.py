@@ -2,6 +2,7 @@
 import sys
 import time
 sys.path[0] = sys.path[0].removesuffix('\\tests')
+sys.path[0] = sys.path[0].removesuffix('/tests')
 
 from cardsmith import *
 from elements.rect import RectElement
