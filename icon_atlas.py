@@ -4,5 +4,5 @@ icon_paths = {
 }
 
 icon_offsets = {
-    'dmg' : (0, 5),
+    'dmg' : (0, 10),
 }

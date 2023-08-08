@@ -43,7 +43,7 @@ schema = Schema(
                         TextElement(
                             text='$name$ <size=20><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>#dmg',
                             font_path='alegreya',
-                            font_size=40,
+                            font_size=60,
                             fill=White,
                             alignment=MiddleCenter,
                         )
@@ -52,7 +52,7 @@ schema = Schema(
                         TextElement(
                             text='$name$ <size=20><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>#dmg',
                             font_path='alegreya',
-                            font_size=20,
+                            font_size=40,
                             fill=White,
                             alignment=MiddleCenter,
                         )
