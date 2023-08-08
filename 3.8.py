@@ -13,6 +13,9 @@ url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQfcuVJtXMn4PGIY7id1qMlOi
 
 SUITE_SIZE = Point(120, 120)
 
+Settings.CardsDirectory = 'out/3.8/cards'
+Settings.CardsDirectory = 'out/3.8/decks'
+
 schema = Schema(
     naming='$name$',
     deck_name='3.8 ',

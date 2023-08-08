@@ -13,11 +13,21 @@ url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQfcuVJtXMn4PGIY7id1qMlOi
 
 SUITE_SIZE = Point(180, 180)
 
+Settings.CardsDirectory = 'out/3.9.2/cards'
+Settings.CardsDirectory = 'out /3.9.2/decks'
+
 schema = Schema(
     naming='$name$',
-    deck_name='3.8 ',
+    deck_name='3.9.2 ',
     group_by='$deck$',
-    required_entry_fields=['name', 'title', 'type', 'effect', 'deck', 'load'],
+    required_entry_fields=['name', 'type', 'effect', 'deck', 'load'],
+    text_replacements={
+        'Guarantee:' : '<bold>Guarantee:</bold><br>',
+        'On Reveal:' : '<bold>On Reveal:</bold><br>',
+        'Contract:' : '<bold>Contract:</bold><br>',
+        'Violation:' : '<bold>Violation:</bold><br>',
+        'Recover' : '<bold>Recover</bold>',
+    },
     elements=[
 
         # Black Border
@@ -34,28 +44,28 @@ schema = Schema(
             RectElement(
                 fill='muted_green',
                 offset=Point(2, 2),
-                size=Point(PARENT-5, PARENT-5)
+                size=Point(PARENT-4, PARENT-4)
             )
         ]),
         ConditionalElement('$type$=Stone', [
             RectElement(
                 fill='muted_red',
                 offset=Point(2, 2),
-                size=Point(PARENT-5, PARENT-5)
+                size=Point(PARENT-4, PARENT-4)
             )
         ]),
         ConditionalElement('$type$=Scrolls', [
             RectElement(
                 fill='muted_blue',
                 offset=Point(2, 2),
-                size=Point(PARENT-5, PARENT-5)
+                size=Point(PARENT-4, PARENT-4)
             )
         ]),
-        ConditionalElement('$type$=Null', [
+        ConditionalElement('$type$=Blank', [
             RectElement(
                 fill='white',
                 offset=Point(2, 2),
-                size=Point(PARENT-5, PARENT-5)
+                size=Point(PARENT-4, PARENT-4)
             )
         ]),
 
@@ -102,22 +112,24 @@ schema = Schema(
         ).make_invisible(),
 
         # Subtitle
-        RectElement(
-            fill='blank',
-            offset=Point(PARENT / 20, 160),
-            size=Point(PARENT * (19/20) - SUITE_SIZE.x, 40),
-            alignment=TopLeft,
-            children=[
-                TextElement(
-                    text='$title$',
-                    font_path='alegreya_italic',
-                    fill='black',
-                    font_size=72,
-                    alignment=MiddleLeft,
-                    offset=Point(0, -15),
-                ),
-            ]
-        ).make_invisible(),
+        ConditionalElement('god?', [
+            RectElement(
+                fill='blank',
+                offset=Point(PARENT / 20, 160),
+                size=Point(PARENT * (19/20) - SUITE_SIZE.x, 40),
+                alignment=TopLeft,
+                children=[
+                    TextElement(
+                        text='$god$',
+                        font_path='alegreya_italic',
+                        fill='black',
+                        font_size=72,
+                        alignment=MiddleLeft,
+                        offset=Point(0, -15),
+                    ),
+                ]
+            ).make_invisible(),
+        ]),
 
         # Suites
         ConditionalElement('$type$=Blades', [
@@ -192,11 +204,7 @@ schema = Schema(
                     offset=Point(0, -15),
                 ),
             ]
-        ).make_invisible(),
-
-        
-
-        
+        ).make_invisible()     
     ],
 )
 

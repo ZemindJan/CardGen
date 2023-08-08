@@ -17,12 +17,12 @@ class ICardElement:
         pass
 
 class CardElement:
-    def __init__(self, offset : Point = None, alignment : Alignment = None, size : Point = None, children : list = None) -> None:
+    def __init__(self, offset : Point = None, alignment : Alignment = None, size : Point = None, children : list = None, is_visible = True) -> None:
         self.offset = offset or Point.zero()
         self.alignment = alignment or TopLeft
         self.size = size or Point.zero()
         self.children = children or []
-        self.visible = True
+        self.visible = is_visible
 
     def calculate_size(self, parent_area : Rect) -> Rect:
         origin = self.alignment.get_root(parent_area)
