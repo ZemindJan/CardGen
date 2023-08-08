@@ -18,7 +18,11 @@ def process(filename : str = 'data.csv') -> list[dict[str, str]]:
         entry = {}
 
         for i, cell in enumerate(cells):
-            entry[field_names[i]] = cell
+            if i >= len(field_names):
+                continue
+
+            key = field_names[i]
+            entry[key] = cell
 
         data.append(entry)
     
@@ -32,8 +36,7 @@ def split_line(line : str) -> list[str]:
 
     for char in line:
         if char == ',' and not in_quotes:
-            if cell:
-                cells.append(cell)
+            cells.append(cell)
             cell = ''
         elif char == '"':
             in_quotes = not in_quotes

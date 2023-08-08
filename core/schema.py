@@ -71,6 +71,9 @@ class Schema:
         for field in self.required_entry_fields:
             if field not in entry:
                 return False
+            
+            if entry[field] == '':
+                return False
         
         return True
     
