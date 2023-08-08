@@ -20,6 +20,7 @@ class Schema:
             group_by : str = None, 
             deck_grid_size : Point = None,
             required_entry_fields : list[str] = None,
+            text_replacements : dict[str, str] = None,
         ) -> None:
         self.naming = naming
         self.dimensions = dimensions or DEFAULT_DIMENSIONS
@@ -30,6 +31,7 @@ class Schema:
         self.group_by = group_by
         self.deck_grid_size = deck_grid_size or Point(10, 7)
         self.required_entry_fields = required_entry_fields or []
+        self.replacements = text_replacements or dict()
 
     def draw_card(self, entry : dict[str, str], index = 0) -> str:
         image = Image.new(
@@ -68,10 +70,19 @@ class Schema:
                 return False
         
         return True
+    
+    def replace_text(self, my_string : str) -> str:
+        for key, val in self.replacements.items():
+            my_string = my_string.replace(key, val)
+
+        return my_string    
+    
+    def process_entry(self, entry : dict[str, str]) -> dict[str, str]:
+        return {key : self.replace_text(val) for (key, val) in entry.items()}
 
     def process(self, source : Source):
         decks : dict[str, list[str]] = {}
-        entries = [entry for entry in source.get_data() if self.is_viable_entry(entry)]
+        entries = [self.process_entry(entry) for entry in source.get_data() if self.is_viable_entry(entry)]
         default_deckname = self.deck_name or Settings.GlobalDeckName
 
         for index, entry in enumerate(entries):
