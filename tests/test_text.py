@@ -2,6 +2,7 @@
 import sys
 import time
 sys.path[0] = sys.path[0].removesuffix('\\tests')
+sys.path[0] = sys.path[0].removesuffix('/tests')
 
 from cardsmith import *
 from elements.rect import RectElement
@@ -15,6 +16,10 @@ from data.source import ManualSource
 
 schema = Schema(
     naming='test/$name$',
+    text_replacements={
+        'test' : 'best'
+    },
+    count='$count$',
     elements=[
         RectElement(
             fill=Black,
@@ -38,7 +43,7 @@ schema = Schema(
                         TextElement(
                             text='$name$ <size=20><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>#dmg',
                             font_path='alegreya',
-                            font_size=40,
+                            font_size=60,
                             fill=White,
                             alignment=MiddleCenter,
                         )
@@ -47,7 +52,7 @@ schema = Schema(
                         TextElement(
                             text='$name$ <size=20><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>#dmg',
                             font_path='alegreya',
-                            font_size=20,
+                            font_size=40,
                             fill=White,
                             alignment=MiddleCenter,
                         )
@@ -73,21 +78,22 @@ schema = Schema(
                     font_path='alegreya',
                     fill='white',
                     font_size=800
+                ),
+                PolygonElement(
+                    fill='#00FF00',
+                    points=[Point(0, 0), Point(1, 0), Point(0.5, 1)],
+                    offset=Point(0, 0),
+                    alignment=MiddleCenter,
                 )
             ]
         ),
 
-        PolygonElement(
-            fill='#00FF00',
-            points=[Point(0, 0), Point(1, 0), Point(0.5, 1)],
-            offset=Point(0, 0),
-            alignment=MiddleCenter,
-        )
+        
         
     ]
 )
 
 schema.process(ManualSource([
-    dict(name='test'),
-    dict(name='test2')
+    dict(name='test', count='2'),
+    dict(name='test2', count='1')
 ]))

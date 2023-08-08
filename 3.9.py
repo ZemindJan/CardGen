@@ -9,14 +9,13 @@ from settings import Settings
 
 url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQfcuVJtXMn4PGIY7id1qMlOi4IbkVqFpqSArPBe-YZlKZ2crQuPx_IzHGe5O8z86uPB93QAykHNT4T/pub?gid=2074238036&single=true&output=csv"
 
-
-
 SUITE_SIZE = Point(120, 120)
 
-Settings.CardsDirectory = 'out/3.9/cards'
-Settings.CardsDirectory = 'out/3.9/decks'
+Settings.CardsDirectory = 'out/cards/3.9'
+Settings.DecksDirectory = 'out/decks/3.9'
 
 schema = Schema(
+    dimensions=Point(2.5 * 96 * 2, 3.5 * 96 * 2),
     naming='$name$',
     deck_name='3.9 ',
     group_by='$deck$',

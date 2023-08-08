@@ -5,14 +5,16 @@ from PIL import Image, ImageDraw
 from core.create_directories import verify_directories
 from settings import Settings
 from data.source import Source
+from core.deck import Deck, Card
 
 DEFAULT_DIMENSIONS = Point(750, 1050)
 
 class Schema:
     def __init__(
             self, 
-            naming : str, # this defines how output cards are named. 
+            naming : str, 
             elements : list,
+            count : str = None, 
             back_elements : list = None, 
             dimensions : Point = None, 
             background : Color = None, 
@@ -25,6 +27,7 @@ class Schema:
         self.naming = naming
         self.dimensions = dimensions or DEFAULT_DIMENSIONS
         self.elements   = elements   or []
+        self.count = count or '1'
         self.back_elements = back_elements or []
         self.background = verify_color(background or White)
         self.deck_name = deck_name
@@ -68,6 +71,9 @@ class Schema:
         for field in self.required_entry_fields:
             if field not in entry:
                 return False
+            
+            if entry[field] == '':
+                return False
         
         return True
     
@@ -81,46 +87,52 @@ class Schema:
         return {key : self.replace_text(val) for (key, val) in entry.items()}
 
     def process(self, source : Source):
-        decks : dict[str, list[str]] = {}
+        decks : dict[str, Deck] = {}
         entries = [self.process_entry(entry) for entry in source.get_data() if self.is_viable_entry(entry)]
         default_deckname = self.deck_name or Settings.GlobalDeckName
 
+        if len(entries) == 0:
+            raise Exception('No viable entries!')
+
         for index, entry in enumerate(entries):
             name = self.draw_card(entry, index)
+            count = replace_references(self.count, entry, index)
+            card = Card(name, int(count))
 
             if self.group_by:
                 group = replace_references(self.group_by, entry, index)
             
                 if group not in decks:
-                    decks[group] = []
+                    decks[group] = Deck(group)
 
-                decks[group].append(name)
+                decks[group].add_card(card)
             else:
                 if default_deckname not in decks:
-                    decks[default_deckname] = []
+                    decks[default_deckname] = Deck(default_deckname)
 
-                decks[default_deckname].append(name)
+                decks[default_deckname].add_card(card)
 
         self.draw_back()
             
         
         self.build_decks(decks)
 
-    def build_decks(self, decks : dict[str, list[str]]):
-        for deck, cards in decks.items():
-            self.build_deck(deck, cards)
+    def build_decks(self, decks : dict[str, Deck]):
+        for name, deck in decks.items():
+            self.build_deck(name, deck)
 
-    def build_deck(self, name : str, cards : list[str]):
+    def build_deck(self, name : str, deck : Deck):
         cards_per_sheet = self.deck_grid_size.x * self.deck_grid_size.y - 1
 
-        if len(cards) <= cards_per_sheet:
-            self.build_cardsheet(name, cards, self.deck_grid_size)
+        if deck.size <= cards_per_sheet:
+            self.build_cardsheet(name, deck.get_flat_card_list(), self.deck_grid_size)
         else:
-            sheet_num = (len(cards) + cards_per_sheet - 1) // cards_per_sheet
+            sheet_num = (deck.size + cards_per_sheet - 1) // cards_per_sheet
+            flat_list = deck.get_flat_card_list()
             for i in range(sheet_num):
-                self.build_cardsheet(f'{name}{i+1}', cards[cards_per_sheet * i : cards_per_sheet * (i + 1)], self.deck_grid_size)
+                self.build_cardsheet(f'{name}{i+1}', flat_list[cards_per_sheet * i : cards_per_sheet * (i + 1)], self.deck_grid_size)
 
-    def build_cardsheet(self, name : str, cards : list[str], grid_size : Point):
+    def build_cardsheet(self, name : str, cards : list[Card], grid_size : Point):
         sheet = Image.new('RGBA', size=(
             int(self.dimensions.x * grid_size.x), int(self.dimensions.y * grid_size.y)
         ))
@@ -128,7 +140,7 @@ class Schema:
         for i, card in enumerate(cards):
             x_coord = i % grid_size.x
             y_coord = i // grid_size.x
-            file = f'{Settings.CardsDirectory}/{card}.png'
+            file = f'{Settings.CardsDirectory}/{card.name}.png'
 
             image = Image.open(file)
             sheet.paste(image, (int(self.dimensions.x * x_coord), int(self.dimensions.y * y_coord),

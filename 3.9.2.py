@@ -7,29 +7,27 @@ from elements.text import TextElement
 from elements.image import ImageElement
 from settings import Settings
 
-url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQfcuVJtXMn4PGIY7id1qMlOi4IbkVqFpqSArPBe-YZlKZ2crQuPx_IzHGe5O8z86uPB93QAykHNT4T/pub?gid=2074238036&single=true&output=csv"
-
-
+url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQfcuVJtXMn4PGIY7id1qMlOi4IbkVqFpqSArPBe-YZlKZ2crQuPx_IzHGe5O8z86uPB93QAykHNT4T/pub?gid=694111189&single=true&output=csv'
 
 SUITE_SIZE = Point(180, 180)
 
-Settings.CardsDirectory = 'out/3.9.2/cards'
-Settings.CardsDirectory = 'out /3.9.2/decks'
+Settings.CardsDirectory = 'out/cards/3.9.2'
+Settings.DecksDirectory = 'out/decks/3.9.2'
 
 schema = Schema(
+    dimensions=Point(750, 1050),
     naming='$name$',
     deck_name='3.9.2 ',
     group_by='$deck$',
-    required_entry_fields=['name', 'type', 'effect', 'deck', 'load'],
+    required_entry_fields=['name', 'type', 'effect', 'deck', 'cost'],
     text_replacements={
         'Guarantee:' : '<bold>Guarantee:</bold><br>',
         'On Reveal:' : '<bold>On Reveal:</bold><br>',
         'Contract:' : '<bold>Contract:</bold><br>',
-        'Violation:' : '<bold>Violation:</bold><br>',
+        'Violation:' : '<br><bold>Violation:</bold><br>',
         'Recover' : '<bold>Recover</bold>',
     },
     elements=[
-
         # Black Border
         RectElement(
             fill='black',
@@ -173,7 +171,7 @@ schema = Schema(
             size=Point(100, 100),
             children=[
                 TextElement(
-                    text='$load$',
+                    text='$cost$',
                     font_path='alegreya_italic',
                     fill='black',
                     font_size=72,
@@ -196,7 +194,7 @@ schema = Schema(
                     offset=Point(0, -30),
                 ),                
                 TextElement(
-                    text='$load$',
+                    text='$cost$',
                     font_path='alegreya_bold',
                     fill='black',
                     font_size=80,

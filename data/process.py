@@ -36,8 +36,7 @@ def split_line(line : str) -> list[str]:
 
     for char in line:
         if char == ',' and not in_quotes:
-            if cell:
-                cells.append(cell)
+            cells.append(cell)
             cell = ''
         elif char == '"':
             in_quotes = not in_quotes
