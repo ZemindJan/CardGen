@@ -9,7 +9,19 @@ from settings import Settings
 
 url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQfcuVJtXMn4PGIY7id1qMlOi4IbkVqFpqSArPBe-YZlKZ2crQuPx_IzHGe5O8z86uPB93QAykHNT4T/pub?gid=694111189&single=true&output=csv'
 
+BLACK_OUTLINE_WIDTH = 2
+SIDE_COLUMN_RATIO = 1/20
+GOLD_OUTLINE_WIDTH = 8
+EFFECT_X_BUFFER = 3
+
 SUITE_SIZE = Point(180, 180)
+
+KEYWORDS = ['Guarantee', 'On Reveal', 'Contract', 'Violation', 'Recover', 'Replace', 'Stamina']
+REPLACEMENTS = {}
+
+for KEYWORD in KEYWORDS:
+    REPLACEMENTS[f'{KEYWORD}'] = f'<bold>{KEYWORD}</bold>'
+    REPLACEMENTS[f'<bold>{KEYWORD}</bold>:'] = f'<bold>{KEYWORD}:</bold><br>'
 
 Settings.CardsDirectory = 'out/cards/3.9.2'
 Settings.DecksDirectory = 'out/decks/3.9.2'
@@ -19,14 +31,9 @@ schema = Schema(
     naming='$name$',
     deck_name='3.9.2 ',
     group_by='$deck$',
+    count='$copies$',
     required_entry_fields=['name', 'type', 'effect', 'deck', 'cost'],
-    text_replacements={
-        'Guarantee:' : '<bold>Guarantee:</bold><br>',
-        'On Reveal:' : '<bold>On Reveal:</bold><br>',
-        'Contract:' : '<bold>Contract:</bold><br>',
-        'Violation:' : '<br><bold>Violation:</bold><br>',
-        'Recover' : '<bold>Recover</bold>',
-    },
+    text_replacements=REPLACEMENTS,
     elements=[
         # Black Border
         RectElement(
@@ -41,61 +48,69 @@ schema = Schema(
         ConditionalElement('$type$=Blades', [
             RectElement(
                 fill='muted_green',
-                offset=Point(2, 2),
-                size=Point(PARENT-4, PARENT-4)
+                offset=Point(BLACK_OUTLINE_WIDTH, BLACK_OUTLINE_WIDTH),
+                size=Point(PARENT - 2 * BLACK_OUTLINE_WIDTH, PARENT  - 2 * BLACK_OUTLINE_WIDTH)
             )
         ]),
         ConditionalElement('$type$=Stone', [
             RectElement(
                 fill='muted_red',
-                offset=Point(2, 2),
-                size=Point(PARENT-4, PARENT-4)
+                offset=Point(BLACK_OUTLINE_WIDTH, BLACK_OUTLINE_WIDTH),
+                size=Point(PARENT - 2 * BLACK_OUTLINE_WIDTH, PARENT  - 2 * BLACK_OUTLINE_WIDTH)
             )
         ]),
         ConditionalElement('$type$=Scrolls', [
             RectElement(
                 fill='muted_blue',
-                offset=Point(2, 2),
-                size=Point(PARENT-4, PARENT-4)
+                offset=Point(BLACK_OUTLINE_WIDTH, BLACK_OUTLINE_WIDTH),
+                size=Point(PARENT - 2 * BLACK_OUTLINE_WIDTH, PARENT  - 2 * BLACK_OUTLINE_WIDTH)
             )
         ]),
         ConditionalElement('$type$=Blank', [
             RectElement(
                 fill='white',
-                offset=Point(2, 2),
-                size=Point(PARENT-4, PARENT-4)
+                offset=Point(BLACK_OUTLINE_WIDTH, BLACK_OUTLINE_WIDTH),
+                size=Point(PARENT - 2 * BLACK_OUTLINE_WIDTH, PARENT  - 2 * BLACK_OUTLINE_WIDTH)
             )
         ]),
 
         # Text
         RectElement(
             fill='white',
-            offset=Point(PARENT * (1 / 20), PARENT * (1/5)),
-            size=Point(PARENT * (1 - 1 / 10), PARENT * (1 - 1 / 5 - 1 / 20)),
+            offset=Point(PARENT * SIDE_COLUMN_RATIO, PARENT * (1/5)),
+            size=Point(PARENT * (1 - 1 / 10), PARENT * (1 - 1 / 5 - SIDE_COLUMN_RATIO)),
             outline='gold',
-            outlineWidth=8,
+            outlineWidth=GOLD_OUTLINE_WIDTH,
         ),
 
         RectElement(
             fill='white',
-            offset=Point(PARENT * (1 / 20)+8, PARENT * (1/5)+8),
-            size=Point(PARENT * (1 - 1.25 / 10), PARENT * (1 - 1 / 5 - 1 / 20) - 16),
+            offset=Point(PARENT * SIDE_COLUMN_RATIO + GOLD_OUTLINE_WIDTH, PARENT * (1/5) + GOLD_OUTLINE_WIDTH),
+            size=Point(PARENT * (1 - 1 / 10) - 2 * GOLD_OUTLINE_WIDTH, PARENT * (1 - 1 / 5 - SIDE_COLUMN_RATIO) - 2 * GOLD_OUTLINE_WIDTH),
             children=[
-                TextElement(
-                    text='$effect$',
-                    font_path='alegreya',
-                    fill='black',
-                    font_size=60,
-                    alignment=MiddleCenter,
-                )
+                RectElement(
+                    fill='white',
+                    offset=Point(EFFECT_X_BUFFER, 0),
+                    size=Point(PARENT - 2 * EFFECT_X_BUFFER, PARENT),
+                    children=[
+                        TextElement(
+                            text='$effect$',
+                            font_path='alegreya',
+                            fill='black',
+                            font_size=60,
+                            alignment=MiddleCenter,
+                            max_icon_size=Point(70, 70),
+                        )
+                    ],
+                ).make_invisible(),
             ],
         ),
-
+                    
         # Title
         RectElement(
             fill='blank',
-            offset=Point(PARENT / 20, 50),
-            size=Point(PARENT * (19/20) - SUITE_SIZE.x, 80),
+            offset=Point(PARENT * SIDE_COLUMN_RATIO, 50),
+            size=Point(PARENT * (1 - SIDE_COLUMN_RATIO) - SUITE_SIZE.x, 80),
             alignment=TopLeft,
             children=[
                 TextElement(
@@ -113,8 +128,8 @@ schema = Schema(
         ConditionalElement('god?', [
             RectElement(
                 fill='blank',
-                offset=Point(PARENT / 20, 160),
-                size=Point(PARENT * (19/20) - SUITE_SIZE.x, 40),
+                offset=Point(PARENT * SIDE_COLUMN_RATIO, 160),
+                size=Point(PARENT * (1 - SIDE_COLUMN_RATIO) - SUITE_SIZE.x, 40),
                 alignment=TopLeft,
                 children=[
                     TextElement(
@@ -204,6 +219,38 @@ schema = Schema(
             ]
         ).make_invisible()     
     ],
+    back_elements=[
+        RectElement(
+            fill='gold',
+            offset=Point(0, 0),
+            size=Point(PARENT, PARENT),
+            outline='black',
+            outlineWidth=BLACK_OUTLINE_WIDTH,
+        ),
+
+        RectElement(
+            fill='gold',
+            outline='white',
+            outlineWidth=20,
+            offset=Point(50, 50),
+            size=Point(PARENT - 100, PARENT - 100),
+        ),
+
+        RectElement(
+            fill='gold',
+            offset=Point(70, 70),
+            size=Point(PARENT - 140, PARENT - 440),
+            children=[
+                TextElement(
+                    text='GOD',
+                    fill='white',
+                    font_path='alegreya_bold',
+                    font_size=200,
+                    alignment=MiddleCenter
+                )
+            ]
+        )
+    ]
 )
 
 schema.process(OnlineSource(url))
