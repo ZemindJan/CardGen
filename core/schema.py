@@ -97,7 +97,7 @@ class Schema:
         for index, entry in enumerate(entries):
             name = self.draw_card(entry, index)
             count = replace_references(self.count, entry, index)
-            card = Card(name, int(count))
+            card = Card(name, int(count) if count.isdigit() else 1)
 
             if self.group_by:
                 group = replace_references(self.group_by, entry, index)
