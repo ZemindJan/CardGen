@@ -41,7 +41,7 @@ schema = Schema(
                     condition='$name$=test',
                     on_true=[
                         TextElement(
-                            text='$name$ <size=20><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>#dmg',
+                            text='$name$ <size=20><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>#plusone',
                             font_path='alegreya',
                             font_size=60,
                             fill=White,
@@ -50,7 +50,7 @@ schema = Schema(
                     ],
                     on_false=[
                         TextElement(
-                            text='$name$ <size=20><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>#dmg',
+                            text='$name$ <size=20><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>#plusone',
                             font_path='alegreya',
                             font_size=40,
                             fill=White,
@@ -74,7 +74,7 @@ schema = Schema(
             offset=Point(0, 0),
             children=[
                 TextElement(
-                    text='This #dmg is a test for wraps',
+                    text='This #plusone is a test for wraps',
                     font_path='alegreya',
                     fill='white',
                     font_size=800

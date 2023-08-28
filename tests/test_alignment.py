@@ -27,6 +27,6 @@ schema = Schema(
     ]
 )
 
-schema.draw_entry(dict(
+schema.draw_card(dict(
     name='test'
 ))
