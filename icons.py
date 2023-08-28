@@ -1,6 +1,6 @@
 from core.icon import Icon
 
-for drink in ['Whiskey', 'Gin', 'Vodka', 'Citrus', 'Aperetif', 'Syrup', 'Soda']:
+for drink in ['Whiskey', 'Gin', 'Vodka', 'Rum', 'Citrus', 'Aperitif', 'Syrup', 'Soda']:
     Icon(
         name=f'{drink}',
         path=f'{drink}.png'

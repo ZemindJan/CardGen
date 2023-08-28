@@ -103,7 +103,7 @@ Settings.DecksDirectory = 'out/decks/test/happyhour'
 schema.process(ManualSource([
     {
         'name' : 'Sazerac',
-        'effect' : '#Whiskey #Aperetif #Syrup',
+        'effect' : '#Whiskey #Aperitif #Syrup',
         'ingredient' : 'Scotch',
         'icon' : '#Whiskey #Plusone'
     }
