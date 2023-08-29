@@ -4,11 +4,13 @@ from core.text.tag import Tag
 from core.text.fonts import get_font
 
 from PIL import Image, ImageDraw, ImageFont
-from core.icon import atlas
+from core.icon import Icon, atlas
 import icons
 from settings import Settings
 
 class IconSegment:
+    icon : Icon
+    
     def __init__(self, name : str, max_icon_size : Point) -> None:
         try:
             self.icon = atlas[name]
@@ -18,10 +20,13 @@ class IconSegment:
         self.image = Image.open(f'{Settings.IconsDirectory}/{self.icon.path}')
         self.name = name
         self.max_icon_size = max_icon_size
-        size = Point(*self.image.size)
-        scale_diff = max(size.x / max_icon_size.x, size.y / max_icon_size.y)
-        self.image = self.image.resize((int(size.x / scale_diff), int(size.y / scale_diff)))
-        self.size = Point(*self.image.size)
+
+        size = self.icon.size or Point(*self.image.size)
+
+        if size.x > max_icon_size.x or size.y > max_icon_size.y:
+            scale_diff = max(size.x / max_icon_size.x, size.y / max_icon_size.y)
+            self.image = self.image.resize((int(size.x / scale_diff), int(size.y / scale_diff)))
+            self.size = Point(*self.image.size)
 
     def draw(self, coords : Point, line_size : Point, image : Image.Image):
         whitespace = line_size.y - self.size.y
