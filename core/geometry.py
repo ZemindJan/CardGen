@@ -18,7 +18,7 @@ class Point():
     def __truediv__(self, other):
         return Point(self.x / other, self.y / other)
 
-    def to(self, p2):
+    def to(self, p2) -> 'Rect':
         return Rect(self, p2)
     
     def tuple(self):
@@ -55,9 +55,13 @@ class Rect():
     
     def int_tuple(self):
         return int(self.p1.x), int(self.p1.y), int(self.p2.x), int(self.p2.y)
+    
+    def round(self):
+        self.p1 = Point(*self.p1.int_tuple())
+        self.p2 = Point(*self.p2.int_tuple())
 
     @classmethod
-    def from_size(self, p1 : Point, size : Point):
+    def from_size(self, p1 : Point, size : Point) -> 'Rect':
         return Rect(p1, p1 + size)
     
     def __contains__(self, other):

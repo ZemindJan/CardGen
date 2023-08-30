@@ -11,6 +11,10 @@ from core.text.line import make_lines
 from core.text.fonts import get_font
 
 class TextElement(CardElement):
+    text : str
+    font : str
+    max_icon_size : Point | None
+
     def __init__(self, text : str, font_path : str, fill : Color, font_size : int, line_spacing : int = 5, max_line_length : int = None, offset: Point = None, alignment: Alignment = None, max_icon_size : Point = None) -> None:
         super().__init__(offset, alignment, None)
         self.text = text
@@ -19,7 +23,7 @@ class TextElement(CardElement):
         self.font_size = font_size
         self.max_line_length = max_line_length
         self.line_spacing = line_spacing
-        self.max_icon_size = max_icon_size or Point(50, 50)
+        self.max_icon_size = max_icon_size
 
     def draw(self, image: Image, entry: dict[str, str], schema: Schema, parent_area: Rect, index : int = 0):
         if not self.visible:

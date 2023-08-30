@@ -2,6 +2,7 @@ from core.color import Color, make_color
 from core.geometry import Point
 from core.text.tag import Tag
 from core.text.fonts import get_font
+from core.safe_paste import safe_paste
 
 from PIL import Image, ImageDraw, ImageFont
 from core.icon import Icon, atlas
@@ -21,19 +22,22 @@ class IconSegment:
         self.name = name
         self.max_icon_size = max_icon_size
 
-        size = self.icon.size or Point(*self.image.size)
+        curr_size = Point(*self.image.size)
+        desired_size = self.icon.size or curr_size
+         
+        if max_icon_size and (desired_size.x > max_icon_size.x or desired_size.y > max_icon_size.y):
+            scale_diff = max(desired_size.x / max_icon_size.x, desired_size.y / max_icon_size.y)
+            desired_size = Point(desired_size.x / scale_diff, desired_size.y / scale_diff)
 
-        if size.x > max_icon_size.x or size.y > max_icon_size.y:
-            scale_diff = max(size.x / max_icon_size.x, size.y / max_icon_size.y)
-            self.image = self.image.resize((int(size.x / scale_diff), int(size.y / scale_diff)))
-            self.size = Point(*self.image.size)
+        # Resize if needed
+        if curr_size != desired_size:
+            self.image = self.image.resize(size=curr_size.int_tuple())
+        
+        self.size = Point(*self.image.size)
 
     def draw(self, coords : Point, line_size : Point, image : Image.Image):
         whitespace = line_size.y - self.size.y
         my_coords = coords + Point.y_span(whitespace) + self.icon.offset
-        area = my_coords.to(my_coords + self.size).int_tuple()
-
-        if self.icon.transparent:
-            image.paste(self.image, area, self.image)
-        else:
-            image.paste(self.image, area)
+        area = my_coords.to(my_coords + self.size)
+        mask = self.image if self.icon.transparent else None 
+        safe_paste(canvas=image, image=self.image, area=area, transparency_mask=mask)
