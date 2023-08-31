@@ -2,6 +2,11 @@ from color_atlas import colors
 from enum import Enum
 
 class RGBA:
+    r : int
+    g : int
+    b : int
+    a : int
+
     def __init__(self, r : int, g : int, b : int, a : int = 255) -> None:
         self.r = r
         self.g = g
