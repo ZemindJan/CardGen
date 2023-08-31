@@ -1,4 +1,5 @@
 from color_atlas import colors
+from enum import Enum
 
 class RGBA:
     def __init__(self, r : int, g : int, b : int, a : int = 255) -> None:
@@ -12,9 +13,10 @@ class RGBA:
 
 Color = RGBA | str | tuple[int, int, int] | tuple[int, int, int, int]
 
-White = RGBA(255, 255, 255, 255)
-Black = RGBA(0, 0, 0, 255)
-Red = RGBA(255, 0, 0, 255)
+class Colors(Enum):
+    White = RGBA(255, 255, 255, 255)
+    Black = RGBA(0, 0, 0, 255)
+    Red = RGBA(255, 0, 0, 255)
 
 def hexcode_to_color(hex : str) -> RGBA:
     if hex.startswith('#'):
@@ -34,6 +36,9 @@ def hexcode_to_color(hex : str) -> RGBA:
 def verify_color(data : Color) -> RGBA | None:
     if isinstance(data, RGBA):
         return data
+    
+    if isinstance(data, Colors):
+        return data.value
     
     if data is None:
         return data

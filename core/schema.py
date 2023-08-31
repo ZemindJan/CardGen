@@ -1,6 +1,6 @@
 from core.geometry import Point, Rect
 from core.text.string_parser import replace_references
-from core.color import RGBA, White, verify_color
+from core.color import RGBA, verify_color, Colors
 from PIL import Image, ImageDraw
 from core.create_directories import verify_directories
 from settings import Settings
@@ -29,7 +29,7 @@ class Schema:
         self.elements   = elements   or []
         self.count = count or '1'
         self.back_elements = back_elements or []
-        self.background = verify_color(background or White)
+        self.background = verify_color(background or Colors.White)
         self.deck_name = deck_name
         self.group_by = group_by
         self.deck_grid_size = deck_grid_size or Point(10, 7)

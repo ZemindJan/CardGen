@@ -11,7 +11,7 @@ from elements.conditional import ConditionalElement
 from elements.text import TextElement
 from elements.image import ImageElement
 from elements.polygon import PolygonElement
-from core.color import Black, Red
+from core.color import Colors
 from data.source import ManualSource
 
 schema = Schema(
@@ -22,18 +22,18 @@ schema = Schema(
     count='$count$',
     elements=[
         RectElement(
-            fill=Black,
-            outline=Red,
+            fill=Colors.White,
+            outline=Colors.Red,
             outlineWidth=2,
             offset=Point(PARENT / -6, 0),
             alignment=Alignment.MIDDLE_CENTER,
             size=Point(PARENT / 3, 10)
         ),
         EllipseElement(
-            Red, Point(-5, -5), Point(15, 15), Alignment.MIDDLE_CENTER, Black, 2
+            Colors.Red, Point(-5, -5), Point(15, 15), Alignment.MIDDLE_CENTER, Colors.Black, 2
         ),
         RectElement(
-            fill=Red,
+            fill=Colors.Red,
             offset=Point(0, 0),
             size=Point(PARENT, 100),
             children=[
@@ -44,7 +44,7 @@ schema = Schema(
                             text='$name$ <size=20><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>#plusone',
                             font_path='alegreya',
                             font_size=60,
-                            fill=White,
+                            fill=Colors.White,
                             alignment=Alignment.MIDDLE_CENTER,
                         )
                     ],
@@ -53,7 +53,7 @@ schema = Schema(
                             text='$name$ <size=20><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>#plusone',
                             font_path='alegreya',
                             font_size=40,
-                            fill=White,
+                            fill=Colors.White,
                             alignment=Alignment.MIDDLE_CENTER,
                         )
                     ]
@@ -68,7 +68,7 @@ schema = Schema(
         ),
 
         RectElement(
-            fill=Red,
+            fill=Colors.Red,
             alignment=Alignment.BOTTOM_CENTER,
             size=Point(PARENT, PARENT / 4),
             offset=Point(0, 0),

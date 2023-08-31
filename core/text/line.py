@@ -1,6 +1,5 @@
 from core.geometry import Point
 from PIL import ImageDraw, ImageFont, Image
-from core.color import Black
 from core.text.segment import TextSegment
 from core.text.string_parser import newline
 
