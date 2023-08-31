@@ -27,22 +27,32 @@ class Point():
     def int_tuple(self):
         return (int(self.x), int(self.y))
     
-    @classmethod
-    def x_span(cls, value):
+    @staticmethod
+    def x_span(value):
         return Point(value, 0)
     
-    @classmethod
-    def y_span(cls, value):
+    @staticmethod
+    def y_span(value):
         return Point(0, value)
     
-    @classmethod
-    def zero(cls):
+    @staticmethod
+    def zero():
         return Point(0, 0)
+    
+    def __len__(self) -> int:
+        return 4
+    
+    def __getitem__(self, index):
+        return [self.x, self.y][index]
 
 class Rect():
     def __init__(self, p1 : Point, p2 : Point) -> None:
         self.p1 = p1
         self.p2 = p2
+
+    @staticmethod
+    def from_tuple(tuple : tuple[int, int, int, int]) -> 'Rect':
+        return Rect(Point(tuple[0], tuple[1]), Point(tuple[2], tuple[3]))
 
     def size(self) -> Point:
         return self.p2 - self.p1
@@ -53,12 +63,17 @@ class Rect():
     def center(self) -> Point:
         return (self.p1 + self.p2) / 2
     
-    def int_tuple(self):
+    def int_tuple(self) -> tuple[int, int, int, int]:
         return int(self.p1.x), int(self.p1.y), int(self.p2.x), int(self.p2.y)
     
-    def round(self):
-        self.p1 = Point(*self.p1.int_tuple())
-        self.p2 = Point(*self.p2.int_tuple())
+    def rounded(self) -> 'Rect':
+        return Rect.from_tuple(tuple(map(int, self)))
+
+    def __len__(self) -> int:
+        return 4
+    
+    def __getitem__(self, index):
+        return [self.p1.x, self.p1.y, self.p2.x, self.p2.y][index]
 
     @classmethod
     def from_size(self, p1 : Point, size : Point) -> 'Rect':

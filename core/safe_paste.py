@@ -2,7 +2,7 @@ from PIL.Image import Image
 from core.geometry import Rect, Point
 
 def safe_paste(canvas : Image, image : Image, area : Rect, transparency_mask : Image | None = None):
-    area.round()
+    area = area.rounded()
     
     adjusted_p1 = Point(max(0, area.p1.x), max(0, area.p1.y))
     adjusted_p2 = Point(min(canvas.size[0], area.p2.x), min(canvas.size[1], area.p2.y))
@@ -12,15 +12,13 @@ def safe_paste(canvas : Image, image : Image, area : Rect, transparency_mask : I
         
         diff = Rect(adjusted_p1 - area.p1, adjusted_p2 - area.p1)
 
-        image = image.crop(
-            diff.int_tuple()
-        )
+        image = image.crop(diff)
 
         if transparency_mask:
-            transparency_mask = transparency_mask.crop(area.int_tuple())
+            transparency_mask = transparency_mask.crop(area)
     
     canvas.paste(
         im = image,
-        box = adjusted_area.int_tuple(),
+        box = adjusted_area.rounded(),
         mask = transparency_mask
     )
