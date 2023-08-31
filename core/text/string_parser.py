@@ -1,5 +1,5 @@
 from PIL import Image
-from core.color import Color
+from core.color import RGBA
 from core.text.segment import TextSegment
 from core.text.icon_segment import IconSegment
 from core.text.tag import Tag
@@ -31,7 +31,7 @@ def parse_tag(string : str) -> Tag:
     else:
         return Tag(name, parts[1:])
 
-def parse_string(string : str, font : str, font_size : int, fill : Color, max_icon_size : Point, entry : dict[str, str], index : int = 0) -> list[TextSegment]:
+def parse_string(string : str, font : str, font_size : int, fill : RGBA, max_icon_size : Point, entry : dict[str, str], index : int = 0) -> list[TextSegment]:
     string = replace_references(string, entry, index)
     
     content = ''

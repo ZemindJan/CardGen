@@ -1,4 +1,4 @@
-from core.color import Color, make_color
+from core.color import RGBA, make_color
 from core.geometry import Point
 from core.text.tag import Tag
 from core.text.fonts import get_font

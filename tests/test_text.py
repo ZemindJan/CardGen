@@ -26,11 +26,11 @@ schema = Schema(
             outline=Red,
             outlineWidth=2,
             offset=Point(PARENT / -6, 0),
-            alignment=BottomRight,
+            alignment=Alignment.MIDDLE_CENTER,
             size=Point(PARENT / 3, 10)
         ),
         EllipseElement(
-            Red, Point(-5, -5), Point(15, 15), MiddleCenter, Black, 2
+            Red, Point(-5, -5), Point(15, 15), Alignment.MIDDLE_CENTER, Black, 2
         ),
         RectElement(
             fill=Red,
@@ -45,7 +45,7 @@ schema = Schema(
                             font_path='alegreya',
                             font_size=60,
                             fill=White,
-                            alignment=MiddleCenter,
+                            alignment=Alignment.MIDDLE_CENTER,
                         )
                     ],
                     on_false=[
@@ -54,7 +54,7 @@ schema = Schema(
                             font_path='alegreya',
                             font_size=40,
                             fill=White,
-                            alignment=MiddleCenter,
+                            alignment=Alignment.MIDDLE_CENTER,
                         )
                     ]
                 ),
@@ -63,13 +63,13 @@ schema = Schema(
         ),
         ImageElement(
             'cocktail.png',
-            alignment=MiddleCenter,
+            alignment=Alignment.MIDDLE_CENTER,
             size=Point(200, 200),
         ),
 
         RectElement(
             fill=Red,
-            alignment=BottomCenter,
+            alignment=Alignment.BOTTOM_CENTER,
             size=Point(PARENT, PARENT / 4),
             offset=Point(0, 0),
             children=[
@@ -83,7 +83,7 @@ schema = Schema(
                     fill='#00FF00',
                     points=[Point(0, 0), Point(1, 0), Point(0.5, 1)],
                     offset=Point(0, 0),
-                    alignment=MiddleCenter,
+                    alignment=Alignment.MIDDLE_CENTER,
                 )
             ]
         ),

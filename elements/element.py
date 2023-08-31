@@ -2,7 +2,7 @@ from PIL import Image, ImageDraw
 from core.schema import Schema
 from abc import abstractmethod
 from core.geometry import Point, Rect
-from core.alignment import Alignment, TopLeft
+from core.alignment import Alignment
 from core.scaling import scale
 
 class ICardElement:
@@ -17,9 +17,11 @@ class ICardElement:
         pass
 
 class CardElement:
+    offset : Point | None
+
     def __init__(self, offset : Point = None, alignment : Alignment = None, size : Point = None, children : list = None) -> None:
         self.offset = offset or Point.zero()
-        self.alignment = alignment or TopLeft
+        self.alignment = alignment or Alignment.TOP_LEFT
         self.size = size or Point.zero()
         self.children = children or []
         self.visible = True

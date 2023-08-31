@@ -1,6 +1,6 @@
 from core.geometry import Point, Rect
 from core.text.string_parser import replace_references
-from core.color import Color, White, verify_color
+from core.color import RGBA, White, verify_color
 from PIL import Image, ImageDraw
 from core.create_directories import verify_directories
 from settings import Settings
@@ -17,7 +17,7 @@ class Schema:
             count : str = None, 
             back_elements : list = None, 
             dimensions : Point = None, 
-            background : Color = None, 
+            background : RGBA = None, 
             deck_name : str = None, 
             group_by : str = None, 
             deck_grid_size : Point = None,

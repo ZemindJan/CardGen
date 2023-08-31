@@ -1,4 +1,4 @@
-from core.color import Color, make_color
+from core.color import RGBA, make_color
 from core.geometry import Point
 from core.text.tag import Tag
 from core.text.fonts import get_font
@@ -6,7 +6,7 @@ from PIL import ImageDraw, ImageFont, Image
 
 
 class TextSegment:
-    def __init__(self, content : str, font : str, font_size : int, fill : Color, tags : list[Tag]) -> None:
+    def __init__(self, content : str, font : str, font_size : int, fill : RGBA, tags : list[Tag]) -> None:
         self.content = content
         self.tags = tags
         self.font = font

@@ -2,13 +2,13 @@ from PIL import Image
 from core.alignment import Alignment
 from elements.element import CardElement
 from core.geometry import Point, Rect
-from core.color import Color, verify_color
+from core.color import RGBA, verify_color
 from core.schema import Schema
 from PIL import ImageDraw
 from abc import abstractmethod
 
 class ShapeElement(CardElement):
-    def __init__(self, fill : Color, offset: Point, size: Point, alignment: Alignment = None, outline : Color = None, outlineWidth : int = 0, children : list[CardElement] = None) -> None:
+    def __init__(self, fill : RGBA, offset: Point, size: Point, alignment: Alignment = None, outline : RGBA = None, outlineWidth : int = 0, children : list[CardElement] = None) -> None:
         super().__init__(offset, alignment, size, children)
         self.fill = verify_color(fill)
         self.outline = verify_color(outline)
@@ -32,5 +32,5 @@ class ShapeElement(CardElement):
             child.draw(image, entry, schema, area)
     
     @abstractmethod
-    def draw_shape(self, draw : ImageDraw.ImageDraw, area : Rect, fill : Color, outline : Color = None, outlineWidth : int = 0):
+    def draw_shape(self, draw : ImageDraw.ImageDraw, area : Rect, fill : RGBA, outline : RGBA = None, outlineWidth : int = 0):
         pass

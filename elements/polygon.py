@@ -2,7 +2,7 @@ from PIL import Image
 from core.alignment import Alignment
 from elements.element import CardElement
 from core.geometry import Point, Rect
-from core.color import Color
+from core.color import RGBA
 from core.schema import Schema
 from PIL import ImageDraw
 from elements.shape import ShapeElement
@@ -14,7 +14,7 @@ def find_size(points : list[Point]) -> Point:
     return Point(max(xs) - min(xs), max(ys) - min(ys))
 
 class PolygonElement(ShapeElement):
-    def __init__(self, fill: Color, offset: Point, points : list[Point], stretch: bool = True, alignment: Alignment = None, outline: Color = None, outlineWidth: int = 0, children : list[CardElement] = None) -> None:
+    def __init__(self, fill: RGBA, offset: Point, points : list[Point], stretch: bool = True, alignment: Alignment = None, outline: RGBA = None, outlineWidth: int = 0, children : list[CardElement] = None) -> None:
         super().__init__(fill, offset, find_size(points), alignment, outline, outlineWidth, children)
         self.points = points
         self.stretch = stretch
@@ -25,7 +25,7 @@ class PolygonElement(ShapeElement):
 
         return super().calculate_size(parent_area)
 
-    def draw_shape(self, draw: ImageDraw.ImageDraw, area: Rect, fill: Color, outline: Color = None, outlineWidth: int = 0):
+    def draw_shape(self, draw: ImageDraw.ImageDraw, area: Rect, fill: RGBA, outline: RGBA = None, outlineWidth: int = 0):
         x_ratio = area.size().x / self.size.x
         y_ratio = area.size().y / self.size.y
 
