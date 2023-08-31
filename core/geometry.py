@@ -1,5 +1,10 @@
+Value = float | int
+
 class Point():
-    def __init__(self, x : float, y : float) -> None:
+    x : Value
+    y : Value
+
+    def __init__(self, x : Value, y : Value) -> None:
         self.x = x 
         self.y = y
 
@@ -46,12 +51,15 @@ class Point():
         return [self.x, self.y][index]
 
 class Rect():
+    p1 : Point
+    p2 : Point
+
     def __init__(self, p1 : Point, p2 : Point) -> None:
         self.p1 = p1
         self.p2 = p2
 
     @staticmethod
-    def from_tuple(tuple : tuple[int, int, int, int]) -> 'Rect':
+    def from_tuple(tuple : tuple[Value, Value, Value, Value]) -> 'Rect':
         return Rect(Point(tuple[0], tuple[1]), Point(tuple[2], tuple[3]))
 
     def size(self) -> Point:
@@ -64,7 +72,7 @@ class Rect():
         return (self.p1 + self.p2) / 2
     
     def int_tuple(self) -> tuple[int, int, int, int]:
-        return int(self.p1.x), int(self.p1.y), int(self.p2.x), int(self.p2.y)
+        return tuple(map(int, self))
     
     def rounded(self) -> 'Rect':
         return Rect.from_tuple(tuple(map(int, self)))
