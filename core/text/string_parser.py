@@ -1,7 +1,9 @@
 from PIL import Image
 from core.color import RGBA
-from core.text.segment import TextSegment
-from core.text.icon_segment import IconSegment
+from core.text.segment.line import LineSegment
+from core.text.segment.text import TextSegment
+from core.text.segment.icon import IconSegment
+from typing import Literal
 from core.text.tag import Tag
 from core.geometry import Point
 from settings import Settings
@@ -31,7 +33,8 @@ def parse_tag(string : str) -> Tag:
     else:
         return Tag(name, parts[1:])
 
-def parse_string(string : str, font : str, font_size : int, fill : RGBA, max_icon_size : Point, entry : dict[str, str], index : int = 0) -> list[TextSegment]:
+LineItem = LineSegment | Literal['newline']
+def parse_string(string : str, font : str, font_size : int, fill : RGBA, max_icon_size : Point, entry : dict[str, str], index : int = 0) -> list[LineItem]:
     string = replace_references(string, entry, index)
     
     content = ''

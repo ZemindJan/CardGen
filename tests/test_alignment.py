@@ -9,6 +9,7 @@ from elements.rect import RectElement
 from elements.ellipse import EllipseElement
 from core.color import Black, Red
 from data.source import LocalSource
+from core.alignment import Alignment
 
 schema = Schema(
     naming='test/$name$',
@@ -18,11 +19,16 @@ schema = Schema(
             outline=Red,
             outlineWidth=2,
             offset=Point(PARENT / -6, 0),
-            alignment=BottomRight,
+            alignment=Alignment.BOTTOM_RIGHT,
             size=Point(PARENT / 3, 10)
         ),
         EllipseElement(
-            Red, Point(-5, -5), Point(15, 15), MiddleCenter, Black, 2
+            fill=Red, 
+            offset=Point(-5, -5), 
+            size=Point(15, 15), 
+            alignment=Alignment.MIDDLE_CENTER, 
+            outline=Black, 
+            outlineWidth=2
         ),
     ]
 )

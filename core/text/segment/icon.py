@@ -1,15 +1,17 @@
-from core.color import RGBA, make_color
+from core.color import RGBA, color
 from core.geometry import Point
 from core.text.tag import Tag
 from core.text.fonts import get_font
 from core.safe_paste import safe_paste
+from core.text.segment.line import LineSegment
+from core.alignment import YAlignment
 
 from PIL import Image, ImageDraw, ImageFont
 from core.icon import Icon, atlas
 import icons
 from settings import Settings
 
-class IconSegment:
+class IconSegment(LineSegment):
     icon : Icon
     
     def __init__(self, name : str, max_icon_size : Point) -> None:
@@ -35,9 +37,16 @@ class IconSegment:
         
         self.size = Point(*self.image.size)
 
-    def draw(self, coords : Point, line_size : Point, image : Image.Image):
-        whitespace = line_size.y - self.size.y
-        my_coords = coords + Point.y_span(whitespace) + self.icon.offset
+    def draw(self, coords : Point, line_size : Point, image : Image.Image, alignment : YAlignment):
+
+        if alignment == YAlignment.TOP:
+            y_offset = 0
+        elif alignment == YAlignment.MIDDLE:
+            y_offset = (line_size.y - self.size.y) / 2
+        elif alignment == YAlignment.BOTTOM:
+            y_offset =  line_size.y - self.size.y
+
+        my_coords = coords + Point.y_span(y_offset) + self.icon.offset
         area = my_coords.to(my_coords + self.size)
         mask = self.image if self.icon.transparent else None 
         safe_paste(canvas=image, image=self.image, area=area, transparency_mask=mask)

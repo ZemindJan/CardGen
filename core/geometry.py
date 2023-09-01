@@ -9,14 +9,20 @@ class Point():
         self.y = y
 
     def __add__(self, other):
-        return Point(self.x + other.x, self.y + other.y)
+        return Point(self.x + other[0], self.y + other[1])
+    
+    def __radd__(self, other):
+        return self + other
     
     def __neg__(self):
         return Point(-self.x, -self.y)
     
     def __sub__(self, other):
-        return Point(self.x - other.x, self.y - other.y)
+        return Point(self.x - other[0], self.y - other[1])
     
+    def __rsub__(self, other):
+        return -(self - other)
+
     def __mul__(self, other):
         return Point(self.x * other, self.y * other)
     
@@ -88,7 +94,7 @@ class Rect():
         return Rect(p1, p1 + size)
     
     def __contains__(self, other):
-        if isinstance(other, Point):
-            return self.p1.x <= other.x <= self.p2.x and self.p1.y <= other.y <= self.p2.y
-        elif isinstance(other, Rect):
-            return other.p1 in self and other.p2 in self
+        if len(other) == 2:
+            return self.p1.x <= other[0] <= self.p2.x and self.p1.y <= other[1] <= self.p2.y
+        elif len(other) == 4:
+            return (other[0], other[1]) in self and (other[2], other[3]) in self

@@ -30,31 +30,38 @@ schema = Schema(
             size=Point(PARENT / 3, 10)
         ),
         EllipseElement(
-            Colors.Red, Point(-5, -5), Point(15, 15), Alignment.MIDDLE_CENTER, Colors.Black, 2
+            fill=Colors.Red, 
+            offset=Point(-5, -5), 
+            size=Point(15, 15), 
+            alignment=Alignment.MIDDLE_CENTER, 
+            outline=Colors.Black, 
+            outlineWidth=2
         ),
         RectElement(
             fill=Colors.Red,
             offset=Point(0, 0),
-            size=Point(PARENT, 100),
+            size=Point(PARENT, 110),
             children=[
                 ConditionalElement(
                     condition='$name$=test',
                     on_true=[
                         TextElement(
-                            text='$name$ <size=20><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>#plusone',
+                            text='$name$ <size=50><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>#plusone',
                             font_path='alegreya',
-                            font_size=60,
+                            font_size=80,
                             fill=Colors.White,
                             alignment=Alignment.MIDDLE_CENTER,
+                            line_alignment=YAlignment.MIDDLE
                         )
                     ],
                     on_false=[
                         TextElement(
-                            text='$name$ <size=20><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>#plusone',
+                            text='$name$ <size=80><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>#plusone',
                             font_path='alegreya',
-                            font_size=40,
+                            font_size=80,
                             fill=Colors.White,
                             alignment=Alignment.MIDDLE_CENTER,
+                            line_alignment=YAlignment.MIDDLE
                         )
                     ]
                 ),

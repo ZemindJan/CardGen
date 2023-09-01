@@ -48,9 +48,9 @@ def verify_color(data : Color) -> RGBA | None:
     if data is None:
         return data
     
-    return make_color(data)
+    return color(data)
 
-def make_color(data : Color) -> RGBA:
+def color(data : Color) -> RGBA:
     if isinstance(data, tuple):
         return RGBA(*data)    
 
@@ -60,4 +60,4 @@ def make_color(data : Color) -> RGBA:
     if data not in colors:
         raise KeyError(f'Unknown color: {data}')
     
-    return make_color(colors[data])
+    return color(colors[data])
