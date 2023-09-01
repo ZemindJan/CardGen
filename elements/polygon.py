@@ -2,10 +2,10 @@ from PIL import Image
 from core.alignment import Alignment
 from elements.element import CardElement
 from core.geometry import Point, Rect
-from core.color import RGBA
+from core.color import RGBA, Color
 from core.schema import Schema
 from PIL import ImageDraw
-from elements.shape import ShapeElement
+from elements.shape import ShapeElement, Outline
 
 def find_size(points : list[Point]) -> Point:
     xs = [point.x for point in points]
@@ -14,8 +14,15 @@ def find_size(points : list[Point]) -> Point:
     return Point(max(xs) - min(xs), max(ys) - min(ys))
 
 class PolygonElement(ShapeElement):
-    def __init__(self, fill: RGBA, offset: Point, points : list[Point], stretch: bool = True, alignment: Alignment = None, outline: RGBA = None, outlineWidth: int = 0, children : list[CardElement] = None) -> None:
-        super().__init__(fill, offset, find_size(points), alignment, outline, outlineWidth, children)
+    def __init__(self, 
+                 points : list[Point], 
+                 fill: Color = None, 
+                 offset: Point = None, 
+                 stretch: bool = True, 
+                 alignment: Alignment = None, 
+                 outline: Outline | None = None, 
+                 children : list[CardElement] = None) -> None:
+        super().__init__(size=find_size(points), fill=fill, offset=offset, alignment=alignment, outline=outline, children=children)
         self.points = points
         self.stretch = stretch
 

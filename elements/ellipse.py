@@ -2,14 +2,14 @@ from PIL import Image
 from core.alignment import Alignment
 from elements.element import CardElement
 from core.geometry import Point, Rect
-from core.color import RGBA
+from core.color import RGBA, Color
 from core.schema import Schema
 from PIL import ImageDraw
-from elements.shape import ShapeElement
+from elements.shape import ShapeElement, Outline
 
 class EllipseElement(ShapeElement):
-    def __init__(self, fill: RGBA, offset: Point, size: Point, alignment: Alignment = None, outline: RGBA = None, outlineWidth: int = 0, children : list[CardElement] = None) -> None:
-        super().__init__(fill, offset, size, alignment, outline, outlineWidth, children)
+    def __init__(self, size: Point, fill: Color = None, offset: Point = None, alignment: Alignment = None, outline: Outline | None = None, children : list[CardElement] = None) -> None:
+        super().__init__(size=size, fill=fill, offset=offset, alignment=alignment, outline=outline, children=children)
 
     def draw_shape(self, draw: ImageDraw.ImageDraw, area: Rect, fill: RGBA, outline: RGBA = None, outlineWidth: int = 0):
         draw.ellipse(xy=area.int_tuple(), fill=fill.tuple(), outline=outline.tuple() if outline else None, width=outlineWidth)

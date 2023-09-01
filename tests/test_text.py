@@ -10,7 +10,7 @@ from elements.ellipse import EllipseElement
 from elements.conditional import ConditionalElement
 from elements.text import TextElement
 from elements.image import ImageElement
-from elements.polygon import PolygonElement
+from elements.polygon import PolygonElement, Outline
 from core.color import Colors
 from data.source import ManualSource
 
@@ -23,8 +23,7 @@ schema = Schema(
     elements=[
         RectElement(
             fill=Colors.White,
-            outline=Colors.Red,
-            outlineWidth=2,
+            outline=Outline(color=Colors.Red, width=2), 
             offset=Point(PARENT / -6, 0),
             alignment=Alignment.MIDDLE_CENTER,
             size=Point(PARENT / 3, 10)
@@ -34,8 +33,7 @@ schema = Schema(
             offset=Point(-5, -5), 
             size=Point(15, 15), 
             alignment=Alignment.MIDDLE_CENTER, 
-            outline=Colors.Black, 
-            outlineWidth=2
+            outline=Outline(color=Colors.Black, width=2), 
         ),
         RectElement(
             fill=Colors.Red,
@@ -48,7 +46,7 @@ schema = Schema(
                         TextElement(
                             text='$name$ <size=50><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>#plusone',
                             font_path='alegreya',
-                            font_size=80,
+                            font_size=200,
                             fill=Colors.White,
                             alignment=Alignment.MIDDLE_CENTER,
                             line_alignment=YAlignment.MIDDLE
@@ -58,7 +56,7 @@ schema = Schema(
                         TextElement(
                             text='$name$ <size=80><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>#plusone',
                             font_path='alegreya',
-                            font_size=80,
+                            font_size=200,
                             fill=Colors.White,
                             alignment=Alignment.MIDDLE_CENTER,
                             line_alignment=YAlignment.MIDDLE
@@ -84,7 +82,8 @@ schema = Schema(
                     text='This #plusone is a test for wraps',
                     font_path='alegreya',
                     fill='white',
-                    font_size=800
+                    font_size=800,
+                    max_icon_size=Point(50, 50),
                 ),
                 PolygonElement(
                     fill='#00FF00',
