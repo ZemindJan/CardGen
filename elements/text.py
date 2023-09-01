@@ -30,8 +30,9 @@ class TextElement(CardElement):
                  offset: Point = None, 
                  alignment: Alignment = None, 
                  max_icon_size : Point = None,
-                 line_alignment : YAlignment = None) -> None:
-        super().__init__(offset, alignment, None)
+                 line_alignment : YAlignment = None,
+                 visible : bool = True) -> None:
+        super().__init__(offset=offset, alignment=alignment, size=None, children=None, visible=vars)
         self.text = text
         self.font = font_path
         self.fill = verify_color(fill)

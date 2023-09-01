@@ -21,8 +21,9 @@ class PolygonElement(ShapeElement):
                  stretch: bool = True, 
                  alignment: Alignment = None, 
                  outline: Outline | None = None, 
-                 children : list[CardElement] = None) -> None:
-        super().__init__(size=find_size(points), fill=fill, offset=offset, alignment=alignment, outline=outline, children=children)
+                 children : list[CardElement] = None, 
+                 visible : bool = True) -> None:
+        super().__init__(size=find_size(points), fill=fill, offset=offset, alignment=alignment, outline=outline, children=children, visible=visible)
         self.points = points
         self.stretch = stretch
 

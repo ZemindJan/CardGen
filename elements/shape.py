@@ -17,8 +17,8 @@ class ShapeElement(CardElement):
     fill : RGBA
     outline : Outline | None
 
-    def __init__(self, size: Point, fill : Color = None, offset: Point = None,  alignment: Alignment = None, outline : Outline | None = None, children : list[CardElement] = None) -> None:
-        super().__init__(offset, alignment, size, children)
+    def __init__(self, size: Point, fill : Color = None, offset: Point = None,  alignment: Alignment = None, outline : Outline | None = None, children : list[CardElement] = None, visible : bool = True) -> None:
+        super().__init__(offset=offset, alignment=alignment, size=size, children=children, visible=visible)
         self.fill = verify_color(fill or Colors.Black)
         self.outline = outline
     

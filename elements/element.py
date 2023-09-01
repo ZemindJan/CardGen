@@ -23,12 +23,12 @@ class CardElement:
     size : Point
     children : list[CardElement]
 
-    def __init__(self, offset : Point = None, alignment : Alignment = None, size : Point = None, children : list = None) -> None:
+    def __init__(self, offset : Point = None, alignment : Alignment = None, size : Point = None, children : list = None, visible : bool = True) -> None:
         self.offset = offset or Point.zero()
         self.alignment = alignment or Alignment.TOP_LEFT
         self.size = size or Point.zero()
         self.children = children or []
-        self.visible = True
+        self.visible = visible
 
     def calculate_size(self, parent_area : Rect) -> Rect:
         origin = self.alignment.get_root(parent_area)
@@ -49,7 +49,3 @@ class CardElement:
         index : int = 0
     ):
         pass
-
-    def make_invisible(self):
-        self.visible = False
-        return self
