@@ -1,6 +1,12 @@
 from color_atlas import colors
+from enum import Enum
 
-class Color:
+class RGBA:
+    r : int
+    g : int
+    b : int
+    a : int
+
     def __init__(self, r : int, g : int, b : int, a : int = 255) -> None:
         self.r = r
         self.g = g
@@ -10,11 +16,14 @@ class Color:
     def tuple(self) -> tuple[int, int, int, int]:
         return (self.r, self.g, self.b, self.a)
 
-White = Color(255, 255, 255, 255)
-Black = Color(0, 0, 0, 255)
-Red = Color(255, 0, 0, 255)
+Color = RGBA | str | tuple[int, int, int] | tuple[int, int, int, int]
 
-def hexcode_to_color(hex : str) -> Color:
+class Colors(Enum):
+    White = RGBA(255, 255, 255, 255)
+    Black = RGBA(0, 0, 0, 255)
+    Red = RGBA(255, 0, 0, 255)
+
+def hexcode_to_color(hex : str) -> RGBA:
     if hex.startswith('#'):
         hex = hex[1:]
 
@@ -27,20 +36,23 @@ def hexcode_to_color(hex : str) -> Color:
     else:
         a = 255 
 
-    return Color(r, g, b, a)
+    return RGBA(r, g, b, a)
 
-def verify_color(data : any) -> Color | None:
-    if isinstance(data, Color):
+def verify_color(data : Color) -> RGBA | None:
+    if isinstance(data, RGBA):
         return data
+    
+    if isinstance(data, Colors):
+        return data.value
     
     if data is None:
         return data
     
-    return make_color(data)
+    return color(data)
 
-def make_color(data : str | tuple) -> Color:
+def color(data : Color) -> RGBA:
     if isinstance(data, tuple):
-        return Color(*data)    
+        return RGBA(*data)    
 
     if data.startswith('#'):
         return hexcode_to_color(data)
@@ -48,4 +60,4 @@ def make_color(data : str | tuple) -> Color:
     if data not in colors:
         raise KeyError(f'Unknown color: {data}')
     
-    return make_color(colors[data])
+    return color(colors[data])

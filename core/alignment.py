@@ -1,40 +1,64 @@
+from enum import Enum
 from core.geometry import Point, Rect
 
-top_y_align = 0
-middle_y_align = 1
-bottom_y_align = 2
+class YAlignment(Enum):
+    TOP = 0
+    MIDDLE = 1
+    BOTTOM = 2
 
-left_x_align = 0
-center_x_align = 1
-right_x_align = 2
+class XAlignment(Enum):
+    LEFT = 0
+    CENTER = 1
+    RIGHT = 2
 
-class Alignment:
+class _Alignment:
+    x : XAlignment
+    y : YAlignment
+
     def __init__(self, y_align : int, x_align : int) -> None:
-        self.x_align = x_align
-        self.y_align = y_align
+        self.x = x_align
+        self.y = y_align
 
     def get_root(self, rect : Rect) -> Point:
         x = rect.p1.x
         y = rect.p1.y
 
-        if self.x_align == center_x_align:
+        if self.x == XAlignment.CENTER:
             x = (rect.p1.x + rect.p2.x) / 2
-        elif self.x_align == right_x_align:
+        elif self.x == XAlignment.RIGHT:
             x = rect.p2.x
 
-        if self.y_align == middle_y_align:
+        if self.y == YAlignment.MIDDLE:
             y = (rect.p1.y + rect.p2.y) / 2
-        elif self.y_align == bottom_y_align:
+        elif self.y == YAlignment.BOTTOM:
             y = rect.p2.y
 
         return Point(x, y)
 
-TopLeft = Alignment(top_y_align, left_x_align)
-TopCenter = Alignment(top_y_align, center_x_align)
-TopRight = Alignment(top_y_align, right_x_align)
-MiddleLeft = Alignment(middle_y_align, left_x_align)
-MiddleCenter = Alignment(middle_y_align, center_x_align)
-MiddleRight = Alignment(middle_y_align, right_x_align)
-BottomLeft = Alignment(bottom_y_align, left_x_align)
-BottomCenter = Alignment(bottom_y_align, center_x_align)
-BottomRight = Alignment(bottom_y_align, right_x_align)
+class Alignment(Enum):
+    x : XAlignment
+    y : YAlignment
+
+    TOP_LEFT      : 'Alignment' = _Alignment(YAlignment.TOP, XAlignment.LEFT)
+    TOP_CENTER    : 'Alignment' = _Alignment(YAlignment.TOP, XAlignment.CENTER)
+    TOP_RIGHT     : 'Alignment' = _Alignment(YAlignment.TOP, XAlignment.RIGHT)
+    MIDDLE_LEFT   : 'Alignment' = _Alignment(YAlignment.MIDDLE, XAlignment.LEFT)
+    MIDDLE_CENTER : 'Alignment' = _Alignment(YAlignment.MIDDLE, XAlignment.CENTER)
+    MIDDLE_RIGHT  : 'Alignment' = _Alignment(YAlignment.MIDDLE, XAlignment.RIGHT)
+    BOTTOM_LEFT   : 'Alignment' = _Alignment(YAlignment.BOTTOM, XAlignment.LEFT)
+    BOTTOM_CENTER : 'Alignment' = _Alignment(YAlignment.BOTTOM, XAlignment.CENTER)
+    BOTTOM_RIGHT  : 'Alignment' = _Alignment(YAlignment.BOTTOM, XAlignment.RIGHT)
+
+    def get_root(self, rect : Rect) -> Point:
+        return _Alignment.get_root(self.value, rect)
+    
+    def get_x(self):
+        return self.value.x
+    
+    def get_y(self):
+        return self.value.y
+
+    x = property(fget=get_x)
+    y = property(fget=get_y)
+
+    

@@ -1,11 +1,9 @@
-from core.alignment import Alignment
 from core.geometry import Point
 from elements.element import ICardElement
 from PIL import Image, ImageDraw
 from core.schema import Schema
 from abc import abstractmethod
 from core.geometry import Point, Rect
-from core.alignment import Alignment, TopLeft
 from core.scaling import scale
 from core.conditions import parse_condition
 

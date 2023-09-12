@@ -1,4 +1,4 @@
-from core.color import Color, make_color
+from core.color import RGBA, color
 from core.text.tag import Tag
 from PIL import ImageDraw, ImageFont
 from font_atlas import transformations, transformation_tags, paths
