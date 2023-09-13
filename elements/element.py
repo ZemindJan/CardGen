@@ -30,7 +30,7 @@ class CardElement:
         self.children = children or []
         self.visible = visible
 
-    def calculate_size(self, parent_area : Rect) -> Rect:
+    def calculate_area(self, parent_area : Rect) -> Rect:
         origin = self.alignment.get_root(parent_area)
 
         scaled_offset = scale(self.offset, parent_area.size())

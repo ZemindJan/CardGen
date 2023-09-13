@@ -13,6 +13,7 @@ from elements.image import ImageElement
 from elements.polygon import PolygonElement, Outline
 from core.color import Colors
 from data.source import ManualSource
+from elements.mirror_element import MirrorElement
 
 schema = Schema(
     naming='test/$name$',
@@ -38,7 +39,7 @@ schema = Schema(
         RectElement(
             fill=Colors.Red,
             offset=Point(0, 0),
-            size=Point(PARENT, 110),
+            size=Point(PARENT / 3 * 2, 110),
             children=[
                 ConditionalElement(
                     condition='$name$=test',
@@ -72,63 +73,34 @@ schema = Schema(
             size=Point(200, 200),
         ),
 
-        RectElement(
-            fill=Colors.Red,
-            alignment=Alignment.BOTTOM_CENTER,
+        MirrorElement(
             size=Point(PARENT, PARENT / 4),
             offset=Point(0, 0),
+            alignment=Alignment.BOTTOM_CENTER,
             children=[
-                ConditionalElement(
-                    condition='$name$=test',
-                    on_true=[
+                RectElement(
+                    fill=Colors.Red,
+                    alignment=Alignment.BOTTOM_CENTER,
+                    size=Point(PARENT, PARENT),
+                    offset=Point(0, 0),
+                    children=[
                         TextElement(
-                            text='$name$ <size=20><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>#plusone',
+                            text='This #plusone is a test for wraps',
                             font_path='alegreya',
-                            font_size=60,
-                            fill=Colors.White,
-                            alignment=Alignment.MIDDLE_CENTER,
-                        )
-                    ],
-                    on_false=[
-                        TextElement(
-                            text='$name$ <size=20><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>#plusone',
-                            font_path='alegreya',
-                            font_size=40,
-                            fill=Colors.White,
+                            fill='white',
+                            font_size=800,
+                            max_icon_size=Point(40, 40),
+                        ),
+                        PolygonElement(
+                            fill='#00FF00',
+                            points=[Point(0, 0), Point(1, 0), Point(0.5, 1)],
+                            offset=Point(0, 0),
                             alignment=Alignment.MIDDLE_CENTER,
                         )
                     ]
                 ),
-                
             ]
-        ),
-        ImageElement(
-            'cocktail.png',
-            alignment=Alignment.MIDDLE_CENTER,
-            size=Point(200, 200),
-        ),
-
-        RectElement(
-            fill=Colors.Red,
-            alignment=Alignment.BOTTOM_CENTER,
-            size=Point(PARENT, PARENT / 4),
-            offset=Point(0, 0),
-            children=[
-                TextElement(
-                    text='This #plusone is a test for wraps',
-                    font_path='alegreya',
-                    fill='white',
-                    font_size=800,
-                    max_icon_size=Point(50, 50),
-                ),
-                PolygonElement(
-                    fill='#00FF00',
-                    points=[Point(0, 0), Point(1, 0), Point(0.5, 1)],
-                    offset=Point(0, 0),
-                    alignment=Alignment.MIDDLE_CENTER,
-                )
-            ]
-        ),
+        )
 
         
         
