@@ -23,7 +23,7 @@ class ShapeElement(CardElement):
         self.outline = outline
     
     def draw(self, image: Image, entry: dict[str, str], schema: Schema, parent_area: Rect, index : int = 0):
-        area : Rect = self.calculate_size(parent_area)
+        area : Rect = self.calculate_area(parent_area)
         draw = ImageDraw.Draw(image)
 
         if self.visible:

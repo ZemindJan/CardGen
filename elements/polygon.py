@@ -27,11 +27,11 @@ class PolygonElement(ShapeElement):
         self.points = points
         self.stretch = stretch
 
-    def calculate_size(self, parent_area: Rect) -> Rect:
+    def calculate_area(self, parent_area: Rect) -> Rect:
         if self.stretch:
             return parent_area
 
-        return super().calculate_size(parent_area)
+        return super().calculate_area(parent_area)
 
     def draw_shape(self, draw: ImageDraw.ImageDraw, area: Rect, fill: RGBA, outline: RGBA = None, outlineWidth: int = 0):
         x_ratio = area.size().x / self.size.x
