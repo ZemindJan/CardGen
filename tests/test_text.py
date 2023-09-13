@@ -13,7 +13,7 @@ from elements.image import ImageElement
 from elements.polygon import PolygonElement, Outline
 from core.color import Colors
 from data.source import ManualSource
-from elements.mirror_element import MirrorElement
+from elements.mirror import MirrorElement
 
 schema = Schema(
     naming='test/$name$',
