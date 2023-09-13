@@ -6,9 +6,9 @@ from elements.element import CardElement
 from settings import Settings
 
 class ImageElement(CardElement):
-    def __init__(self, name : str, offset: Point = None, alignment: Alignment = None, size : Point = None, children: list = None) -> None:
-        super().__init__(offset, alignment, None, children)
-
+    def __init__(self, name : str, offset: Point = None, alignment: Alignment = None, size : Point = None, children: list = None, visible : bool = True) -> None:
+        super().__init__(offset=offset, alignment=alignment, size=size, children=children, visible=visible)
+        
         self.my_image = Image.open(f'{Settings.ImagesDirectory}/{name}')
         
         if size is None:

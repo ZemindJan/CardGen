@@ -2,17 +2,25 @@ from PIL import Image
 from core.alignment import Alignment
 from elements.element import CardElement
 from core.geometry import Point, Rect
-from core.color import Color, verify_color
+from core.color import RGBA, Color, Colors, verify_color
 from core.schema import Schema
 from PIL import ImageDraw
 from abc import abstractmethod
+from dataclasses import dataclass
+
+@dataclass
+class Outline:
+    color : Color
+    width : int
 
 class ShapeElement(CardElement):
-    def __init__(self, fill : Color, offset: Point, size: Point, alignment: Alignment = None, outline : Color = None, outlineWidth : int = 0, children : list[CardElement] = None) -> None:
-        super().__init__(offset, alignment, size, children)
-        self.fill = verify_color(fill)
-        self.outline = verify_color(outline)
-        self.outlineWidth = outlineWidth
+    fill : RGBA
+    outline : Outline | None
+
+    def __init__(self, size: Point, fill : Color = None, offset: Point = None,  alignment: Alignment = None, outline : Outline | None = None, children : list[CardElement] = None, visible : bool = True) -> None:
+        super().__init__(offset=offset, alignment=alignment, size=size, children=children, visible=visible)
+        self.fill = verify_color(fill or Colors.Black)
+        self.outline = outline
     
     def draw(self, image: Image, entry: dict[str, str], schema: Schema, parent_area: Rect, index : int = 0):
         area : Rect = self.calculate_size(parent_area)
@@ -23,8 +31,8 @@ class ShapeElement(CardElement):
                 draw,
                 area,
                 self.fill,
-                self.outline,
-                self.outlineWidth
+                verify_color(self.outline.color) if self.outline else None,
+                self.outline.width if self.outline else None,
             )
 
         for child in self.children:
@@ -32,5 +40,5 @@ class ShapeElement(CardElement):
             child.draw(image, entry, schema, area)
     
     @abstractmethod
-    def draw_shape(self, draw : ImageDraw.ImageDraw, area : Rect, fill : Color, outline : Color = None, outlineWidth : int = 0):
+    def draw_shape(self, draw : ImageDraw.ImageDraw, area : Rect, fill : RGBA, outline : RGBA = None, outlineWidth : int = 0):
         pass

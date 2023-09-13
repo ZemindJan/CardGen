@@ -1,16 +1,28 @@
 from core.geometry import Point
 from PIL import ImageDraw, ImageFont, Image
-from core.color import Black
-from core.text.segment import TextSegment
+from core.text.segment.line import LineSegment
+from core.text.segment.icon import IconSegment
 from core.text.string_parser import newline
+from typing import Literal
 
 class TextLine:
-    def __init__(self, segments : list[TextSegment], x_size : int, y_size : int) -> None:
+    def __init__(self, segments : list[LineSegment], x_size : int, y_size : int) -> None:
         self.segments = segments
         self.x_size = x_size
         self.y_size = y_size
 
-def make_lines(elements : list[TextSegment], font : str, font_size : int, max_line_length : int, space_size : int) -> list[TextLine]:
+    def tallest_is_icon(self) -> bool:
+        tallest = None
+        height = -1
+
+        for segment in self.segments:
+            if segment.size.y > height:
+                tallest = segment
+                height = segment.size.y
+
+        return isinstance(tallest, IconSegment)
+
+def make_lines(elements : list[LineSegment | Literal['newline']], font : str, font_size : int, max_line_length : int, space_size : int) -> list[TextLine]:
     lines = []
     line = []
     line_size = 0

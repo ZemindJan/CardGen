@@ -1,11 +1,18 @@
-from core.color import Color, make_color
+from core.color import Color, RGBA, color
 from core.geometry import Point
 from core.text.tag import Tag
 from core.text.fonts import get_font
 from PIL import ImageDraw, ImageFont, Image
+from core.text.segment.line import LineSegment
+from core.alignment import YAlignment
 
+class TextSegment(LineSegment):
+    content : str
+    tags : list[Tag]
+    font : str
+    font_size : int
+    fill : RGBA
 
-class TextSegment:
     def __init__(self, content : str, font : str, font_size : int, fill : Color, tags : list[Tag]) -> None:
         self.content = content
         self.tags = tags
@@ -22,7 +29,7 @@ class TextSegment:
             if tag.name == 'size':
                 self.font_size = int(tag.data)
             if tag.name == 'color' or tag.name == 'fill':
-                self.fill = make_color(tag.data)
+                self.fill = color(tag.data)
 
     def get_font(self):
         return get_font(self.font, self.font_size, self.tags)
@@ -38,15 +45,22 @@ class TextSegment:
 
         return f'{prefix}{content}{suffix}'
 
-    def draw(self, coords : Point, line_size : Point, image : Image.Image):
+    def draw(self, coords : Point, line_size : Point, image : Image.Image, alignment : YAlignment):
         draw = ImageDraw.Draw(image)
         font = self.get_font()
         draw.fontmode = "L"
 
-        my_coords = coords + Point.y_span(line_size.y - self.height())
+        if alignment == YAlignment.TOP:
+            y_offset = self.height()
+        elif alignment == YAlignment.MIDDLE:
+            y_offset = (line_size.y - self.height()) / 2
+        elif alignment == YAlignment.BOTTOM:
+            y_offset = line_size.y - self.height()
+
+        my_coords = coords + Point.y_span(y_offset)
 
         draw.text(
-            xy=my_coords.to(Point(1000, 1000)).int_tuple(),
+            xy=my_coords.to(my_coords + (1000, 1000)).int_tuple(),
             text=self.content,
             font=font,
             fill=self.fill.tuple(),

@@ -10,8 +10,8 @@ from elements.ellipse import EllipseElement
 from elements.conditional import ConditionalElement
 from elements.text import TextElement
 from elements.image import ImageElement
-from elements.polygon import PolygonElement
-from core.color import Black, Red
+from elements.polygon import PolygonElement, Outline
+from core.color import Colors
 from data.source import ManualSource
 
 schema = Schema(
@@ -22,39 +22,44 @@ schema = Schema(
     count='$count$',
     elements=[
         RectElement(
-            fill=Black,
-            outline=Red,
-            outlineWidth=2,
+            fill=Colors.White,
+            outline=Outline(color=Colors.Red, width=2), 
             offset=Point(PARENT / -6, 0),
-            alignment=BottomRight,
+            alignment=Alignment.MIDDLE_CENTER,
             size=Point(PARENT / 3, 10)
         ),
         EllipseElement(
-            Red, Point(-5, -5), Point(15, 15), MiddleCenter, Black, 2
+            fill=Colors.Red, 
+            offset=Point(-5, -5), 
+            size=Point(15, 15), 
+            alignment=Alignment.MIDDLE_CENTER, 
+            outline=Outline(color=Colors.Black, width=2), 
         ),
         RectElement(
-            fill=Red,
+            fill=Colors.Red,
             offset=Point(0, 0),
-            size=Point(PARENT, 100),
+            size=Point(PARENT, 110),
             children=[
                 ConditionalElement(
                     condition='$name$=test',
                     on_true=[
                         TextElement(
-                            text='$name$ <size=20><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>#dmg',
+                            text='$name$ <size=50><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>#plusone',
                             font_path='alegreya',
-                            font_size=60,
-                            fill=White,
-                            alignment=MiddleCenter,
+                            font_size=200,
+                            fill=Colors.White,
+                            alignment=Alignment.MIDDLE_CENTER,
+                            line_alignment=YAlignment.MIDDLE
                         )
                     ],
                     on_false=[
                         TextElement(
-                            text='$name$ <size=20><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>#dmg',
+                            text='$name$ <size=80><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>#plusone',
                             font_path='alegreya',
-                            font_size=40,
-                            fill=White,
-                            alignment=MiddleCenter,
+                            font_size=200,
+                            fill=Colors.White,
+                            alignment=Alignment.MIDDLE_CENTER,
+                            line_alignment=YAlignment.MIDDLE
                         )
                     ]
                 ),
@@ -63,27 +68,28 @@ schema = Schema(
         ),
         ImageElement(
             'cocktail.png',
-            alignment=MiddleCenter,
+            alignment=Alignment.MIDDLE_CENTER,
             size=Point(200, 200),
         ),
 
         RectElement(
-            fill=Red,
-            alignment=BottomCenter,
+            fill=Colors.Red,
+            alignment=Alignment.BOTTOM_CENTER,
             size=Point(PARENT, PARENT / 4),
             offset=Point(0, 0),
             children=[
                 TextElement(
-                    text='This #dmg is a test for wraps',
+                    text='This #plusone is a test for wraps',
                     font_path='alegreya',
                     fill='white',
-                    font_size=800
+                    font_size=800,
+                    max_icon_size=Point(50, 50),
                 ),
                 PolygonElement(
                     fill='#00FF00',
                     points=[Point(0, 0), Point(1, 0), Point(0.5, 1)],
                     offset=Point(0, 0),
-                    alignment=MiddleCenter,
+                    alignment=Alignment.MIDDLE_CENTER,
                 )
             ]
         ),
