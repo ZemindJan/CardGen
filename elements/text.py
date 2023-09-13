@@ -58,13 +58,16 @@ class TextElement(CardElement):
             if max_line_length is None:
                 max_line_length = parent_area.size().x
 
+            
+
             lines = make_lines(elements, self.font, size, max_line_length, space_size)
             total_height = sum(line.y_size for line in lines) + (len(lines) - 1) * self.line_spacing
 
             y_offset = self.offset.y
             y_whitespace = parent_area.size().y - total_height
+            x_whitespace = parent_area.size().x - max(line.x_size for line in lines)
 
-            if y_whitespace >= 0:
+            if y_whitespace >= 0 and x_whitespace >= 0:
                 break
             elif size < 10:
                 break

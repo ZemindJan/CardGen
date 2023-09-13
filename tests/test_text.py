@@ -82,20 +82,20 @@ schema = Schema(
                     condition='$name$=test',
                     on_true=[
                         TextElement(
-                            text='$name$ <size=20><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>#dmg',
+                            text='$name$ <size=20><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>#plusone',
                             font_path='alegreya',
                             font_size=60,
-                            fill=White,
-                            alignment=MiddleCenter,
+                            fill=Colors.White,
+                            alignment=Alignment.MIDDLE_CENTER,
                         )
                     ],
                     on_false=[
                         TextElement(
-                            text='$name$ <size=20><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>#dmg',
+                            text='$name$ <size=20><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>#plusone',
                             font_path='alegreya',
                             font_size=40,
-                            fill=White,
-                            alignment=MiddleCenter,
+                            fill=Colors.White,
+                            alignment=Alignment.MIDDLE_CENTER,
                         )
                     ]
                 ),
@@ -104,13 +104,13 @@ schema = Schema(
         ),
         ImageElement(
             'cocktail.png',
-            alignment=MiddleCenter,
+            alignment=Alignment.MIDDLE_CENTER,
             size=Point(200, 200),
         ),
 
         RectElement(
-            fill=Red,
-            alignment=BottomCenter,
+            fill=Colors.Red,
+            alignment=Alignment.BOTTOM_CENTER,
             size=Point(PARENT, PARENT / 4),
             offset=Point(0, 0),
             children=[
