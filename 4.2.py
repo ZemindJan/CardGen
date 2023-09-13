@@ -134,14 +134,14 @@ schema = Schema(
 
         ConditionalElement(condition='$cl$=X', on_true=[
             RectElement(
-                size=Point(60, 60),
-                offset=Point(PARENT - 80, 120),
-                visible=False,
+                size=Point(80, 32),
+                offset=Point(PARENT - 80, 240),
+                fill='red',
                 children=[
                     TextElement(
                         text='LOW',
                         fill='black',
-                        font_size=20,
+                        font_size=18,
                         font_path='alegreya_bold',
                         alignment=Alignment.MIDDLE_CENTER
                     )
@@ -151,14 +151,14 @@ schema = Schema(
 
         ConditionalElement(condition='$cm$=X', on_true=[
             RectElement(
-                size=Point(60, 60),
-                offset=Point(PARENT - 80, 160),
-                visible=False,
+                size=Point(80, 32),
+                offset=Point(PARENT - 80, 200),
+                fill='yellow',
                 children=[
                     TextElement(
-                        text='MIDDLE',
+                        text='MID',
                         fill='black',
-                        font_size=20,
+                        font_size=18,
                         font_path='alegreya_bold',
                         alignment=Alignment.MIDDLE_CENTER
                     )
@@ -168,14 +168,66 @@ schema = Schema(
 
         ConditionalElement(condition='$ch$=X', on_true=[
             RectElement(
-                size=Point(60, 60),
-                offset=Point(PARENT - 80, 200),
-                visible=False,
+                size=Point(80, 32),
+                offset=Point(PARENT - 80, 160),
+                fill='green',
                 children=[
                     TextElement(
                         text='HIGH',
                         fill='black',
-                        font_size=20,
+                        font_size=18,
+                        font_path='alegreya_bold',
+                        alignment=Alignment.MIDDLE_CENTER
+                    )
+                ]
+            ),
+        ]),
+
+
+        ConditionalElement(condition='$low$=X', on_true=[
+            RectElement(
+                size=Point(80, 32),
+                offset=Point(0, 240),
+                fill='red',
+                children=[
+                    TextElement(
+                        text='LOW',
+                        fill='black',
+                        font_size=18,
+                        font_path='alegreya_bold',
+                        alignment=Alignment.MIDDLE_CENTER
+                    )
+                ]
+            ),
+        ]),
+
+        ConditionalElement(condition='$mid$=X', on_true=[
+            RectElement(
+                size=Point(80, 32),
+                offset=Point(0, 200),
+                fill='yellow',
+                children=[
+                    TextElement(
+                        text='MID',
+                        fill='black',
+                        font_size=18,
+                        font_path='alegreya_bold',
+                        alignment=Alignment.MIDDLE_CENTER
+                    )
+                ]
+            ),
+        ]),
+
+        ConditionalElement(condition='$high$=X', on_true=[
+            RectElement(
+                size=Point(80, 32),
+                offset=Point(0, 160),
+                fill='green',
+                children=[
+                    TextElement(
+                        text='HIGH',
+                        fill='black',
+                        font_size=18,
                         font_path='alegreya_bold',
                         alignment=Alignment.MIDDLE_CENTER
                     )
