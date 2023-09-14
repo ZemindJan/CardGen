@@ -133,6 +133,7 @@ schema = Schema(
             ]
         ),
 
+        # COMBOS
         ConditionalElement(condition='$cl$=X', on_true=[
             RectElement(
                 size=Point(80, 32),
@@ -149,7 +150,6 @@ schema = Schema(
                 ]
             ),
         ]),
-
         ConditionalElement(condition='$cm$=X', on_true=[
             RectElement(
                 size=Point(80, 32),
@@ -166,7 +166,6 @@ schema = Schema(
                 ]
             ),
         ]),
-
         ConditionalElement(condition='$ch$=X', on_true=[
             RectElement(
                 size=Point(80, 32),
@@ -184,7 +183,7 @@ schema = Schema(
             ),
         ]),
 
-
+        # POSITIONS
         ConditionalElement(condition='$low$=X', on_true=[
             RectElement(
                 size=Point(80, 32),
@@ -201,7 +200,6 @@ schema = Schema(
                 ]
             ),
         ]),
-
         ConditionalElement(condition='$mid$=X', on_true=[
             RectElement(
                 size=Point(80, 32),
@@ -218,7 +216,6 @@ schema = Schema(
                 ]
             ),
         ]),
-
         ConditionalElement(condition='$high$=X', on_true=[
             RectElement(
                 size=Point(80, 32),
