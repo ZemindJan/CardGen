@@ -29,6 +29,14 @@ class Condition:
     def eval(self, entry : dict[str, str]) -> bool:
         pass
 
+class Not(Condition):
+    def __init__(self, condition : Condition) -> None:
+        super().__init__()
+        self.condition = condition
+
+    def eval(self, entry: dict[str, str]) -> bool:
+        return not self.condition.eval(entry)
+
 class Exists(Condition):
     def __init__(self, name : str) -> None:
         super().__init__()
@@ -60,20 +68,37 @@ class Or(Condition):
 
     def eval(self, entry : dict[str, str]) -> bool:
         return self.left.eval(entry) or self.right.eval(entry)
+    
+class Boolean(Condition):
+    def __init__(self, value) -> None:
+        super().__init__()
+        self.value = value
+
+    def eval(self, entry: dict[str, str]) -> bool:
+        return self.value
 
 def parse_condition(text : str) -> Condition:
     text = text.strip()
+
+    if text.startswith('!'):
+        tail = text[1:]
+        return Not(condition=parse_condition(tail))
+
     if '|' in text:
         left, right = text.split('|')
-        return Or(parse_condition(left), parse_condition(right))
+        return Or(left=parse_condition(left), right=parse_condition(right))
 
     if '&' in text:
         left, right = text.split('&')
-        return And(parse_condition(left), parse_condition(right))
+        return And(left=parse_condition(left), right=parse_condition(right))
     
     if text.endswith('?'):
-        return Exists(text[:-1])
+        return Exists(name=text[:-1])
+    
+    if '!=' in text:
+        left, right = text.split('!=')
+        return Not(condition=Equality(left=parse_value(left), right=parse_value(right)))
 
     if '=' in text:
         left, right = text.split('=')
-        return Equality(parse_value(left), parse_value(right))
+        return Equality(left=parse_value(left), right=parse_value(right))
