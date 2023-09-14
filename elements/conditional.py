@@ -12,7 +12,7 @@ class ConditionalElement(ICardElement):
         self.condition = parse_condition(condition)
         self.on_true = on_true
         self.on_false = on_false or []
-        self.else_conditions : list[tuple[Condition, list[ICardElement]]] = []
+        self.__else_conditions : list[tuple[Condition, list[ICardElement]]] = []
 
     def draw(
         self,
@@ -30,15 +30,15 @@ class ConditionalElement(ICardElement):
     def __eval_children(self, entry : dict[str, str]) -> list[ICardElement]:
         if self.condition.eval(entry=entry):
             return self.on_true
-        elif len(self.else_conditions) > 0:
-            for condition, elements in self.else_conditions:
+        elif len(self.__else_conditions) > 0:
+            for condition, elements in self.__else_conditions:
                 if condition.eval(entry=entry):
                     return self.on_false + elements
         else:
             return self.on_false
 
     def else_if(self, condition : str, elements : list[ICardElement]) -> 'ConditionalElement':
-        self.else_conditions.append((parse_condition(condition), elements))
+        self.__else_conditions.append((parse_condition(condition), elements))
 
     def else_do(self, elements : list[ICardElement]):
-        self.else_conditions.append((Boolean(True), elements))
+        self.__else_conditions.append((Boolean(True), elements))
