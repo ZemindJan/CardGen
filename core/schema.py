@@ -88,7 +88,9 @@ class Schema:
 
     def process(self, source : Source):
         decks : dict[str, Deck] = {}
-        entries = [self.process_entry(entry) for entry in source.get_data() if self.is_viable_entry(entry)]
+
+        incoming_entries = [source.preprocess(entry) for entry in source.get_data()]
+        entries = [self.process_entry(entry) for entry in incoming_entries if self.is_viable_entry(entry)]
         default_deckname = self.deck_name or Settings.GlobalDeckName
 
         if len(entries) == 0:
