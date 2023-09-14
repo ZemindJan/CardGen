@@ -1,11 +1,23 @@
 from data.fetch import fetch
 from data.process import process
 from abc import abstractmethod
+from typing import Callable
+
+Entry = dict[str, str]
 
 class Source:
+    def __init__(self) -> None:
+        self.preprocessors : list[Callable[[Entry], Entry]] = []
+
     @abstractmethod
     def get_data(self) -> list[dict[str, str]]:
         pass
+
+    def preprocess(self, entry : Entry) -> Entry:
+        for processor in self.preprocessors:
+            entry = processor(entry)
+        
+        return entry
 
 class OnlineSource(Source):
     def __init__(self, url : str) -> None:
