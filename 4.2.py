@@ -7,6 +7,7 @@ from elements.text import TextElement
 from elements.image import ImageElement
 from settings import Settings
 from elements.shape import Outline
+from elements.mirror import MirrorElement
 
 url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQfcuVJtXMn4PGIY7id1qMlOi4IbkVqFpqSArPBe-YZlKZ2crQuPx_IzHGe5O8z86uPB93QAykHNT4T/pub?gid=559014483&single=true&output=csv'
 
@@ -17,7 +18,7 @@ Settings.DecksDirectory = 'out/decks/4.2'
 BLACK_OUTLINE_WIDTH = 2
 SIDE_COLUMN_RATIO = 1/20
 GOLD_OUTLINE_WIDTH = 8
-EFFECT_X_BUFFER = 3
+EFFECT_X_BUFFER = 3 
 CARD_HEIGHT = int(3.5 * 96 * 2)
 CARD_WIDTH = int(2.5 * 96 * 2)
 
@@ -25,7 +26,7 @@ schema = Schema(
     dimensions=Point(CARD_WIDTH, CARD_HEIGHT),
     naming='$aname$ $dname$ $index$',
     deck_name='4.2',
-    required_entry_fields=['aname', 'low', 'mid', 'high', 'suit', 'traits', 'acost', 'aeffect', 'cl', 'cm', 'ch', 'dname', 'dcost', 'deffect'],
+    required_entry_fields=['aname', 'low', 'mid', 'high', 'suit', 'atraits', 'acost', 'aeffect', 'cl', 'cm', 'ch', 'dname', 'dcost', 'dtraits', 'deffect'],
     elements=[
         # Black Border
         RectElement(
