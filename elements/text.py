@@ -64,7 +64,7 @@ class TextElement(CardElement):
             y_offset = self.offset.y
             y_whitespace = parent_area.size().y - total_height
 
-            x_whitespace = max(line.x_size for line in lines)
+            x_whitespace = parent_area.size().x - max(line.x_size for line in lines)
 
             if y_whitespace >= 0 and x_whitespace >= 0:
                 break
