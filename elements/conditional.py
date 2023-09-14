@@ -40,5 +40,5 @@ class ConditionalElement(ICardElement):
     def else_if(self, condition : str, elements : list[ICardElement]) -> 'ConditionalElement':
         self.__else_conditions.append((parse_condition(condition), elements))
 
-    def else_do(self, elements : list[ICardElement]):
+    def else_draw(self, elements : list[ICardElement]):
         self.__else_conditions.append((Boolean(True), elements))
