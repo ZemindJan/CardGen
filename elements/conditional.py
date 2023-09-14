@@ -34,11 +34,13 @@ class ConditionalElement(ICardElement):
             for condition, elements in self.__else_conditions:
                 if condition.eval(entry=entry):
                     return self.on_false + elements
-        else:
-            return self.on_false
+                
+        return self.on_false
 
     def else_if(self, condition : str, elements : list[ICardElement]) -> 'ConditionalElement':
         self.__else_conditions.append((parse_condition(condition), elements))
+        return self
 
-    def else_draw(self, elements : list[ICardElement]):
+    def else_draw(self, elements : list[ICardElement]) -> 'ConditionalElement':
         self.__else_conditions.append((Boolean(True), elements))
+        return self

@@ -1,5 +1,5 @@
 from cardsmith import *
-from data.source import OnlineSource
+from data.source import OnlineSource, ManualSource
 from elements.rect import RectElement
 from elements.conditional import ConditionalElement
 from elements.ellipse import EllipseElement
@@ -22,9 +22,26 @@ EFFECT_X_BUFFER = 3
 CARD_HEIGHT = int(3.5 * 96 * 2)
 CARD_WIDTH = int(2.5 * 96 * 2)
 
+COMBO_BANNER_SIZE = Point(70, 32)
+TEXT_REPLACEMENTS = {
+    '\n' : '<br>',
+}
+KEY_WORDS = [
+    'Launch', 'Launched',
+    'Ground',
+    'Stun',
+    'Distance',
+    'Block',
+    'Low', 'Middle', 'High',
+    'Kick', 'Punch'
+]
+for key_word in KEY_WORDS:
+    TEXT_REPLACEMENTS[key_word] = f'<bold>{key_word}</bold>'
+
 schema = Schema(
     dimensions=Point(CARD_WIDTH, CARD_HEIGHT),
     naming='$aname$ $dname$ $index$',
+    text_replacements=TEXT_REPLACEMENTS,
     deck_name='4.2',
     required_entry_fields=['aname', 'low', 'mid', 'high', 'suit', 'atraits', 'acost', 'aeffect', 'cl', 'cm', 'ch', 'dname', 'dcost', 'dtraits', 'deffect'],
     elements=[
@@ -86,6 +103,7 @@ schema = Schema(
                 ]
         )]),
 
+        # A Cost
         ConditionalElement('$acost$=-', on_true=[
             RectElement(
                 size=Point(PARENT - 120, 60),
@@ -116,11 +134,10 @@ schema = Schema(
                 ],
         )]),
 
-        
-
+        # A Effect
         RectElement(
-            size=Point(PARENT - 100, 300),
-            offset=Point(25, 60),
+            size=Point(PARENT - COMBO_BANNER_SIZE.x * 2 - 10, 300),
+            offset=Point(COMBO_BANNER_SIZE.x + 5, 60),
             visible=False,
             children=[
                 TextElement(
@@ -136,8 +153,8 @@ schema = Schema(
         # COMBOS
         ConditionalElement(condition='$cl$=X', on_true=[
             RectElement(
-                size=Point(80, 32),
-                offset=Point(PARENT - 80, 240),
+                size=COMBO_BANNER_SIZE,
+                offset=Point(PARENT - COMBO_BANNER_SIZE.x, 240),
                 fill='red',
                 children=[
                     TextElement(
@@ -149,11 +166,10 @@ schema = Schema(
                     )
                 ]
             ),
-        ]),
-        ConditionalElement(condition='$cm$=X', on_true=[
+        ]).else_if(condition='$cm$=X', elements=[
             RectElement(
-                size=Point(80, 32),
-                offset=Point(PARENT - 80, 200),
+                size=COMBO_BANNER_SIZE,
+                offset=Point(PARENT - COMBO_BANNER_SIZE.x, 200),
                 fill='yellow',
                 children=[
                     TextElement(
@@ -165,11 +181,10 @@ schema = Schema(
                     )
                 ]
             ),
-        ]),
-        ConditionalElement(condition='$ch$=X', on_true=[
+        ]).else_if(condition='$ch$=X', elements=[
             RectElement(
-                size=Point(80, 32),
-                offset=Point(PARENT - 80, 160),
+                size=COMBO_BANNER_SIZE,
+                offset=Point(PARENT - COMBO_BANNER_SIZE.x, 160),
                 fill='green',
                 children=[
                     TextElement(
@@ -186,7 +201,7 @@ schema = Schema(
         # POSITIONS
         ConditionalElement(condition='$low$=X', on_true=[
             RectElement(
-                size=Point(80, 32),
+                size=COMBO_BANNER_SIZE,
                 offset=Point(0, 240),
                 fill='red',
                 children=[
@@ -199,10 +214,9 @@ schema = Schema(
                     )
                 ]
             ),
-        ]),
-        ConditionalElement(condition='$mid$=X', on_true=[
+        ]).else_if(condition='$mid$=X', elements=[
             RectElement(
-                size=Point(80, 32),
+                size=COMBO_BANNER_SIZE,
                 offset=Point(0, 200),
                 fill='yellow',
                 children=[
@@ -215,10 +229,9 @@ schema = Schema(
                     )
                 ]
             ),
-        ]),
-        ConditionalElement(condition='$high$=X', on_true=[
+        ]).else_if(condition='$high$=X', elements=[
             RectElement(
-                size=Point(80, 32),
+                size=COMBO_BANNER_SIZE,
                 offset=Point(0, 160),
                 fill='green',
                 children=[
@@ -231,12 +244,32 @@ schema = Schema(
                     )
                 ]
             ),
-        ]),
-
+        ])
     ],
     back_elements=[
 
     ]
 )
+
+
+manual_src = ManualSource(entries=[
+    {
+        'aname' : 'discombobulate',
+        'low' : '-',
+        'mid' : '-',
+        'high' : '-',
+        'suit' : 'Utility',
+        'atraits' : 'kick',
+        'acost' : '2',
+        'aeffect' : 'testing a really long line',
+        'cl' : '-',
+        'cm' : '-',
+        'ch' : '-',
+        'dname' : 'dicombobulate',
+        'dcost' : '-',
+        'dtraits' : 'kick',
+        'deffect' : 'effect',
+    }
+])
 
 schema.process(OnlineSource(url))
