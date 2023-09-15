@@ -1,7 +1,6 @@
 from core.geometry import Point
-from elements.element import ICardElement
 from PIL import Image, ImageDraw
-from core.schema import Schema
+from core.schema import Schema, ICardElement
 from abc import abstractmethod
 from core.geometry import Point, Rect
 from core.scaling import scale

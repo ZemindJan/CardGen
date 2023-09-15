@@ -50,6 +50,9 @@ One of the primary uses of the generator is to get custom data from entries. To 
 
 To get the card's index in the list of entries, use `$index$`. Entries are processed top-down. Note that this doesn't necessarily correspond to line number if some entries are filtered out for being incomplete.
 
+### Lookups
+If you want to dynamically change a value based on the entry, you can also use a lookup in the form of `$lookup <name> <table>$` where table is a json or python format table of keys to values. This is useful for dynamic changes in color.
+
 ### Icons
 To display images in line with text, you can define icons. They are placed using `#iconname` where the `iconname` must be defined to map to an image in the **Icon Atlas**.
 

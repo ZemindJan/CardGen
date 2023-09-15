@@ -9,13 +9,27 @@ from core.deck import Deck, Card
 
 DEFAULT_DIMENSIONS = Point(750, 1050)
 
+class ICardElement:
+    def predraw(self, entry : dict[str, str]):
+        pass
+
+    def draw(
+        self,
+        image : Image.Image, 
+        entry : dict[str, str], 
+        schema : 'Schema',
+        parent_area : Rect,
+        index : int = 0
+    ):
+        pass
+
 class Schema:
     def __init__(
             self, 
             naming : str, 
-            elements : list,
+            elements : list[ICardElement],
             count : str = None, 
-            back_elements : list = None, 
+            back_elements : list[ICardElement] = None, 
             dimensions : Point = None, 
             background : RGBA = None, 
             deck_name : str = None, 
@@ -28,7 +42,7 @@ class Schema:
         self.dimensions = dimensions or DEFAULT_DIMENSIONS
         self.elements   = elements   or []
         self.count = count or '1'
-        self.back_elements = back_elements or []
+        self.back_elements : list[ICardElement] = back_elements or []
         self.background = verify_color(background or Colors.White)
         self.deck_name = deck_name
         self.group_by = group_by
@@ -44,6 +58,7 @@ class Schema:
         )
 
         for element in self.elements:
+            element.predraw(entry)
             element.draw(image, entry, self, Point.zero().to(self.dimensions))
 
         name = replace_references(self.naming, entry, index)

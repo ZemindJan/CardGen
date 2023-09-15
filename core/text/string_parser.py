@@ -7,6 +7,7 @@ from typing import Literal
 from core.text.tag import Tag
 from core.geometry import Point
 from settings import Settings
+from json import loads
 
 newline = 'newline'
 
@@ -85,6 +86,13 @@ def parse_string(string : str, font : str, font_size : int, fill : RGBA, max_ico
                     elements.append(newline)
                     continue
 
+                if tag_content.startswith('lookup '):
+                    push()
+                    content = parse_lookup_tag(tag_content, entry, index)
+                    push()
+                    tag_content = ''
+                    continue
+
                 active_tags.append(parse_tag(tag_content))
             
             tag_content = ''
@@ -124,6 +132,18 @@ def replace_references(string : str, entry : dict[str, str], entry_index : int =
 
         if name == 'index':
             string = before + str(entry_index) + after
+        elif name.startswith('lookup'):
+            first_space = name.find(' ')
+            second_space = name[first_space+1:].find(' ') + first_space + 1
+            prefix, entry_name, table_text = name[:first_space], name[first_space + 1:second_space], name[second_space + 1:]
+            key = replace_references(f'${entry_name}$', entry)
+            table = loads(table_text.replace('\'', '\"'))
+
+            if key in table:
+                string = before + replace_references(table[key], entry, entry_index) + after
+            else:
+                print(f'Warning: key {key} not found in lookup table {table_text}')
+                string = before + after
         else:
             # Typical Case
             if name not in entry:
@@ -134,3 +154,12 @@ def replace_references(string : str, entry : dict[str, str], entry_index : int =
         index1 = string.find('$')
 
     return string
+
+def parse_lookup_tag(lookup : str, entry : dict[str, str], index : int = 0) -> str:
+    lookup = lookup.removeprefix('lookup')
+
+    id, table_text = lookup.split(',')
+    key = replace_references(id.strip(), entry, index)
+    table = loads(table_text.replace('\'', '\"'))
+
+    return table[key]

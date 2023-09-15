@@ -23,6 +23,7 @@ class MirrorElement(CardElement):
         my_image = Image.new(mode='RGBA', size=area.size().int_tuple())
 
         for child in self.children:
+            child.predraw(entry)
             child.draw(my_image, entry, schema, Rect(Point.zero(), area.size()), index)
 
         if self.mirror_x:
