@@ -7,7 +7,8 @@ transformations = {
     },
     'bold' : {
         'alegreya' : 'alegreya_bold',
-        'alegreya_italic' : 'alegreya_italic_bold'
+        'alegreya_italic' : 'alegreya_italic_bold',
+        'alegreya_bold' : 'alegreya_bold',
     }
 }
 

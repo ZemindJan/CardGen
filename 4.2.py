@@ -27,22 +27,49 @@ TEXT_REPLACEMENTS = {
     '\n' : '<br>',
 }
 KEY_WORDS = [
-    'Launch', 'Launched',
-    'Ground',
+    'Launched', 'Launch',
+    'Grounded', 'Ground',
     'Stun',
     'Distance',
     'Block',
     'Low', 'Middle', 'High',
-    'Kick', 'Punch'
+    'Kick', 'Punch',
+    'Drike', 'Imbibe',
+    'Combo',
+    'Momentum',
+    'Cascade',
 ]
-for key_word in KEY_WORDS:
-    TEXT_REPLACEMENTS[key_word] = f'<bold>{key_word}</bold>'
+MALFORMED_KEY_WORDS = {
+    '<bold><bold>Ground</bold>ed</bold>' : '<bold>Grounded</bold>',
+    '<bold><bold>Launch</bold>ed</bold>' : '<bold>Launched</bold>'
+}
+SUIT_COLORS = {
+    'High' : 'muted_green',
+    'Middle' : 'muted_yellow',
+    'Low' : 'muted_red',
+    'Utility' : 'grey',
+    'Multi' : 'purple',
+}
+
+def preprocess(entry : dict[str, str]) -> dict[str, str]:
+    for key_word in KEY_WORDS:
+        bolded_key_word = f'<bold>{key_word}</bold>'
+
+        entry['aeffect'] = entry['aeffect'].replace(key_word, bolded_key_word)  
+        entry['deffect'] = entry['deffect'].replace(key_word, bolded_key_word)
+
+    for malformed, correct in MALFORMED_KEY_WORDS.items():
+        entry['aeffect'] = entry['aeffect'].replace(malformed, correct)  
+        entry['deffect'] = entry['deffect'].replace(malformed, correct)
+
+    return entry
 
 schema = Schema(
     dimensions=Point(CARD_WIDTH, CARD_HEIGHT),
     naming='$aname$ $dname$ $index$',
     text_replacements=TEXT_REPLACEMENTS,
     deck_name='4.2',
+    group_by='$deck$',
     required_entry_fields=['aname', 'low', 'mid', 'high', 'suit', 'atraits', 'acost', 'aeffect', 'cl', 'cm', 'ch', 'dname', 'dcost', 'dtraits', 'deffect'],
     elements=[
         # Black Border
@@ -53,41 +80,17 @@ schema = Schema(
         ),
 
         # Background
-        ConditionalElement('$suit$=High', [
-            RectElement(
-                fill='muted_green',
-                offset=Point(BLACK_OUTLINE_WIDTH, BLACK_OUTLINE_WIDTH),
-                size=Point(PARENT - 2 * BLACK_OUTLINE_WIDTH, PARENT  - 2 * BLACK_OUTLINE_WIDTH)
-            )
-        ]),
-        ConditionalElement('$suit$=Middle', [
-            RectElement(
-                fill='muted_yellow',
-                offset=Point(BLACK_OUTLINE_WIDTH, BLACK_OUTLINE_WIDTH),
-                size=Point(PARENT - 2 * BLACK_OUTLINE_WIDTH, PARENT  - 2 * BLACK_OUTLINE_WIDTH)
-            )
-        ]),
-        ConditionalElement('$suit$=Low', [
-            RectElement(
-                fill='muted_red',
-                offset=Point(BLACK_OUTLINE_WIDTH, BLACK_OUTLINE_WIDTH),
-                size=Point(PARENT - 2 * BLACK_OUTLINE_WIDTH, PARENT  - 2 * BLACK_OUTLINE_WIDTH)
-            )
-        ]),
-        ConditionalElement('$suit$=Utility', [
-            RectElement(
-                fill='grey',
-                offset=Point(BLACK_OUTLINE_WIDTH, BLACK_OUTLINE_WIDTH),
-                size=Point(PARENT - 2 * BLACK_OUTLINE_WIDTH, PARENT  - 2 * BLACK_OUTLINE_WIDTH)
-            )
-        ]),
+        *[
+            ConditionalElement(f'$suit$={suit}', [
+                RectElement(
+                    fill=color,
+                    offset=Point(BLACK_OUTLINE_WIDTH, BLACK_OUTLINE_WIDTH),
+                    size=Point(PARENT - 2 * BLACK_OUTLINE_WIDTH, PARENT  - 2 * BLACK_OUTLINE_WIDTH)
+                )
+            ]) for suit, color in SUIT_COLORS.items()
+        ],
 
-        RectElement(
-            fill='muted_blue',
-            offset=Point(BLACK_OUTLINE_WIDTH, int(CARD_HEIGHT*.5)),
-            size=Point(PARENT - 2 * BLACK_OUTLINE_WIDTH, (PARENT  - 2 * BLACK_OUTLINE_WIDTH)/2)
-        ),
-
+        # A Cost
         ConditionalElement('$acost$=-', [], [
             RectElement(
                 size=Point(70, 180),
@@ -103,7 +106,7 @@ schema = Schema(
                 ]
         )]),
 
-        # A Cost
+        # A Title
         ConditionalElement('$acost$=-', on_true=[
             RectElement(
                 size=Point(PARENT - 120, 60),
@@ -166,7 +169,9 @@ schema = Schema(
                     )
                 ]
             ),
-        ]).else_if(condition='$cm$=X', elements=[
+        ]),
+        
+        ConditionalElement(condition='$cm$=X', on_true=[
             RectElement(
                 size=COMBO_BANNER_SIZE,
                 offset=Point(PARENT - COMBO_BANNER_SIZE.x, 200),
@@ -181,7 +186,9 @@ schema = Schema(
                     )
                 ]
             ),
-        ]).else_if(condition='$ch$=X', elements=[
+        ]),
+        
+        ConditionalElement(condition='$ch$=X', on_true=[
             RectElement(
                 size=COMBO_BANNER_SIZE,
                 offset=Point(PARENT - COMBO_BANNER_SIZE.x, 160),
@@ -214,7 +221,9 @@ schema = Schema(
                     )
                 ]
             ),
-        ]).else_if(condition='$mid$=X', elements=[
+        ]),
+        
+        ConditionalElement(condition='$mid$=X', on_true=[
             RectElement(
                 size=COMBO_BANNER_SIZE,
                 offset=Point(0, 200),
@@ -229,7 +238,9 @@ schema = Schema(
                     )
                 ]
             ),
-        ]).else_if(condition='$high$=X', elements=[
+        ]),
+        
+        ConditionalElement(condition='$high$=X', on_true=[
             RectElement(
                 size=COMBO_BANNER_SIZE,
                 offset=Point(0, 160),
@@ -244,10 +255,82 @@ schema = Schema(
                     )
                 ]
             ),
+        ]),
+
+        MirrorElement(size=Point(PARENT, PARENT), offset=Point(0, PARENT / 2), mirror_x=False, mirror_y=False, children=[
+
+            RectElement(
+                fill='muted_blue',
+                offset=Point(BLACK_OUTLINE_WIDTH, 0),
+                size=Point(PARENT - 2 * BLACK_OUTLINE_WIDTH, (PARENT  - 1 * BLACK_OUTLINE_WIDTH))
+            ),
+
+            # A Cost
+            ConditionalElement('$dcost$=-', [], [
+                RectElement(
+                    size=Point(70, 180),
+                    offset=Point(390, 0),
+                    visible=False,
+                    children=[
+                        TextElement(
+                            text='$dcost$',
+                            fill='black',
+                            font_size=80,
+                            font_path='alegreya_bold'
+                        )
+                    ]
+            )]),
+
+            # A Title
+            ConditionalElement('$dcost$=-', on_true=[
+                RectElement(
+                    size=Point(PARENT - 120, 60),
+                    offset=Point(60, 20),
+                    visible=False,
+                    children=[
+                        TextElement(
+                            text='$dname$',
+                            fill='black',
+                            font_size=60,
+                            font_path='alegreya_bold',
+                            alignment=Alignment.MIDDLE_CENTER
+                        )
+                    ])
+            ], on_false=[
+                RectElement(
+                    size=Point(PARENT - 120, 60),
+                    offset=Point(20, 20),
+                    visible=False,
+                    children=[
+                        TextElement(
+                            text='$dname$',
+                            fill='black',
+                            font_size=60,
+                            font_path='alegreya_bold',
+                            alignment=Alignment.MIDDLE_CENTER
+                        )
+                    ],
+            )]),
+
+            # A Effect
+            RectElement(
+                size=Point(PARENT - COMBO_BANNER_SIZE.x * 2 - 10, 300),
+                offset=Point(COMBO_BANNER_SIZE.x + 5, 60),
+                visible=False,
+                children=[
+                    TextElement(
+                        text='$deffect$',
+                        fill='black',
+                        font_size=35,
+                        font_path='alegreya',
+                        alignment=Alignment.MIDDLE_CENTER
+                    )
+                ]
+            ),
         ])
     ],
     back_elements=[
-
+        
     ]
 )
 
@@ -272,4 +355,9 @@ manual_src = ManualSource(entries=[
     }
 ])
 
-schema.process(OnlineSource(url))
+online_src = OnlineSource(url)
+
+# choose source
+src = online_src
+src.preprocessors.append(preprocess)
+schema.process(src)
