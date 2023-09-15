@@ -80,15 +80,10 @@ schema = Schema(
         ),
 
         # Background
-        *[
-            ConditionalElement(f'$suit$={suit}', [
-                RectElement(
-                    fill=color,
-                    offset=Point(BLACK_OUTLINE_WIDTH, BLACK_OUTLINE_WIDTH),
-                    size=Point(PARENT - 2 * BLACK_OUTLINE_WIDTH, PARENT  - 2 * BLACK_OUTLINE_WIDTH)
-                )
-            ]) for suit, color in SUIT_COLORS.items()
-        ],
+        RectElement(
+            offset=Point(BLACK_OUTLINE_WIDTH, BLACK_OUTLINE_WIDTH),
+            size=Point(PARENT - 2 * BLACK_OUTLINE_WIDTH, PARENT  - 2 * BLACK_OUTLINE_WIDTH)
+        ).on_draw_set_fields(fill=f'$lookup suit {SUIT_COLORS}$'),
 
         # A Cost
         ConditionalElement('$acost$=-', [], [
