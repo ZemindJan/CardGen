@@ -8,6 +8,7 @@ from elements.image import ImageElement
 from settings import Settings
 from elements.shape import Outline
 from elements.mirror import MirrorElement
+from keywords import preprocess_fields
 
 url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQfcuVJtXMn4PGIY7id1qMlOi4IbkVqFpqSArPBe-YZlKZ2crQuPx_IzHGe5O8z86uPB93QAykHNT4T/pub?gid=559014483&single=true&output=csv'
 
@@ -26,23 +27,6 @@ COMBO_BANNER_SIZE = Point(70, 32)
 TEXT_REPLACEMENTS = {
     '\n' : '<br>',
 }
-KEY_WORDS = [
-    'Launched', 'Launch',
-    'Grounded', 'Ground',
-    'Stun',
-    'Distance',
-    'Block',
-    'Low', 'Middle', 'High',
-    'Kick', 'Punch',
-    'Drike', 'Imbibe',
-    'Combo',
-    'Momentum',
-    'Cascade',
-]
-MALFORMED_KEY_WORDS = {
-    '<bold><bold>Ground</bold>ed</bold>' : '<bold>Grounded</bold>',
-    '<bold><bold>Launch</bold>ed</bold>' : '<bold>Launched</bold>'
-}
 SUIT_COLORS = {
     'High' : 'muted_green',
     'Middle' : 'muted_yellow',
@@ -50,19 +34,6 @@ SUIT_COLORS = {
     'Utility' : 'grey',
     'Multi' : 'purple',
 }
-
-def preprocess(entry : dict[str, str]) -> dict[str, str]:
-    for key_word in KEY_WORDS:
-        bolded_key_word = f'<bold>{key_word}</bold>'
-
-        entry['aeffect'] = entry['aeffect'].replace(key_word, bolded_key_word)  
-        entry['deffect'] = entry['deffect'].replace(key_word, bolded_key_word)
-
-    for malformed, correct in MALFORMED_KEY_WORDS.items():
-        entry['aeffect'] = entry['aeffect'].replace(malformed, correct)  
-        entry['deffect'] = entry['deffect'].replace(malformed, correct)
-
-    return entry
 
 schema = Schema(
     dimensions=Point(CARD_WIDTH, CARD_HEIGHT),
@@ -354,5 +325,8 @@ online_src = OnlineSource(url)
 
 # choose source
 src = online_src
-src.preprocessors.append(preprocess)
-schema.process(src)
+src.preprocessors.append(preprocess_fields(['aeffect', 'deffect']))
+
+# only process if run directly
+if __name__ == "__main__":
+    schema.process(src)

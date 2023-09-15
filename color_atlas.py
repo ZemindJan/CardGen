@@ -13,4 +13,10 @@ colors = {
     'grey' : (155,155,155),
     'gold' : (227, 184, 84),
     'blank' : (0, 0, 0, 0),
+
+    'champ_red' : '#aa3435',
+    'card_red' : '#db9192',
+    'champ_blue' : '#3634a5',
+    'card_blue' : '#8aa2ce',
+
 }
