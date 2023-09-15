@@ -96,7 +96,7 @@ schema = Schema(
                             points=[Point(0, 0), Point(1, 0), Point(0.5, 1)],
                             offset=Point(0, 0),
                             alignment=Alignment.MIDDLE_CENTER,
-                        )
+                        ).on_draw_set_fields(fill=f'$lookup name {str({"best" : "#00FF00", "best2" : "#FF0000"})}$')
                     ]
                 ),
             ]

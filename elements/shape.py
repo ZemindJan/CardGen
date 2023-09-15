@@ -30,13 +30,14 @@ class ShapeElement(CardElement):
             self.draw_shape(
                 draw,
                 area,
-                self.fill,
+                verify_color(self.fill), # in case of predraw meddling, we verify again
                 verify_color(self.outline.color) if self.outline else None,
                 self.outline.width if self.outline else None,
             )
 
         for child in self.children:
             child : CardElement
+            child.predraw(entry)
             child.draw(image, entry, schema, area)
     
     @abstractmethod
