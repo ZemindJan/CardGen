@@ -9,6 +9,7 @@ from settings import Settings
 from elements.shape import Outline
 from elements.mirror import MirrorElement
 from keywords import preprocess_fields
+from elements.grid import GridElement
 from elements.group import GroupElement
 
 Settings.CardsDirectory = 'out/props/4.2'
@@ -19,72 +20,83 @@ CARD_SIZE = Point(CARD_WIDTH, CARD_HEIGHT)
 
 SLOTS = 7
 
-def card_group(is_opp = False):
-    return GroupElement(
-        size=Point(PARENT, PARENT),
-        children=[
-            RectElement(
-                size=Point(PARENT, PARENT / 2),
-                fill= 'champ_blue' if is_opp else 'champ_red',
-            ),
-            MirrorElement(
-                size=CARD_SIZE,
-                offset=Point(PARENT - CARD_SIZE.x - 100, 100),
-                children=[
-                    RectElement(
-                        size=Point(PARENT, PARENT),
-                        fill= 'card_blue' if is_opp else 'card_red',
-                        children=[TextElement(
-                            text='DECK' if is_opp else 'DISCARD',
-                            font_path='alegreya_bold',
-                            fill='champ_blue' if is_opp else 'champ_red',
-                            font_size=50,
-                            alignment=Alignment.MIDDLE_CENTER,
-                        )]
-                    )
-                ]
-            ),
-            MirrorElement(
-                size=CARD_SIZE,
-                offset=Point(100, 100),
-                children=[
-                    RectElement(
-                        size=Point(PARENT, PARENT),
-                        fill= 'card_blue' if is_opp else 'card_red',
-                        children=[TextElement(
-                            text='DECK' if not is_opp else 'DISCARD',
-                            font_path='alegreya_bold',
-                            fill='champ_blue' if is_opp else 'champ_red',
-                            font_size=50,
-                            alignment=Alignment.MIDDLE_CENTER,
-                        )]
-                    )
-                ]
-            ),
-        ] + [
-            RectElement(
-                size=CARD_SIZE,
-                offset=Point(PARENT * (1/3 * 1/2 + 2/3 * (ratio := (i / (SLOTS) + 1 / ((SLOTS) * (SLOTS + 1))))), 500),
-                fill='card_blue' if is_opp else 'card_red'
-            ) for i in range(SLOTS)
-        ]
-    )
-
 schema = Schema(
-    dimensions=Point(CARD_WIDTH * 12, CARD_HEIGHT * 6),
+    dimensions=Point(CARD_WIDTH * 4, int(CARD_HEIGHT * 1.6)),
     naming='FavourBoard',
     deck_name='crowd',
+    background='dark_favour',
     elements=[
-        MirrorElement(
-            size=Point(PARENT, PARENT), 
-            children=[card_group(True)]
+        GridElement(
+            grid=[[
+                EllipseElement(
+                    size=Point(80, 80),
+                    alignment=Alignment.MIDDLE_CENTER,
+                    offset=Point(PARENT / 10 * i, 20),
+                    fill='favour' if 1 <= i <= 7 else 'darker_favour',
+                    children=[
+                        GroupElement() if 1 <= i <= 7 else
+                        TextElement(
+                            text='BLESSING',
+                            alignment=Alignment.MIDDLE_CENTER,
+                            font_path='alegreya',
+                            font_size=20,
+                            offset=Point(0, -3),
+                            fill='favour',
+                        )
+                    ],
+                )
+                for i in range(9)
+            ]],
+            size=Point(PARENT - 80, 100)
         ),
 
-        GroupElement(
-            size=Point(PARENT, PARENT),
-            children=[card_group()],
+        GridElement(
+            size=Point(PARENT, PARENT - 100),
+            offset=Point(0, 100),
+            grid=[[
+                RectElement(
+                    size=CARD_SIZE,
+                    fill='darker_favour',
+                    alignment=Alignment.MIDDLE_CENTER,
+                    children=[TextElement(
+                        text='CROWD',
+                        font_path='alegreya_bold',
+                        font_size=50,
+                        alignment=Alignment.MIDDLE_CENTER,
+                        fill='favour',
+                    )]
+                ),
+
+                RectElement(
+                    size=CARD_SIZE,
+                    fill='darker_favour',
+                    alignment=Alignment.MIDDLE_CENTER,
+                    children=[TextElement(
+                        text='WHIM',
+                        font_path='alegreya_bold',
+                        font_size=50,
+                        alignment=Alignment.MIDDLE_CENTER,
+                        fill='favour',
+                    )]
+                ),
+
+                RectElement(
+                    size=CARD_SIZE,
+                    fill='darker_favour',
+                    alignment=Alignment.MIDDLE_CENTER,
+                    children=[TextElement(
+                        text='ARENA',
+                        font_path='alegreya_bold',
+                        font_size=50,
+                        alignment=Alignment.MIDDLE_CENTER,
+                        fill='favour',
+                    )]
+                ),
+            ]]
         ),
-    ]
+
+        
+    ],
 )
 
 src = ManualSource([{}])

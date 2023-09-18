@@ -11,6 +11,7 @@ colors = {
     'muted_green' : (116, 204, 125),
     'purple' : '#9966ff',
     'grey' : (155,155,155),
+    'dark_grey' : (100,100,100),
     'gold' : (227, 184, 84),
     'blank' : (0, 0, 0, 0),
 
@@ -19,4 +20,7 @@ colors = {
     'champ_blue' : '#3634a5',
     'card_blue' : '#8aa2ce',
 
+    'favour' : '#eea5c6',
+    'dark_favour' : '#a15e80',
+    'darker_favour' : '#5d384e',
 }
