@@ -14,6 +14,15 @@ from elements.polygon import PolygonElement, Outline
 from core.color import Colors
 from data.source import ManualSource
 from elements.mirror import MirrorElement
+from elements.grid import GridElement
+
+def test(txt):
+    return TextElement(
+        text=txt,
+        font_path='alegreya',
+        font_size=50,
+        fill='black',
+    )
 
 schema = Schema(
     naming='test/$name$',
@@ -41,6 +50,14 @@ schema = Schema(
             offset=Point(0, 0),
             size=Point(PARENT / 3 * 2, 110),
             children=[
+                GridElement.from_grid(
+                    grid=[
+                        [test('a'), test('b')],
+                        [test('c'), test('d')]
+                    ],
+                    size=Point(100, 100),
+                    offset=Point(200, 200)
+                ),
                 ConditionalElement(
                     condition='$name$=test',
                     on_true=[
@@ -61,7 +78,7 @@ schema = Schema(
                             fill=Colors.White,
                             alignment=Alignment.MIDDLE_CENTER,
                             line_alignment=YAlignment.MIDDLE
-                        )
+                        ),
                     ]
                 ),
                 
