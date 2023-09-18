@@ -24,7 +24,7 @@ class GridElement(GroupElement):
                  size: Point = None, 
                  visible: bool = True) -> 'GridElement':
         return GridElement(
-            grid_size=Point(len(grid), len(grid[0])),
+            grid_size=Point(len(grid[0]), len(grid)),
             children=[item for row in grid for item in row],
             offset=offset,
             alignment=alignment,
