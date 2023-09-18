@@ -45,7 +45,7 @@ class GridElement(GroupElement):
             if child is None:
                 continue
 
-            x, y = index % self.grid_size.x, index // self.grid_size.y
+            x, y = index % self.grid_size.x, index // self.grid_size.x
 
             origin = area.p1 + x_offset * x + y_offset * y
             child_area = origin.to(origin + x_offset + y_offset)
