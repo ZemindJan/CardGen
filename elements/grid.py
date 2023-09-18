@@ -8,30 +8,14 @@ from elements.group import GroupElement
 
 class GridElement(GroupElement):
     def __init__(self, 
-                 grid_size : Point,
-                 offset: Point = None, 
-                 alignment: Alignment = None, 
-                 size: Point = None, 
-                 children: list[CardElement] = None, 
-                 visible: bool = True) -> None:
-        super().__init__(offset, alignment, size, children, visible)
-        self.grid_size = grid_size
-
-    @staticmethod
-    def from_grid(grid : list[list[CardElement]],  
+                 grid : list[list[CardElement]],  
                   offset: Point = None, 
                  alignment: Alignment = None, 
                  size: Point = None, 
                  visible: bool = True) -> 'GridElement':
-        return GridElement(
-            grid_size=Point(len(grid[0]), len(grid)),
-            children=[item for row in grid for item in row],
-            offset=offset,
-            alignment=alignment,
-            size=size,
-            visible=visible,
-        )
-
+        super().__init__(offset, alignment, size, [item for row in grid for item in row], visible)
+        self.grid_size = Point(len(grid[0]), len(grid))
+    
     def draw(self, image: Image, entry: dict[str, str], schema: Schema, parent_area: Rect, index: int = 0):
         if not self.visible:
             return
