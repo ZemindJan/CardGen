@@ -50,7 +50,7 @@ schema = Schema(
             offset=Point(0, 0),
             size=Point(PARENT / 3 * 2, 110),
             children=[
-                GridElement.from_grid(
+                GridElement(
                     grid=[
                         [test('a'), test('b')],
                         [test('c'), test('d')]
