@@ -55,6 +55,9 @@ class Point():
     
     def __getitem__(self, index):
         return [self.x, self.y][index]
+    
+    def __repr__(self) -> str:
+        return f'Point({self.x}, {self.y})'
 
 class Rect():
     p1 : Point
@@ -98,3 +101,6 @@ class Rect():
             return self.p1.x <= other[0] <= self.p2.x and self.p1.y <= other[1] <= self.p2.y
         elif len(other) == 4:
             return (other[0], other[1]) in self and (other[2], other[3]) in self
+    
+    def __repr__(self) -> str:
+        return f'Rect[{self.p1} to {self.p2}]'
