@@ -9,6 +9,7 @@ from settings import Settings
 from elements.shape import Outline
 from elements.mirror import MirrorElement
 from keywords import preprocess_fields
+from props import *
 
 url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQfcuVJtXMn4PGIY7id1qMlOi4IbkVqFpqSArPBe-YZlKZ2crQuPx_IzHGe5O8z86uPB93QAykHNT4T/pub?gid=559014483&single=true&output=csv'
 
@@ -41,7 +42,7 @@ schema = Schema(
     text_replacements=TEXT_REPLACEMENTS,
     deck_name='4.2',
     group_by='$deck$',
-    required_entry_fields=['aname', 'low', 'mid', 'high', 'suit', 'atraits', 'acost', 'aeffect', 'cl', 'cm', 'ch', 'dname', 'dcost', 'dtraits', 'deffect'],
+    required_entry_fields=['aname', 'low', 'mid', 'high', 'suit', 'atraits', 'acost', 'aeffect', 'cl', 'cm', 'ch', 'dname', 'dcost', 'dtraits', 'deffect', 'deck'],
     elements=[
         # Black Border
         RectElement(
@@ -296,7 +297,13 @@ schema = Schema(
         ])
     ],
     back_elements=[
-        
+        TextElement(
+            text='CARD',
+            font_path='alegreya_bold',
+            fill='black',
+            font_size=100,
+            alignment=Alignment.MIDDLE_CENTER,
+        )
     ]
 )
 

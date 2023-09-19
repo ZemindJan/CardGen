@@ -1,3 +1,7 @@
+# Allows code to be run in root directory
+import sys
+sys.path[0] = sys.path[0].removesuffix('\\props')
+
 from cardsmith import *
 from data.source import OnlineSource, ManualSource
 from elements.rect import RectElement

@@ -23,4 +23,7 @@ colors = {
     'favour' : '#eea5c6',
     'dark_favour' : '#a15e80',
     'darker_favour' : '#5d384e',
+
+    'dark_energy' : '#d6a520',
+    'energy' : '#ffdc7d',
 }

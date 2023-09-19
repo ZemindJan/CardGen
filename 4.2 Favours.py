@@ -16,7 +16,7 @@ Settings.DecksDirectory = 'out/decks/4.2'
 URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQfcuVJtXMn4PGIY7id1qMlOi4IbkVqFpqSArPBe-YZlKZ2crQuPx_IzHGe5O8z86uPB93QAykHNT4T/pub?gid=1141313585&single=true&output=csv'
 
 CARD_HEIGHT = int(3.5 * 96 * 2)
-CARD_WIDTH = int(2.5 * 96 * 2)
+CARD_WIDTH  = int(2.5 * 96 * 2)
 
 schema = Schema(
     dimensions=Point(CARD_WIDTH, CARD_HEIGHT),
