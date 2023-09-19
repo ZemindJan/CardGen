@@ -4,14 +4,16 @@ KEY_WORDS = [
     'Grounded', 'Ground',
     'Stun',
     'Distance',
-    'Block',
+    'Block', 'Dodge',
     'Low', 'Middle', 'High',
     'Kick', 'Punch',
     'Drink', 'Imbibe',
     'Combo',
-    'Momentum',
-    'Cascade',
+    'Momentum', 'Cascade',
     'Favour',
+    'On Hit',
+    'Slow', 'Fast',
+
 ]
 MALFORMED_KEY_WORDS = {
     '<bold><bold>Ground</bold>ed</bold>' : '<bold>Grounded</bold>',

@@ -1,6 +1,6 @@
 # Allows code to be run in root directory
 import sys
-sys.path[0] = sys.path[0].removesuffix('\\props')
+sys.path[0] = sys.path[0].removesuffix('4.2')
 
 from cardsmith import *
 from data.source import OnlineSource, ManualSource
@@ -18,14 +18,14 @@ from elements.grid import GridElement
 
 Settings.CardsDirectory = 'out/props/4.2'
 
-CARD_HEIGHT = int(3.5 * 96 * 2) // 2
-CARD_WIDTH = int(2.5 * 96 * 2) // 2
+CARD_HEIGHT = int(4.75 * 96 * 2)
+CARD_WIDTH = int(2.75 * 96 * 2)
 CARD_SIZE = Point(CARD_WIDTH, CARD_HEIGHT)
 
 SLOTS = 7
 
 schema = Schema(
-    dimensions=Point(CARD_WIDTH * 14, CARD_HEIGHT * 4),
+    dimensions=Point(CARD_WIDTH * 14, int(CARD_HEIGHT * 3.5)),
     naming='GameBoard',
     deck_name='crowd',
     elements=[
@@ -58,7 +58,7 @@ schema = Schema(
                     ) for _ in range(SLOTS)
                 ]
             ], 
-            size=Point(PARENT - 1200, PARENT),
+            size=Point(PARENT - 2000, PARENT),
             offset=Point(int(CARD_SIZE.x // 3 * 9), 0),
         ),
 

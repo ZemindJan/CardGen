@@ -1,6 +1,6 @@
 # Allows code to be run in root directory
 import sys
-sys.path[0] = sys.path[0].removesuffix('\\props')
+sys.path[0] = sys.path[0].removesuffix('4.2')
 
 from cardsmith import *
 from data.source import OnlineSource, ManualSource
