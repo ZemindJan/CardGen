@@ -11,6 +11,9 @@ class Point():
     def __add__(self, other):
         return Point(self.x + other[0], self.y + other[1])
     
+    def __eq__(self, other : 'Point'):
+        return self.x == other.x and self.y == other.y
+    
     def __radd__(self, other):
         return self + other
     
