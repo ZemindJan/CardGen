@@ -31,6 +31,8 @@ CARD_WIDTH = int(2.75 * 96 * 2)
 COMBO_BANNER_SIZE = Point(70, 32)
 TEXT_REPLACEMENTS = {
     '\n' : '<br>',
+    'dmg' : '#Damage',
+    'blk' : '#Block',
 }
 SUIT_COLORS = {
     'High' : 'muted_green',
@@ -224,7 +226,8 @@ a_side = GroupElement(
                     fill='black',
                     font_size=35,
                     font_path='alegreya',
-                    alignment=Alignment.MIDDLE_CENTER
+                    alignment=Alignment.MIDDLE_CENTER,
+                    line_alignment=YAlignment.MIDDLE,
                 )
             ]
         ),
@@ -307,7 +310,8 @@ d_side = GroupElement(
                     fill='black',
                     font_size=35,
                     font_path='alegreya',
-                    alignment=Alignment.MIDDLE_CENTER
+                    alignment=Alignment.MIDDLE_CENTER,
+                    line_alignment=YAlignment.MIDDLE,
                 )
             ]
         ),
@@ -343,30 +347,7 @@ schema = Schema(
     ]
 )
 
-manual_src = ManualSource(entries=[
-    {
-        'aname' : 'discombobulate',
-        'low' : '-',
-        'mid' : '-',
-        'high' : '-',
-        'suit' : 'Utility',
-        'atraits' : 'kick',
-        'acost' : '2',
-        'aeffect' : 'testing a really long line',
-        'cl' : '-',
-        'cm' : '-',
-        'ch' : '-',
-        'dname' : 'dicombobulate',
-        'dcost' : '-',
-        'dtraits' : 'kick',
-        'deffect' : 'effect',
-    }
-])
-
-online_src = OnlineSource(url)
-
-# choose source
-src = ManualSource(entries=[{
+manual_src = ManualSource(entries=[{
     'aname' : 'Flying Kick',
     'copies' : '2',
     'low' : '-',
@@ -385,7 +366,15 @@ src = ManualSource(entries=[{
     'deffect' : 'Dodge Low<br>Launch Self',
     'deck' : 'Test'
 }])
-src.preprocessors.append(preprocess_fields(['aeffect', 'deffect']))
+
+online_src = OnlineSource(url)
+
+# choose source
+src = online_src
+src.preprocessors.append(
+    preprocess_fields(['aeffect', 'deffect']),
+    
+)
 
 # only process if run directly
 if __name__ == "__main__":
