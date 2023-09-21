@@ -36,7 +36,7 @@ SUIT_COLORS = {
     'High' : 'muted_green',
     'Middle' : 'muted_yellow',
     'Low' : 'muted_red',
-    'Utility' : 'grey',
+    'Skill' : 'grey',
     'Multi' : 'purple',
 }
 
@@ -366,7 +366,25 @@ manual_src = ManualSource(entries=[
 online_src = OnlineSource(url)
 
 # choose source
-src = online_src
+src = ManualSource(entries=[{
+    'aname' : 'Flying Kick',
+    'copies' : '2',
+    'low' : '-',
+    'mid' : '-',
+    'high': 'X',
+    'suit' : 'High',
+    'atraits' : 'Air, Kick',
+    'acost' : '2',
+    'aeffect' : 'Launch Self<br>5 #Damage',
+    'cl' : 'X',
+    'cm' : '-',
+    'ch' : '-',
+    'dname' : 'Quick Leap',
+    'dcost' : '1',
+    'dtraits' : 'Air, Move',
+    'deffect' : 'Dodge Low<br>Launch Self',
+    'deck' : 'Test'
+}])
 src.preprocessors.append(preprocess_fields(['aeffect', 'deffect']))
 
 # only process if run directly
