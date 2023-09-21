@@ -33,7 +33,7 @@ class IconSegment(LineSegment):
 
         # Resize if needed
         if curr_size != desired_size:
-            self.image = self.image.resize(size=curr_size.int_tuple())
+            self.image = self.image.resize(size=desired_size.int_tuple())
         
         self.size = Point(*self.image.size)
 
@@ -48,5 +48,5 @@ class IconSegment(LineSegment):
 
         my_coords = coords + Point.y_span(y_offset) + self.icon.offset
         area = my_coords.to(my_coords + self.size)
-        mask = self.image if self.icon.transparent else None 
+        mask = self.image.copy() if self.icon.transparent else None 
         safe_paste(canvas=image, image=self.image, area=area, transparency_mask=mask)
