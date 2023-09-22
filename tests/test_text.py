@@ -59,10 +59,10 @@ schema = Schema(
                     offset=Point(200, 200)
                 ),
                 ConditionalElement(
-                    condition='$name$=test',
+                    condition='$name$=best',
                     on_true=[
                         TextElement(
-                            text='$name$ <size=50><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>#plusone',
+                            text='$name$ <size=50><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>#blight',
                             font_path='alegreya',
                             font_size=200,
                             fill=Colors.White,
@@ -72,7 +72,7 @@ schema = Schema(
                     ],
                     on_false=[
                         TextElement(
-                            text='$name$ <size=80><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>#plusone',
+                            text='$name$ <size=80><color=blue>is</size> <italic>the</color></italic> <bold>namep</bold>#blight',
                             font_path='alegreya',
                             font_size=200,
                             fill=Colors.White,

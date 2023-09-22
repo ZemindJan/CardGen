@@ -5,3 +5,9 @@ Icon(
     path='Plusone.png',
     transparent=False,
 )
+
+Icon(
+    name='blight',
+    path='Blight.png',
+    transparent=True,
+)
