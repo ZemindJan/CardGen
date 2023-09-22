@@ -4,7 +4,7 @@ KEY_WORDS = [
     'Grounded', 'Ground',
     'Stun',
     'Distance',
-    'Block', 'Dodge',
+    'Dodge',
     'Low', 'Middle', 'High',
     'Kick', 'Punch',
     'Drink', 'Imbibe',

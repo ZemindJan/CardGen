@@ -31,12 +31,14 @@ CARD_WIDTH = int(2.75 * 96 * 2)
 COMBO_BANNER_SIZE = Point(70, 32)
 TEXT_REPLACEMENTS = {
     '\n' : '<br>',
+    'dmg' : '#Damage',
+    'blk' : '#Block',
 }
 SUIT_COLORS = {
     'High' : 'muted_green',
     'Middle' : 'muted_yellow',
     'Low' : 'muted_red',
-    'Utility' : 'grey',
+    'Skill' : 'grey',
     'Multi' : 'purple',
 }
 
@@ -224,7 +226,8 @@ a_side = GroupElement(
                     fill='black',
                     font_size=35,
                     font_path='alegreya',
-                    alignment=Alignment.MIDDLE_CENTER
+                    alignment=Alignment.MIDDLE_CENTER,
+                    line_alignment=YAlignment.MIDDLE,
                 )
             ]
         ),
@@ -307,7 +310,8 @@ d_side = GroupElement(
                     fill='black',
                     font_size=35,
                     font_path='alegreya',
-                    alignment=Alignment.MIDDLE_CENTER
+                    alignment=Alignment.MIDDLE_CENTER,
+                    line_alignment=YAlignment.MIDDLE,
                 )
             ]
         ),
@@ -344,31 +348,34 @@ schema = Schema(
     ]
 )
 
-manual_src = ManualSource(entries=[
-    {
-        'aname' : 'discombobulate',
-        'low' : '-',
-        'mid' : '-',
-        'high' : '-',
-        'suit' : 'Utility',
-        'atraits' : 'kick',
-        'acost' : '2',
-        'aeffect' : 'testing a really long line',
-        'cl' : '-',
-        'cm' : '-',
-        'ch' : '-',
-        'dname' : 'dicombobulate',
-        'dcost' : '-',
-        'dtraits' : 'kick',
-        'deffect' : 'effect',
-    }
-])
+manual_src = ManualSource(entries=[{
+    'aname' : 'Flying Kick',
+    'copies' : '2',
+    'low' : '-',
+    'mid' : '-',
+    'high': 'X',
+    'suit' : 'High',
+    'atraits' : 'Air, Kick',
+    'acost' : '2',
+    'aeffect' : 'Launch Self<br>5 #Damage',
+    'cl' : 'X',
+    'cm' : '-',
+    'ch' : '-',
+    'dname' : 'Quick Leap',
+    'dcost' : '1',
+    'dtraits' : 'Air, Move',
+    'deffect' : 'Dodge Low<br>Launch Self',
+    'deck' : 'Test'
+}])
 
 online_src = OnlineSource(url)
 
 # choose source
 src = online_src
-src.preprocessors.append(preprocess_fields(['aeffect', 'deffect']))
+src.preprocessors.append(
+    preprocess_fields(['aeffect', 'deffect']),
+    
+)
 
 # only process if run directly
 if __name__ == "__main__":

@@ -18,7 +18,7 @@ class MirrorElement(CardElement):
         self.mirror_y = mirror_y
 
     def draw(self, image: Image, entry: dict[str, str], schema: Schema, parent_area: Rect, index: int = 0):
-        area = self.calculate_area(parent_area)
+        area = self.calculate_area(parent_area).rounded()
 
         my_image = Image.new(mode='RGBA', size=area.size().int_tuple())
 
@@ -31,4 +31,8 @@ class MirrorElement(CardElement):
         if self.mirror_y:
             my_image = ImageOps.flip(my_image)
 
-        safe_paste(image, my_image, area)
+        safe_paste(
+            canvas=image, 
+            image=my_image, 
+            area=area
+        )
