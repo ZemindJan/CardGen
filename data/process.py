@@ -8,7 +8,28 @@ def process(filename : str = 'data.csv') -> list[dict[str, str]]:
         return []   
         
     content = clean_content(content)
-    lines = content.split('\r\n')
+
+    lines = []
+    index = 0
+    
+    query = content[index:].find('\r\n')
+
+    while query != -1:
+        index = index + query
+
+        
+        if content[:index].count('\"') % 2 == 1: # newline is in quotes
+            index += 2
+        else: # newline is genuine
+            line = content[:index]
+            lines.append(line)
+            content = content[index + 2:]
+            index = 0
+            # new line
+
+        query = content[index:].find('\r\n')
+
+    lines.append(content)
 
     field_names = [name.lower() for name in split_line(lines[0])]
     data = []
