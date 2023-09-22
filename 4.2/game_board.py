@@ -58,7 +58,7 @@ schema = Schema(
                     ) for _ in range(SLOTS)
                 ]
             ], 
-            size=Point(PARENT - 2000, PARENT),
+            size=Point(CARD_SIZE.x * 9, PARENT),
             offset=Point(int(CARD_SIZE.x // 3 * 9), 0),
         ),
 

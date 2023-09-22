@@ -13,8 +13,9 @@ KEY_WORDS = [
     'Favour',
     'On Hit',
     'Slow', 'Fast',
-
+    'Deathtoll', 'Exhume',
 ]
+
 MALFORMED_KEY_WORDS = {
     '<bold><bold>Ground</bold>ed</bold>' : '<bold>Grounded</bold>',
     '<bold><bold>Launch</bold>ed</bold>' : '<bold>Launched</bold>'

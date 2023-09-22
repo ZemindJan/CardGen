@@ -320,7 +320,8 @@ schema = Schema(
     text_replacements=TEXT_REPLACEMENTS,
     deck_name='4.2',
     group_by='$deck$',
-    required_entry_fields=['aname', 'low', 'mid', 'high', 'suit', 'atraits', 'acost', 'aeffect', 'cl', 'cm', 'ch', 'dname', 'dcost', 'dtraits', 'deffect', 'deck'],
+    count='$copies$',
+    required_entry_fields=['aname', 'copies', 'low', 'mid', 'high', 'suit', 'atraits', 'acost', 'aeffect', 'cl', 'cm', 'ch', 'dname', 'dcost', 'dtraits', 'deffect', 'deck'],
     elements=[
         # Black Border
         RectElement(

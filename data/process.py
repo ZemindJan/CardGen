@@ -28,7 +28,6 @@ def process(filename : str = 'data.csv') -> list[dict[str, str]]:
     
     return data
 
-
 def split_line(line : str) -> list[str]:
     cells = []
     in_quotes = False
