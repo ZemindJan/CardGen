@@ -374,7 +374,6 @@ online_src = OnlineSource(url)
 src = online_src
 src.preprocessors.append(
     preprocess_fields(['aeffect', 'deffect']),
-    
 )
 
 # only process if run directly
