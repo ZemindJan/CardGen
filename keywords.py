@@ -18,7 +18,8 @@ KEY_WORDS = [
 
 MALFORMED_KEY_WORDS = {
     '<bold><bold>Ground</bold>ed</bold>' : '<bold>Grounded</bold>',
-    '<bold><bold>Launch</bold>ed</bold>' : '<bold>Launched</bold>'
+    '<bold><bold>Launch</bold>ed</bold>' : '<bold>Launched</bold>',
+    '<bold><bold>Stun</bold>ned</bold>' : '<bold>Stunned</bold>',
 }
 
 def preprocess_fields(fields : list[str]):
