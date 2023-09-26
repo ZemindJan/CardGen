@@ -19,14 +19,14 @@ from elements.group import GroupElement
 url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQfcuVJtXMn4PGIY7id1qMlOi4IbkVqFpqSArPBe-YZlKZ2crQuPx_IzHGe5O8z86uPB93QAykHNT4T/pub?gid=559014483&single=true&output=csv'
 
 
-Settings.CardsDirectory = 'out/cards/4.2/backs'
+Settings.CardsDirectory = 'out/decks/4.2/'
 
 CARD_HEIGHT = int(4.75 * 96 * 2)
 CARD_WIDTH = int(2.75 * 96 * 2)
 
 schema = Schema(
     dimensions=Point(CARD_WIDTH, CARD_HEIGHT),
-    naming='$deck$',
+    naming='$deck$ back',
     deck_name='4.2',
     group_by='$deck$',
     required_entry_fields=['deck'],
