@@ -4,7 +4,7 @@ KEY_WORDS = [
     'Grounded', 'Ground',
     'Stun',
     'Distance',
-    'Dodge',
+    'Dodge', 'Undodgeable',
     'Low', 'Middle', 'High',
     'Kick', 'Punch',
     'Drink', 'Imbibe',
@@ -14,6 +14,8 @@ KEY_WORDS = [
     'On Hit',
     'Slow', 'Fast',
     'Deathtoll', 'Exhume',
+    'Follow',
+    
 ]
 
 MALFORMED_KEY_WORDS = {
