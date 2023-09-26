@@ -18,7 +18,7 @@ def safe_paste(canvas : Image, image : Image, area : Rect, transparency_mask : I
         image = image.crop(diff)
 
         if transparency_mask:
-            transparency_mask = transparency_mask.crop(area)
+            transparency_mask = transparency_mask.crop(diff)
 
     canvas.paste(
         im = image,
