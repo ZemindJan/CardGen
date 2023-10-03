@@ -28,7 +28,7 @@ EFFECT_X_BUFFER = 3
 CARD_HEIGHT = int(4.75 * 96 * 2)
 CARD_WIDTH = int(2.75 * 96 * 2)
 
-COMBO_BANNER_SIZE = Point(70, 32)
+COMBO_BANNER_SIZE = Point(100, 50)
 TEXT_REPLACEMENTS = {
     '\n' : '<br>',
     'dmg' : '#Damage',
@@ -49,13 +49,13 @@ combos = GroupElement(
         ConditionalElement(condition='$cl$=X', on_true=[
             RectElement(
                 size=COMBO_BANNER_SIZE,
-                offset=Point(PARENT - COMBO_BANNER_SIZE.x, 240),
+                offset=Point(PARENT - COMBO_BANNER_SIZE.x, 160 + (COMBO_BANNER_SIZE.y + 5) * 2),
                 fill='red',
                 children=[
                     TextElement(
                         text='LOW',
                         fill='black',
-                        font_size=18,
+                        font_size=28,
                         font_path='alegreya_bold',
                         alignment=Alignment.MIDDLE_CENTER
                     )
@@ -66,13 +66,13 @@ combos = GroupElement(
         ConditionalElement(condition='$cm$=X', on_true=[
             RectElement(
                 size=COMBO_BANNER_SIZE,
-                offset=Point(PARENT - COMBO_BANNER_SIZE.x, 200),
+                offset=Point(PARENT - COMBO_BANNER_SIZE.x, 160 + (COMBO_BANNER_SIZE.y + 5) * 1),
                 fill='yellow',
                 children=[
                     TextElement(
                         text='MID',
                         fill='black',
-                        font_size=18,
+                        font_size=28,
                         font_path='alegreya_bold',
                         alignment=Alignment.MIDDLE_CENTER
                     )
@@ -83,13 +83,13 @@ combos = GroupElement(
         ConditionalElement(condition='$ch$=X', on_true=[
             RectElement(
                 size=COMBO_BANNER_SIZE,
-                offset=Point(PARENT - COMBO_BANNER_SIZE.x, 160),
+                offset=Point(PARENT - COMBO_BANNER_SIZE.x, 160 + (COMBO_BANNER_SIZE.y + 5) * 0),
                 fill='green',
                 children=[
                     TextElement(
                         text='HIGH',
                         fill='black',
-                        font_size=18,
+                        font_size=28,
                         font_path='alegreya_bold',
                         alignment=Alignment.MIDDLE_CENTER
                     )
@@ -101,13 +101,13 @@ combos = GroupElement(
         ConditionalElement(condition='$low$=X', on_true=[
             RectElement(
                 size=COMBO_BANNER_SIZE,
-                offset=Point(0, 240),
+                offset=Point(1, 160 + (COMBO_BANNER_SIZE.y + 5) * 2),
                 fill='red',
                 children=[
                     TextElement(
                         text='LOW',
                         fill='black',
-                        font_size=18,
+                        font_size=28,
                         font_path='alegreya_bold',
                         alignment=Alignment.MIDDLE_CENTER
                     )
@@ -118,13 +118,13 @@ combos = GroupElement(
         ConditionalElement(condition='$mid$=X', on_true=[
             RectElement(
                 size=COMBO_BANNER_SIZE,
-                offset=Point(0, 200),
+                offset=Point(1, 160 + (COMBO_BANNER_SIZE.y + 5) * 1),
                 fill='yellow',
                 children=[
                     TextElement(
                         text='MID',
                         fill='black',
-                        font_size=18,
+                        font_size=28,
                         font_path='alegreya_bold',
                         alignment=Alignment.MIDDLE_CENTER
                     )
@@ -135,13 +135,13 @@ combos = GroupElement(
         ConditionalElement(condition='$high$=X', on_true=[
             RectElement(
                 size=COMBO_BANNER_SIZE,
-                offset=Point(0, 160),
+                offset=Point(1, 160 + (COMBO_BANNER_SIZE.y + 5) * 0),
                 fill='green',
                 children=[
                     TextElement(
                         text='HIGH',
                         fill='black',
-                        font_size=18,
+                        font_size=28,
                         font_path='alegreya_bold',
                         alignment=Alignment.MIDDLE_CENTER
                     )
@@ -157,8 +157,8 @@ a_side = GroupElement(
     children=[
         # Background
         RectElement(
-            offset=Point(BLACK_OUTLINE_WIDTH, BLACK_OUTLINE_WIDTH),
-            size=Point(PARENT - 2 * BLACK_OUTLINE_WIDTH, PARENT  - 2 * BLACK_OUTLINE_WIDTH)
+            offset=Point(1, 1),
+            size=Point(PARENT - BLACK_OUTLINE_WIDTH, PARENT  - BLACK_OUTLINE_WIDTH)
         ).on_draw_set_fields(fill=f'$lookup suit {SUIT_COLORS}$'),
 
         # Title
@@ -352,14 +352,14 @@ manual_src = ManualSource(entries=[{
     'aname' : 'Flying Kick',
     'copies' : '2',
     'low' : '-',
-    'mid' : '-',
+    'mid' : 'X',
     'high': 'X',
     'suit' : 'High',
     'atraits' : 'Air, Kick',
     'acost' : '2',
     'aeffect' : 'Launch Self<br>5 #Damage',
     'cl' : 'X',
-    'cm' : '-',
+    'cm' : 'X',
     'ch' : '-',
     'dname' : 'Quick Leap',
     'dcost' : '1',
